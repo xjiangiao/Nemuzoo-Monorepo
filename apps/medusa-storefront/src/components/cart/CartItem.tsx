@@ -1,0 +1,78 @@
+"use client";
+
+import Link from "next/link";
+import QuantitySelector from "@/components/ui/QuantitySelector";
+import { formatPrice } from "@/lib/utils";
+
+interface CartItemProps {
+  item: {
+    id: string;
+    title: string;
+    handle: string;
+    thumbnail?: string;
+    quantity: number;
+    unit_price: number;
+    currency_code: string;
+    variant?: string;
+  };
+  onUpdateQuantity: (id: string, quantity: number) => void;
+  onRemove: (id: string) => void;
+}
+
+export default function CartItem({ item, onUpdateQuantity, onRemove }: CartItemProps) {
+  return (
+    <div className="flex gap-4 py-6 border-b border-[var(--color-border-primary)]">
+      <Link
+        href={`/products/${item.handle}`}
+        className="flex-shrink-0 w-24 h-24 bg-[var(--color-surface-secondary)] rounded-lg overflow-hidden"
+      >
+        {item.thumbnail ? (
+          <img
+            src={item.thumbnail}
+            alt={item.title}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-[var(--color-text-muted)] text-xs">
+            No Image
+          </div>
+        )}
+      </Link>
+
+      <div className="flex-1 min-w-0">
+        <div className="flex justify-between items-start">
+          <div>
+            <Link
+              href={`/products/${item.handle}`}
+              className="text-sm font-medium text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors"
+            >
+              {item.title}
+            </Link>
+            {item.variant && (
+              <p className="text-xs text-[var(--color-text-muted)] mt-0.5">
+                {item.variant}
+              </p>
+            )}
+          </div>
+          <p className="text-sm font-medium text-[var(--color-text-primary)] ml-4">
+            {formatPrice(item.unit_price * item.quantity, item.currency_code)}
+          </p>
+        </div>
+
+        <div className="flex items-center justify-between mt-3">
+          <QuantitySelector
+            value={item.quantity}
+            onChange={(qty) => onUpdateQuantity(item.id, qty)}
+          />
+          <button
+            type="button"
+            onClick={() => onRemove(item.id)}
+            className="text-xs text-[var(--color-text-muted)] hover:text-[var(--color-error)] transition-colors ml-4"
+          >
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
