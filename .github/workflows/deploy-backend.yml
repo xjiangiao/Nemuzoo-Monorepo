@@ -64,7 +64,29 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
+            mkdir -p /opt/medusa
             cd /opt/medusa
+
+            # Write docker-compose.yml
+            cat > docker-compose.yml << 'COMPOSEEOF'
+            services:
+              medusa-backend:
+                image: ghcr.io/${{ env.IMAGE_NAME }}:latest
+                container_name: medusa-backend
+                restart: unless-stopped
+                ports:
+                  - "9000:9000"
+                env_file:
+                  - .env
+                environment:
+                  - NODE_ENV=production
+                healthcheck:
+                  test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9000/health"]
+                  interval: 30s
+                  timeout: 10s
+                  retries: 3
+                  start_period: 30s
+            COMPOSEEOF
 
             # Write .env from GitHub Secrets on every deploy
             cat > .env << 'ENVEOF'
