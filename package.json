@@ -1,0 +1,30 @@
+{
+  "name": "nemuzoo-monorepo",
+  "private": true,
+  "packageManager": "pnpm@10.26.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "start": "turbo start",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "backend:dev": "turbo dev --filter=@nemuzoo/medusa-backend",
+    "backend:build": "turbo build --filter=@nemuzoo/medusa-backend",
+    "storefront:dev": "turbo dev --filter=@nemuzoo/medusa-storefront",
+    "storefront:build": "turbo build --filter=@nemuzoo/medusa-storefront",
+    "storefront:build:cloudflare": "pnpm --filter=@nemuzoo/medusa-storefront run build:cloudflare"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "19.0.5",
+      "@types/react-dom": "19.0.5"
+    }
+  },
+  "devDependencies": {
+    "turbo": "^2.0.14",
+    "prettier": "^3.2.5"
+  }
+}
