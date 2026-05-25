@@ -1,4 +1,4 @@
-name: Deploy Storefront to Cloudflare
+name: Deploy Storefront to Cloudflare Workers
 
 on:
   push:
@@ -39,10 +39,10 @@ jobs:
         env:
           NEXT_PUBLIC_MEDUSA_BACKEND_URL: ${{ vars.NEXT_PUBLIC_MEDUSA_BACKEND_URL }}
 
-      - name: Deploy to Cloudflare Pages
+      - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: apps/medusa-storefront
-          command: pages deploy
+          command: deploy --env production
