@@ -30,6 +30,7 @@ WORKDIR /app
 COPY --from=builder /app/apps/medusa-backend/.medusa ./apps/medusa-backend/.medusa
 COPY --from=builder /app/apps/medusa-backend/package.json ./apps/medusa-backend/
 COPY --from=builder /app/apps/medusa-backend/medusa-config.ts ./apps/medusa-backend/
+COPY --from=builder /app/apps/medusa-backend/tsconfig.json ./apps/medusa-backend/
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/apps/medusa-backend/node_modules ./apps/medusa-backend/node_modules
 COPY --from=builder /app/pnpm-lock.yaml ./
