@@ -65,6 +65,26 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /opt/medusa
+
+            # Write .env from GitHub Secrets on every deploy
+            cat > .env << 'ENVEOF'
+            NODE_ENV=production
+            PORT=9000
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
+            REDIS_URL=${{ secrets.REDIS_URL }}
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
+            COOKIE_SECRET=${{ secrets.COOKIE_SECRET }}
+            STORE_CORS=${{ vars.STORE_CORS }}
+            ADMIN_CORS=${{ vars.ADMIN_CORS }}
+            AUTH_CORS=${{ vars.AUTH_CORS }}
+            MEDUSA_ADMIN_ONBOARDING_TYPE=default
+            R2_FILE_URL=${{ secrets.R2_FILE_URL }}
+            R2_ENDPOINT=${{ secrets.R2_ENDPOINT }}
+            R2_BUCKET=${{ secrets.R2_BUCKET }}
+            R2_ACCESS_KEY_ID=${{ secrets.R2_ACCESS_KEY_ID }}
+            R2_SECRET_ACCESS_KEY=${{ secrets.R2_SECRET_ACCESS_KEY }}
+            ENVEOF
+
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             docker pull ghcr.io/${{ env.IMAGE_NAME }}:latest
             docker compose down medusa-backend
