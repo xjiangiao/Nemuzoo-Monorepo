@@ -20,10 +20,11 @@ export default function FadeInView({
     const node = ref.current;
     if (!node) return;
 
+    let timeoutId: ReturnType<typeof setTimeout>;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setTimeout(() => setVisible(true), delay);
+          timeoutId = setTimeout(() => setVisible(true), delay);
           observer.unobserve(node);
         }
       },
@@ -31,7 +32,10 @@ export default function FadeInView({
     );
 
     observer.observe(node);
-    return () => observer.disconnect();
+    return () => {
+      clearTimeout(timeoutId);
+      observer.disconnect();
+    };
   }, [delay]);
 
   return (

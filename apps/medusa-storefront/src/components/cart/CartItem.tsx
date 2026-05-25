@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import QuantitySelector from "@/components/ui/QuantitySelector";
 import { formatPrice } from "@/lib/utils";
 
@@ -24,13 +25,15 @@ export default function CartItem({ item, onUpdateQuantity, onRemove }: CartItemP
     <div className="flex gap-4 py-6 border-b border-[var(--color-border-primary)]">
       <Link
         href={`/products/${item.handle}`}
-        className="flex-shrink-0 w-24 h-24 bg-[var(--color-surface-secondary)] rounded-lg overflow-hidden"
+        className="shrink-0 w-24 h-24 bg-[var(--color-surface-secondary)] rounded-lg overflow-hidden relative"
       >
         {item.thumbnail ? (
-          <img
+          <Image
             src={item.thumbnail}
             alt={item.title}
-            className="w-full h-full object-cover"
+            fill
+            sizes="96px"
+            className="object-cover"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-[var(--color-text-muted)] text-xs">

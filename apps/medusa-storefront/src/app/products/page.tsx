@@ -22,7 +22,7 @@ interface Product {
 }
 
 export default function ProductsPage() {
-  const { data: products, isLoading, error } = useQuery({
+  const { data: products, isLoading, error, refetch } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
       medusaClient.products
@@ -50,7 +50,7 @@ export default function ProductsPage() {
           title="Failed to load dolls"
           description="Please try again later."
           action={
-            <Button variant="outline" onClick={() => window.location.reload()}>
+            <Button variant="outline" onClick={() => refetch()}>
               Retry
             </Button>
           }

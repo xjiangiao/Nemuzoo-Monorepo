@@ -1,3 +1,9 @@
+/*
+ Fonts are loaded via CSS @import rather than next/font/google because
+ Next.js 16 Turbopack has a known bug where next/font/google fails with:
+ "Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'"
+ Revert to next/font/google once the upstream Turbopack issue is resolved.
+*/
 @import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Sans:wght@300;400;500&display=swap");
 @import "tailwindcss";
 

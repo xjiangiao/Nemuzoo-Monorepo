@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Badge from "@/components/ui/Badge";
 import { formatPrice, getProductThumbnail, getProductPrice } from "@/lib/utils";
 
@@ -27,13 +28,14 @@ export default function ProductCard({ product }: ProductCardProps) {
       href={`/products/${product.handle}`}
       className="group block"
     >
-      <div className="aspect-square bg-[var(--color-surface-secondary)] rounded-xl overflow-hidden mb-4">
+      <div className="aspect-square bg-[var(--color-surface-secondary)] rounded-xl overflow-hidden mb-4 relative">
         {thumbnail ? (
-          <img
+          <Image
             src={thumbnail}
             alt={product.title}
-            className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
-            loading="lazy"
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-[var(--color-text-muted)]">
