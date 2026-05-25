@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "admin.nemuzoo.com",
+        hostname: "static.nemuzoo.com",
       },
       {
         protocol: "http",
