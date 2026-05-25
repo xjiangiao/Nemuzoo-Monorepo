@@ -5,5 +5,5 @@ compatibility_date = "2025-05-01"
 [site]
 bucket = ".open-next/assets"
 
-[env.production]
-vars = { NODE_ENV = "production" }
+[vars]
+NODE_ENV = "production"
