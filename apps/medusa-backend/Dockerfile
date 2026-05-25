@@ -23,6 +23,9 @@ COPY apps/medusa-backend ./apps/medusa-backend
 WORKDIR /app/apps/medusa-backend
 RUN pnpm build
 
+# Ensure admin build output is in the expected directory
+RUN mkdir -p public/admin && cp -r .medusa/server/public/admin/* public/admin/ 2>/dev/null || true
+
 # Production stage
 FROM base AS runner
 WORKDIR /app
