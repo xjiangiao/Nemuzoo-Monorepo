@@ -2,27 +2,12 @@
 
 import { useQuery } from "@tanstack/react-query";
 import medusaClient from "@/lib/medusa-client";
+import type { Product } from "@/types";
 import Container from "@/components/layout/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ProductGrid from "@/components/product/ProductGrid";
 import SkeletonCard from "@/components/ui/SkeletonCard";
 import Button from "@/components/ui/Button";
-
-interface Product {
-  id: string;
-  title: string;
-  handle: string;
-  thumbnail?: string;
-  images?: Array<{ url: string; alt?: string }>;
-  variants?: Array<{
-    calculated_price?: {
-      calculated_amount?: number | null;
-      currency_code?: string | null;
-    } | null;
-    prices?: Array<{ amount: number; currency_code: string }>;
-  }> | null;
-  metadata?: Record<string, unknown> | null;
-}
 
 /**
  * Renders a featured-products section that fetches products and displays up to four highlighted items.

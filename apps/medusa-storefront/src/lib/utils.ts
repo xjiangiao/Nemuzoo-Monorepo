@@ -78,9 +78,11 @@ export function getProductPrice(product: {
  * @returns The formatted date string, e.g. "January 1, 2020"
  */
 export function formatDate(date: string | Date): string {
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return "";
   return new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
-  }).format(new Date(date));
+  }).format(d);
 }

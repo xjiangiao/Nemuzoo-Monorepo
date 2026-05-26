@@ -1,3 +1,4 @@
+import React from "react"
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
 import Link from "next/link"
@@ -68,12 +69,14 @@ function Button({
   ...props
 }: ButtonProps) {
   if (href && !props.disabled) {
+    const { children, ...rest } = props;
     return (
       <Link
         href={href}
         className={cn(buttonVariants({ variant, size, className }))}
+        {...(rest as Omit<React.ComponentProps<typeof Link>, "href" | "className">)}
       >
-        {props.children}
+        {children}
       </Link>
     );
   }

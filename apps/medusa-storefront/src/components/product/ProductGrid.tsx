@@ -1,21 +1,8 @@
 import ProductCard from "@/components/product/ProductCard";
+import type { Product } from "@/types";
 
 interface ProductGridProps {
-  products: Array<{
-    id: string;
-    title: string;
-    handle: string;
-    thumbnail?: string;
-    images?: Array<{ url: string; alt?: string }>;
-    variants?: Array<{
-      calculated_price?: {
-        calculated_amount?: number | null;
-        currency_code?: string | null;
-      } | null;
-      prices?: Array<{ amount: number; currency_code: string }>;
-    }> | null;
-    metadata?: Record<string, unknown> | null;
-  }>;
+  products: Product[];
   columns?: 2 | 3 | 4;
   className?: string;
 }

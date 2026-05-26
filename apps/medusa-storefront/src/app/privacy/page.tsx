@@ -40,7 +40,7 @@ export default function PrivacyPage() {
               Introduction
             </h2>
             <p style={{ fontWeight: 300 }}>
-              Nemuzoo (&quot;we,&quot; &quot;our,&quot; or &rdquo;us&quot;) is
+              Nemuzoo (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is
               committed to protecting your privacy. This Privacy Policy explains
               how we collect, use, disclose, and safeguard your information when
               you visit our website or subscribe to our newsletter.

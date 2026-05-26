@@ -2,23 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import Badge from "@/components/ui/Badge";
 import { formatPrice, getProductThumbnail, getProductPrice } from "@/lib/utils";
+import type { Product } from "@/types";
 
 interface ProductCardProps {
-  product: {
-    id: string;
-    title: string;
-    handle: string;
-    thumbnail?: string;
-    images?: Array<{ url: string; alt?: string }>;
-    variants?: Array<{
-      calculated_price?: {
-        calculated_amount?: number | null;
-        currency_code?: string | null;
-      } | null;
-      prices?: Array<{ amount: number; currency_code: string }>;
-    }> | null;
-    metadata?: Record<string, unknown> | null;
-  };
+  product: Product;
   priority?: boolean;
 }
 

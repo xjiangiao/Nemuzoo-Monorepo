@@ -49,6 +49,7 @@ export default function Header() {
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
+            aria-controls="mobile-site-nav"
           >
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
@@ -59,7 +60,7 @@ export default function Header() {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden border-t border-border-primary bg-surface-primary/95 backdrop-blur-md">
-          <nav className="px-4 sm:px-6 py-4 space-y-1">
+          <nav id="mobile-site-nav" className="px-4 sm:px-6 py-4 space-y-1">
             <Link
               href="/products"
               onClick={() => setMenuOpen(false)}

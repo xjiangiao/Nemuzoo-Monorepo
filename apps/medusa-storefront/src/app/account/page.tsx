@@ -52,9 +52,9 @@ export default function AccountPage() {
           <div>
             <span className="text-text-muted">Name</span>
             <p className="text-text-primary">
-              {customer?.first_name
-                ? `${customer.first_name} ${customer.last_name}`
-                : "—"}
+              {[customer?.first_name, customer?.last_name]
+                .filter(Boolean)
+                .join(" ") || "—"}
             </p>
           </div>
           <div>

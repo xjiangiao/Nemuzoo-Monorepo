@@ -42,9 +42,11 @@ export default function AuthMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-44">
         <DropdownMenuLabel>
-          {customer?.first_name
-            ? `${customer.first_name} ${customer.last_name}`
-            : customer?.email}
+          {customer
+            ? [customer.first_name, customer.last_name]
+                .filter(Boolean)
+                .join(" ") || customer.email
+            : ""}
         </DropdownMenuLabel>
         <DropdownMenuGroup>
           <DropdownMenuItem

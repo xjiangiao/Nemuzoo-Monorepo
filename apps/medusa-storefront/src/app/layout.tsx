@@ -6,7 +6,7 @@ import Footer from "@/components/layout/Footer";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({subsets:['latin'],variable:'--font-geist'});
 
 const siteUrl = "https://www.nemuzoo.com";
 
