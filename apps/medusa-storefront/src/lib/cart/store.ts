@@ -1,6 +1,9 @@
 import { create } from "zustand";
 import medusaClient from "@/lib/medusa-client";
 
+const cartFields =
+  "*items,*items.variant,*items.variant.product,*region";
+
 export interface CartItem {
   id: string;
   quantity: number;
@@ -44,7 +47,7 @@ function clearStoredCartId() {
   localStorage.removeItem(CART_STORAGE_KEY);
 }
 
-function mapItems(cart: any, items: any[]): CartItem[] {
+function mapItems(cart: any, items?: any[]): CartItem[] {
   return (items || []).map((item: any) => ({
     id: item.id,
     quantity: item.quantity || 0,
@@ -78,7 +81,9 @@ export const useCartStore = create<CartState>((set, get) => ({
     }
 
     try {
-      const { cart } = await medusaClient.carts.retrieve(storedId);
+      const { cart } = await medusaClient.store.cart.retrieve(storedId, {
+        fields: cartFields,
+      });
       set({
         cartId: storedId,
         items: mapItems(cart, cart.items),
@@ -96,19 +101,24 @@ export const useCartStore = create<CartState>((set, get) => ({
     let currentCartId = cartId;
 
     if (!currentCartId) {
-      const { cart } = await medusaClient.carts.create();
+      const { cart } = await medusaClient.store.cart.create(
+        {},
+        { fields: cartFields }
+      );
       currentCartId = cart.id;
       storeCartId(cart.id);
       set({ cartId: cart.id });
     }
 
     try {
-      await medusaClient.carts.lineItems.create(currentCartId!, {
-        variant_id: variantId,
-        quantity,
-      });
-
-      const { cart } = await medusaClient.carts.retrieve(currentCartId!);
+      const { cart } = await medusaClient.store.cart.createLineItem(
+        currentCartId!,
+        {
+          variant_id: variantId,
+          quantity,
+        },
+        { fields: cartFields }
+      );
       set({ items: mapItems(cart, cart.items), error: null });
     } catch (e) {
       set({ error: "Failed to add item to cart." });
@@ -121,15 +131,30 @@ export const useCartStore = create<CartState>((set, get) => ({
     if (!cartId) return;
 
     try {
+      let cart;
       if (quantity <= 0) {
-        await medusaClient.carts.lineItems.delete(cartId, lineId);
+        const response = await medusaClient.store.cart.deleteLineItem(
+          cartId,
+          lineId,
+          { fields: cartFields }
+        );
+        cart = response.parent;
       } else {
-        await medusaClient.carts.lineItems.update(cartId, lineId, {
-          quantity,
-        });
+        const response = await medusaClient.store.cart.updateLineItem(
+          cartId,
+          lineId,
+          {
+            quantity,
+          },
+          { fields: cartFields }
+        );
+        cart = response.cart;
       }
 
-      const { cart } = await medusaClient.carts.retrieve(cartId);
+      if (!cart) {
+        throw new Error("Cart response missing cart.");
+      }
+
       set({ items: mapItems(cart, cart.items), error: null });
     } catch {
       set({ error: "Failed to update cart." });
@@ -141,9 +166,16 @@ export const useCartStore = create<CartState>((set, get) => ({
     if (!cartId) return;
 
     try {
-      await medusaClient.carts.lineItems.delete(cartId, lineId);
+      const { parent: cart } = await medusaClient.store.cart.deleteLineItem(
+        cartId,
+        lineId,
+        { fields: cartFields }
+      );
 
-      const { cart } = await medusaClient.carts.retrieve(cartId);
+      if (!cart) {
+        throw new Error("Cart response missing cart.");
+      }
+
       set({ items: mapItems(cart, cart.items), error: null });
     } catch {
       set({ error: "Failed to remove item from cart." });

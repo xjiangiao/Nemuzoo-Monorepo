@@ -12,13 +12,17 @@ interface ProductInfoProps {
   product: {
     id: string;
     title: string;
-    description?: string;
+    description?: string | null;
     variants?: Array<{
       id: string;
-      title: string;
+      title: string | null;
+      calculated_price?: {
+        calculated_amount?: number | null;
+        currency_code?: string | null;
+      } | null;
       prices?: Array<{ amount: number; currency_code: string }>;
-    }>;
-    metadata?: Record<string, string>;
+    }> | null;
+    metadata?: Record<string, unknown> | null;
   };
 }
 
@@ -36,9 +40,21 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 
   const variants = product.variants || [];
   const selectedVariant = variants[selectedVariantIndex];
-  const price = selectedVariant?.prices?.[0];
-  const personality = product.metadata?.personality;
-  const story = product.metadata?.story;
+  const calculatedPrice = selectedVariant?.calculated_price;
+  const price =
+    typeof calculatedPrice?.calculated_amount === "number" &&
+    calculatedPrice.currency_code
+      ? {
+          amount: calculatedPrice.calculated_amount,
+          currency_code: calculatedPrice.currency_code,
+        }
+      : selectedVariant?.prices?.[0];
+  const personality =
+    typeof product.metadata?.personality === "string"
+      ? product.metadata.personality
+      : null;
+  const story =
+    typeof product.metadata?.story === "string" ? product.metadata.story : null;
 
   const handleAddToCart = async () => {
     if (!selectedVariant) return;
@@ -112,7 +128,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                       : "border-border-primary text-text-secondary hover:border-accent hover:text-text-primary"
                   }`}
                 >
-                  {v.title}
+                  {v.title || "Default"}
                 </button>
               ))}
             </div>

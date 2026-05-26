@@ -16,18 +16,22 @@ interface Product {
   thumbnail?: string;
   images?: Array<{ url: string; alt?: string }>;
   variants?: Array<{
+    calculated_price?: {
+      calculated_amount?: number | null;
+      currency_code?: string | null;
+    } | null;
     prices?: Array<{ amount: number; currency_code: string }>;
-  }>;
-  metadata?: Record<string, string>;
+  }> | null;
+  metadata?: Record<string, unknown> | null;
 }
 
 export default function ProductsPage() {
   const { data: products, isLoading, error, refetch } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      medusaClient.products
+      medusaClient.store.product
         .list()
-        .then((res) => (res.products as Product[]) || []),
+        .then((res) => (res.products as unknown as Product[]) || []),
   });
 
   return (

@@ -11,9 +11,13 @@ interface ProductCardProps {
     thumbnail?: string;
     images?: Array<{ url: string; alt?: string }>;
     variants?: Array<{
+      calculated_price?: {
+        calculated_amount?: number | null;
+        currency_code?: string | null;
+      } | null;
       prices?: Array<{ amount: number; currency_code: string }>;
-    }>;
-    metadata?: Record<string, string>;
+    }> | null;
+    metadata?: Record<string, unknown> | null;
   };
   priority?: boolean;
 }
@@ -21,7 +25,10 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const thumbnail = getProductThumbnail(product);
   const price = getProductPrice(product);
-  const personality = product.metadata?.personality;
+  const personality =
+    typeof product.metadata?.personality === "string"
+      ? product.metadata.personality
+      : null;
 
   return (
     <Link

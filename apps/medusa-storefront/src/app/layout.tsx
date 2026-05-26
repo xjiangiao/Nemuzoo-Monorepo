@@ -3,6 +3,10 @@ import "./globals.css";
 import { Providers } from "@/lib/providers";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const siteUrl = "https://www.nemuzoo.com";
 
@@ -40,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
+    <html lang="en" className={cn("h-full antialiased", "font-sans", geist.variable)}>
       <body className="min-h-full flex flex-col bg-surface-primary text-text-primary font-body">
         <script
           type="application/ld+json"

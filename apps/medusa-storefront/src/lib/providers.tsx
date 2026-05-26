@@ -3,6 +3,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { CartHydrate } from "@/lib/cart/cart-hydrate";
+import { AuthHydrate } from "@/lib/auth/auth-hydrate";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -19,7 +20,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <CartHydrate>{children}</CartHydrate>
+      <AuthHydrate>
+        <CartHydrate>{children}</CartHydrate>
+      </AuthHydrate>
     </QueryClientProvider>
   );
 }

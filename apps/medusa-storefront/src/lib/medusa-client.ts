@@ -1,9 +1,12 @@
-import Medusa from "@medusajs/medusa-js";
+import Medusa from "@medusajs/js-sdk";
 
 const medusaClient = new Medusa({
   baseUrl: "",
-  maxRetries: 2,
-  publishableApiKey: process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_API_KEY,
+  publishableKey: process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_API_KEY,
+  auth: {
+    type: "session",
+    fetchCredentials: "include",
+  },
 });
 
 export default medusaClient;

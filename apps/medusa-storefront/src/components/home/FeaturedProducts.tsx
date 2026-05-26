@@ -15,16 +15,22 @@ interface Product {
   thumbnail?: string;
   images?: Array<{ url: string; alt?: string }>;
   variants?: Array<{
+    calculated_price?: {
+      calculated_amount?: number | null;
+      currency_code?: string | null;
+    } | null;
     prices?: Array<{ amount: number; currency_code: string }>;
-  }>;
-  metadata?: Record<string, string>;
+  }> | null;
+  metadata?: Record<string, unknown> | null;
 }
 
 export default function FeaturedProducts() {
   const { data: products, isLoading } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      medusaClient.products.list().then((res) => (res.products as Product[]) || []),
+      medusaClient.store.product
+        .list()
+        .then((res) => (res.products as unknown as Product[]) || []),
   });
 
   const featured = products?.slice(0, 4) || [];

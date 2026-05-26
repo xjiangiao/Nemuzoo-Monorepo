@@ -37,3 +37,14 @@ export interface CartSummaryData {
   total: number;
   currency_code: string;
 }
+
+export interface Customer {
+  id: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  phone?: string | null;
+  has_account: boolean;
+  created_at: string;
+  metadata?: Record<string, unknown>;
+}

@@ -16,7 +16,7 @@ export default function ProductPage() {
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", handle],
     queryFn: async () => {
-      const { products } = await medusaClient.products.list({
+      const { products } = await medusaClient.store.product.list({
         handle,
       });
       return products[0] || null;

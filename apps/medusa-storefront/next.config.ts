@@ -26,6 +26,10 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
+        source: "/auth/:path*",
+        destination: `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/auth/:path*`,
+      },
+      {
         source: "/store/:path*",
         destination: `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/:path*`,
       },

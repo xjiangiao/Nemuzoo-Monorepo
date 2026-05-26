@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import CartIcon from "@/components/cart/CartIcon";
+import AccountIcon from "@/components/auth/AccountIcon";
 import { Menu, X } from "lucide-react";
 
 export default function Header() {
@@ -34,6 +35,7 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
+          <AccountIcon />
           <button
             type="button"
             className="md:hidden p-2 text-text-secondary hover:text-text-primary transition-colors"

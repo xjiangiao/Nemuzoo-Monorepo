@@ -8,9 +8,13 @@ interface ProductGridProps {
     thumbnail?: string;
     images?: Array<{ url: string; alt?: string }>;
     variants?: Array<{
+      calculated_price?: {
+        calculated_amount?: number | null;
+        currency_code?: string | null;
+      } | null;
       prices?: Array<{ amount: number; currency_code: string }>;
-    }>;
-    metadata?: Record<string, string>;
+    }> | null;
+    metadata?: Record<string, unknown> | null;
   }>;
   columns?: 2 | 3 | 4;
   className?: string;
