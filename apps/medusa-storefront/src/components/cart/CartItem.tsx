@@ -70,7 +70,7 @@ export default function CartItem({ item, onUpdateQuantity, onRemove }: CartItemP
           <button
             type="button"
             onClick={() => onRemove(item.id)}
-            className="text-xs text-text-muted hover:text-error transition-colors ml-4"
+            className="text-xs text-text-muted hover:text-error transition-colors ml-4 py-1"
           >
             Remove
           </button>

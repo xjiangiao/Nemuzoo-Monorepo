@@ -106,7 +106,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                   key={v.id}
                   type="button"
                   onClick={() => setSelectedVariantIndex(i)}
-                  className={`px-4 py-2 text-sm rounded-lg border transition-colors ${
+                  className={`px-5 py-2.5 md:px-4 md:py-2 text-sm rounded-lg border transition-colors ${
                     i === selectedVariantIndex
                       ? "border-accent text-accent bg-accent-subtle"
                       : "border-border-primary text-text-secondary hover:border-accent hover:text-text-primary"
