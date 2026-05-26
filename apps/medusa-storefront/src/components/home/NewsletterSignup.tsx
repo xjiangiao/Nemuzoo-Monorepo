@@ -7,18 +7,19 @@ import FadeInView from "@/components/ui/FadeInView";
 
 export default function NewsletterSignup() {
   const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) return;
+    if (!email.trim() || !consent) return;
 
     setStatus("loading");
     try {
       const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, consent }),
       });
 
       if (!res.ok) throw new Error("Failed");
@@ -53,14 +54,14 @@ export default function NewsletterSignup() {
                 <p className="text-sm font-medium text-error mb-3">
                   Something went wrong. Try again?
                 </p>
-                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 justify-center">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-3">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Your email address"
                     required
-                    className="px-4 py-2.5 rounded-lg bg-surface-elevated border border-border-primary text-text-primary placeholder-text-muted text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent sm:min-w-70"
+                    className="px-4 py-2.5 rounded-lg bg-surface-elevated border border-border-primary text-text-primary placeholder-text-muted text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
                   />
                   <Button type="submit" variant="accent">
                     Try Again
@@ -68,7 +69,7 @@ export default function NewsletterSignup() {
                 </form>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+              <form onSubmit={handleSubmit} className="mt-8 flex flex-col items-center gap-4">
                 <input
                   type="email"
                   value={email}
@@ -76,9 +77,25 @@ export default function NewsletterSignup() {
                   placeholder="Your email address"
                   required
                   disabled={status === "loading"}
-                  className="px-4 py-2.5 rounded-lg bg-surface-elevated border border-border-primary text-text-primary placeholder-text-muted text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent sm:min-w-70 disabled:opacity-50"
+                  className="w-full max-w-sm px-4 py-2.5 rounded-lg bg-surface-elevated border border-border-primary text-text-primary placeholder-text-muted text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent disabled:opacity-50"
                 />
-                <Button type="submit" variant="accent" disabled={status === "loading"}>
+                <label className="flex items-start gap-2 text-left max-w-sm">
+                  <input
+                    type="checkbox"
+                    checked={consent}
+                    onChange={(e) => setConsent(e.target.checked)}
+                    className="mt-1 shrink-0 w-4 h-4 rounded border-border-primary text-accent focus:ring-accent"
+                    required
+                  />
+                  <span className="text-xs text-text-secondary leading-relaxed">
+                    I agree to receive email updates from Nemuzoo and accept the{" "}
+                    <a href="/privacy" className="text-accent hover:text-accent-hover underline">
+                      Privacy Policy
+                    </a>.
+                    You can unsubscribe at any time.
+                  </span>
+                </label>
+                <Button type="submit" variant="accent" disabled={status === "loading" || !consent}>
                   {status === "loading" ? "Sending..." : "Subscribe"}
                 </Button>
               </form>
