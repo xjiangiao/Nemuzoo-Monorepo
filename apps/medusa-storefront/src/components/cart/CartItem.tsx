@@ -14,7 +14,7 @@ interface CartItemProps {
     quantity: number;
     unit_price: number;
     currency_code: string;
-    variant?: string;
+    variant?: { title: string };
   };
   onUpdateQuantity: (id: string, quantity: number) => void;
   onRemove: (id: string) => void;
@@ -53,7 +53,7 @@ export default function CartItem({ item, onUpdateQuantity, onRemove }: CartItemP
             </Link>
             {item.variant && (
               <p className="text-xs text-[var(--color-text-muted)] mt-0.5">
-                {item.variant}
+                {item.variant?.title}
               </p>
             )}
           </div>

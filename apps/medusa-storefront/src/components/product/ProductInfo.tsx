@@ -6,9 +6,11 @@ import Button from "@/components/ui/Button";
 import QuantitySelector from "@/components/ui/QuantitySelector";
 import StarDecoration from "@/components/ui/StarDecoration";
 import { formatPrice } from "@/lib/utils";
+import { useCart } from "@/lib/cart/context";
 
 interface ProductInfoProps {
   product: {
+    id: string;
     title: string;
     description?: string;
     variants?: Array<{
@@ -22,15 +24,29 @@ interface ProductInfoProps {
 
 export default function ProductInfo({ product }: ProductInfoProps) {
   const [quantity, setQuantity] = useState(1);
+  const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [addedToCart, setAddedToCart] = useState(false);
+  const [addError, setAddError] = useState(false);
+  const { addToCart } = useCart();
 
+  const variants = product.variants || [];
+  const selectedVariant = variants[selectedVariantIndex];
+  const price = selectedVariant?.prices?.[0];
   const personality = product.metadata?.personality;
   const story = product.metadata?.story;
-  const price = product.variants?.[0]?.prices?.[0];
 
-  const handleAddToCart = () => {
-    setAddedToCart(true);
-    setTimeout(() => setAddedToCart(false), 2000);
+  const handleAddToCart = async () => {
+    if (!selectedVariant) return;
+
+    setAddError(false);
+    try {
+      await addToCart(selectedVariant.id, quantity);
+      setAddedToCart(true);
+      setQuantity(1);
+      setTimeout(() => setAddedToCart(false), 2000);
+    } catch {
+      setAddError(true);
+    }
   };
 
   return (
@@ -75,17 +91,22 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       )}
 
       <div className="border-t border-[var(--color-border-primary)] pt-6 space-y-4">
-        {product.variants && product.variants.length > 1 && (
+        {variants.length > 1 && (
           <div>
             <label className="block text-sm font-medium text-[var(--color-text-primary)] mb-2">
               Variant
             </label>
             <div className="flex flex-wrap gap-2">
-              {product.variants.map((v) => (
+              {variants.map((v, i) => (
                 <button
                   key={v.id}
                   type="button"
-                  className="px-4 py-2 text-sm rounded-lg border border-[var(--color-border-primary)] text-[var(--color-text-secondary)] hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)] transition-colors"
+                  onClick={() => setSelectedVariantIndex(i)}
+                  className={`px-4 py-2 text-sm rounded-lg border transition-colors ${
+                    i === selectedVariantIndex
+                      ? "border-[var(--color-accent)] text-[var(--color-accent)] bg-[var(--color-accent-subtle)]"
+                      : "border-[var(--color-border-primary)] text-[var(--color-text-secondary)] hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)]"
+                  }`}
                 >
                   {v.title}
                 </button>
@@ -100,11 +121,18 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             variant="accent"
             size="lg"
             onClick={handleAddToCart}
+            disabled={!selectedVariant}
             className="flex-1 sm:flex-none"
           >
             {addedToCart ? "Added!" : "Add to Cart"}
           </Button>
         </div>
+
+        {addError && (
+          <p className="text-sm text-[var(--color-error)]">
+            Could not add to cart. Please try again.
+          </p>
+        )}
       </div>
     </div>
   );

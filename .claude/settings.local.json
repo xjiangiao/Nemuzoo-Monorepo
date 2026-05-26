@@ -4,7 +4,10 @@
       "Bash(npx next *)",
       "Bash(git add *)",
       "Bash(git commit *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d.get\\('dependencies',''\\)\\) if isinstance\\(d, dict\\) else None\")",
+      "Bash(pnpm add *)",
+      "Bash(pnpm ls *)"
     ]
   }
 }

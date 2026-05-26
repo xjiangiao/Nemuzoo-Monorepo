@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Container from "@/components/layout/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CartItem from "@/components/cart/CartItem";
@@ -8,38 +7,23 @@ import CartSummary from "@/components/cart/CartSummary";
 import EmptyState from "@/components/ui/EmptyState";
 import Button from "@/components/ui/Button";
 import StarDecoration from "@/components/ui/StarDecoration";
-
-// Mock cart state — real implementation connects to Medusa cart API
-interface CartLineItem {
-  id: string;
-  title: string;
-  handle: string;
-  thumbnail?: string;
-  quantity: number;
-  unit_price: number;
-  currency_code: string;
-  variant?: string;
-}
+import SkeletonCard from "@/components/ui/SkeletonCard";
+import { useCart } from "@/lib/cart/context";
 
 export default function CartPage() {
-  const [items, setItems] = useState<CartLineItem[]>([]);
+  const { items, isLoading, updateQuantity, removeItem } = useCart();
 
-  const handleUpdateQuantity = (id: string, quantity: number) => {
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity } : item
-      )
+  if (isLoading) {
+    return (
+      <Container className="py-16 lg:py-20">
+        <div className="space-y-4">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <SkeletonCard key={i} className="flex-row" />
+          ))}
+        </div>
+      </Container>
     );
-  };
-
-  const handleRemove = (id: string) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  const subtotal = items.reduce(
-    (sum, item) => sum + item.unit_price * item.quantity,
-    0
-  );
+  }
 
   if (items.length === 0) {
     return (
@@ -58,6 +42,11 @@ export default function CartPage() {
     );
   }
 
+  const subtotal = items.reduce(
+    (sum, item) => sum + item.unit_price * item.quantity,
+    0
+  );
+
   return (
     <Container className="py-16 lg:py-20">
       <SectionHeading
@@ -71,8 +60,8 @@ export default function CartPage() {
             <CartItem
               key={item.id}
               item={item}
-              onUpdateQuantity={handleUpdateQuantity}
-              onRemove={handleRemove}
+              onUpdateQuantity={(id, qty) => updateQuantity(id, qty)}
+              onRemove={(id) => removeItem(id)}
             />
           ))}
         </div>

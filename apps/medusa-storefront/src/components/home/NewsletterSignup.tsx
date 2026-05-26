@@ -7,12 +7,25 @@ import FadeInView from "@/components/ui/FadeInView";
 
 export default function NewsletterSignup() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "submitted">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim()) return;
-    setStatus("submitted");
+
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!res.ok) throw new Error("Failed");
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -32,10 +45,29 @@ export default function NewsletterSignup() {
               comfort.
             </p>
 
-            {status === "submitted" ? (
+            {status === "success" ? (
               <p className="mt-8 text-sm font-medium text-[var(--color-success)]">
                 Welcome to the dream. We will keep in touch.
               </p>
+            ) : status === "error" ? (
+              <div className="mt-8">
+                <p className="text-sm font-medium text-[var(--color-error)] mb-3">
+                  Something went wrong. Try again?
+                </p>
+                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Your email address"
+                    required
+                    className="px-4 py-2.5 rounded-lg bg-[var(--color-surface-elevated)] border border-[var(--color-border-primary)] text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent sm:min-w-[280px]"
+                  />
+                  <Button type="submit" variant="accent">
+                    Try Again
+                  </Button>
+                </form>
+              </div>
             ) : (
               <form onSubmit={handleSubmit} className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
                 <input
@@ -44,10 +76,11 @@ export default function NewsletterSignup() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email address"
                   required
-                  className="px-4 py-2.5 rounded-lg bg-[var(--color-surface-elevated)] border border-[var(--color-border-primary)] text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent sm:min-w-[280px]"
+                  disabled={status === "loading"}
+                  className="px-4 py-2.5 rounded-lg bg-[var(--color-surface-elevated)] border border-[var(--color-border-primary)] text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent sm:min-w-[280px] disabled:opacity-50"
                 />
-                <Button type="submit" variant="accent">
-                  Subscribe
+                <Button type="submit" variant="accent" disabled={status === "loading"}>
+                  {status === "loading" ? "Sending..." : "Subscribe"}
                 </Button>
               </form>
             )}

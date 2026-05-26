@@ -4,11 +4,14 @@ import { useQuery } from "@tanstack/react-query";
 import medusaClient from "@/lib/medusa-client";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { useState } from "react";
+import Container from "@/components/layout/Container";
+import ProductGallery from "@/components/product/ProductGallery";
+import ProductInfo from "@/components/product/ProductInfo";
+import SkeletonCard from "@/components/ui/SkeletonCard";
+import Button from "@/components/ui/Button";
 
 export default function ProductPage() {
   const { handle } = useParams<{ handle: string }>();
-  const [addedToCart, setAddedToCart] = useState(false);
 
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", handle],
@@ -22,88 +25,64 @@ export default function ProductPage() {
 
   if (isLoading) {
     return (
-      <div className="max-w-6xl mx-auto px-4 py-12">
+      <Container className="py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div className="aspect-square bg-zinc-100 animate-pulse rounded-lg" />
+          <SkeletonCard className="md:col-span-1" />
           <div className="space-y-4">
-            <div className="h-8 bg-zinc-100 animate-pulse rounded w-3/4" />
-            <div className="h-6 bg-zinc-100 animate-pulse rounded w-1/4" />
-            <div className="h-24 bg-zinc-100 animate-pulse rounded" />
+            <div className="h-8 bg-[var(--color-surface-secondary)] animate-pulse rounded w-3/4" />
+            <div className="h-6 bg-[var(--color-surface-secondary)] animate-pulse rounded w-1/4" />
+            <div className="h-24 bg-[var(--color-surface-secondary)] animate-pulse rounded" />
           </div>
         </div>
-      </div>
+      </Container>
     );
   }
 
   if (!product) {
     return (
-      <div className="max-w-6xl mx-auto px-4 py-24 text-center">
-        <h1 className="text-2xl font-bold text-zinc-900 mb-4">
-          Product Not Found
+      <Container className="py-24 text-center">
+        <h1
+          className="text-2xl font-bold text-[var(--color-text-primary)] mb-4"
+          style={{ fontFamily: "var(--font-heading)" }}
+        >
+          Not Found
         </h1>
-        <Link href="/" className="text-blue-600 hover:underline">
-          Back to Home
-        </Link>
-      </div>
+        <p className="text-sm text-[var(--color-text-secondary)] mb-6">
+          This doll wandered off. Let us help you find another one.
+        </p>
+        <Button variant="warm" href="/products">
+          Browse All Dolls
+        </Button>
+      </Container>
     );
   }
 
-  const variant = product.variants?.[0];
-  const price = variant?.prices?.[0];
-  const formattedPrice = price
-    ? new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: price.currency_code || "USD",
-      }).format((price.amount || 0) / 100)
-    : null;
-
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
+    <Container className="py-12">
       <Link
-        href="/"
-        className="text-sm text-zinc-500 hover:text-zinc-900 mb-8 inline-block"
+        href="/products"
+        className="inline-block text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors mb-8"
       >
-        &larr; Back to products
+        &larr; All Dolls
       </Link>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div className="aspect-square bg-zinc-100 rounded-lg overflow-hidden">
-          {product.thumbnail ? (
-            <img
-              src={product.thumbnail}
-              alt={product.title}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-zinc-400">
-              No Image
-            </div>
-          )}
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16">
+        <ProductGallery
+          images={
+            product.images?.length
+              ? product.images.map((img: { url: string }) => ({
+                  url: img.url,
+                  alt: product.title,
+                }))
+              : product.thumbnail
+              ? [{ url: product.thumbnail, alt: product.title }]
+              : []
+          }
+          title={product.title}
+        />
 
-        <div className="space-y-6">
-          <h1 className="text-3xl font-bold text-zinc-900">
-            {product.title}
-          </h1>
-          {formattedPrice && (
-            <p className="text-2xl text-zinc-900">{formattedPrice}</p>
-          )}
-          {product.description && (
-            <p className="text-zinc-600 leading-relaxed">
-              {product.description}
-            </p>
-          )}
-          <button
-            onClick={() => {
-              setAddedToCart(true);
-              setTimeout(() => setAddedToCart(false), 2000);
-            }}
-            className="w-full bg-zinc-900 text-white py-3 px-6 rounded-lg font-medium hover:bg-zinc-800 transition-colors"
-          >
-            {addedToCart ? "Added!" : "Add to Cart"}
-          </button>
-        </div>
+        <ProductInfo product={product} />
       </div>
-    </div>
+    </Container>
   );
 }
