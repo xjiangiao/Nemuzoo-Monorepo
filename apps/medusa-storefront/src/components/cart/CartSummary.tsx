@@ -49,8 +49,8 @@ export default function CartSummary({
         </div>
       </div>
 
-      <Button variant="accent" size="lg" href="/checkout" className="w-full mt-6">
-        Proceed to Checkout
+      <Button variant="accent" size="lg" className="w-full mt-6" disabled>
+        Checkout — Coming Soon
       </Button>
     </div>
   );

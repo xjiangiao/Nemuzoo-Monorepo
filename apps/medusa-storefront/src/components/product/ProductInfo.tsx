@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import QuantitySelector from "@/components/ui/QuantitySelector";
@@ -28,6 +28,11 @@ export default function ProductInfo({ product }: ProductInfoProps) {
   const [addedToCart, setAddedToCart] = useState(false);
   const [addError, setAddError] = useState(false);
   const addToCart = useCartStore((s) => s.addToCart);
+  const addedTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  useEffect(() => {
+    return () => clearTimeout(addedTimeoutRef.current);
+  }, []);
 
   const variants = product.variants || [];
   const selectedVariant = variants[selectedVariantIndex];
@@ -43,7 +48,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       await addToCart(selectedVariant.id, quantity);
       setAddedToCart(true);
       setQuantity(1);
-      setTimeout(() => setAddedToCart(false), 2000);
+      addedTimeoutRef.current = setTimeout(() => setAddedToCart(false), 2000);
     } catch {
       setAddError(true);
     }

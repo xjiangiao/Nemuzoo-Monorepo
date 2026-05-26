@@ -8,8 +8,3 @@ preview_urls = false
 [assets]
 directory = ".open-next/assets"
 binding = "ASSETS"
-
-[vars]
-NODE_ENV = "production"
-NEXT_PUBLIC_MEDUSA_BACKEND_URL = "https://admin.nemuzoo.com"
-NEXT_PUBLIC_MEDUSA_PUBLISHABLE_API_KEY = "pk_6ffe07eeac0113181549762b2b2925dd0edfe54479f2d1eb8d410fb91428acb7"
