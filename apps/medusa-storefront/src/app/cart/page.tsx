@@ -8,10 +8,13 @@ import EmptyState from "@/components/ui/EmptyState";
 import Button from "@/components/ui/Button";
 import StarDecoration from "@/components/ui/StarDecoration";
 import SkeletonCard from "@/components/ui/SkeletonCard";
-import { useCart } from "@/lib/cart/context";
+import { useCartStore } from "@/lib/cart/store";
 
 export default function CartPage() {
-  const { items, isLoading, updateQuantity, removeItem } = useCart();
+  const items = useCartStore((s) => s.items);
+  const isLoading = useCartStore((s) => s.isLoading);
+  const updateQuantity = useCartStore((s) => s.updateQuantity);
+  const removeItem = useCartStore((s) => s.removeItem);
 
   if (isLoading) {
     return (

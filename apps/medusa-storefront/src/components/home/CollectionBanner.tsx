@@ -26,7 +26,7 @@ const collections: CollectionData[] = [
 
 export default function CollectionBanners() {
   return (
-    <section className="py-20 lg:py-28 bg-[var(--color-surface-secondary)]">
+    <section className="py-20 lg:py-28 bg-surface-secondary">
       <Container>
         <SectionHeading
           title="Find Your Companion"
@@ -38,21 +38,20 @@ export default function CollectionBanners() {
             <Link
               key={col.title}
               href={col.href}
-              className="group bg-[var(--color-surface-elevated)] rounded-2xl p-8 lg:p-10 border border-[var(--color-border-primary)] hover:shadow-md transition-shadow"
+              className="group bg-surface-elevated rounded-2xl p-8 lg:p-10 border border-border-primary hover:shadow-md transition-shadow"
             >
               <div className="flex items-center gap-2 mb-4">
                 <StarDecoration size="sm" variant="warm" />
                 <h3
-                  className="text-xl font-medium text-[var(--color-text-primary)]"
-                  style={{ fontFamily: "var(--font-heading)" }}
+                  className="text-xl font-medium text-text-primary font-heading"
                 >
                   {col.title}
                 </h3>
               </div>
-              <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+              <p className="text-sm text-text-secondary leading-relaxed">
                 {col.description}
               </p>
-              <span className="inline-block mt-4 text-sm font-medium text-[var(--color-accent)] group-hover:text-[var(--color-accent-hover)] transition-colors">
+              <span className="inline-block mt-4 text-sm font-medium text-accent group-hover:text-accent-hover transition-colors">
                 Explore &rarr;
               </span>
             </Link>

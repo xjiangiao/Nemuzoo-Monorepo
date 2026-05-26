@@ -29,9 +29,9 @@ export default function ProductPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <SkeletonCard className="md:col-span-1" />
           <div className="space-y-4">
-            <div className="h-8 bg-[var(--color-surface-secondary)] animate-pulse rounded w-3/4" />
-            <div className="h-6 bg-[var(--color-surface-secondary)] animate-pulse rounded w-1/4" />
-            <div className="h-24 bg-[var(--color-surface-secondary)] animate-pulse rounded" />
+            <div className="h-8 bg-surface-secondary animate-pulse rounded w-3/4" />
+            <div className="h-6 bg-surface-secondary animate-pulse rounded w-1/4" />
+            <div className="h-24 bg-surface-secondary animate-pulse rounded" />
           </div>
         </div>
       </Container>
@@ -42,12 +42,11 @@ export default function ProductPage() {
     return (
       <Container className="py-24 text-center">
         <h1
-          className="text-2xl font-bold text-[var(--color-text-primary)] mb-4"
-          style={{ fontFamily: "var(--font-heading)" }}
+          className="text-2xl font-bold text-text-primary mb-4 font-heading"
         >
           Not Found
         </h1>
-        <p className="text-sm text-[var(--color-text-secondary)] mb-6">
+        <p className="text-sm text-text-secondary mb-6">
           This doll wandered off. Let us help you find another one.
         </p>
         <Button variant="warm" href="/products">
@@ -61,7 +60,7 @@ export default function ProductPage() {
     <Container className="py-12">
       <Link
         href="/products"
-        className="inline-block text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors mb-8"
+        className="inline-block text-sm text-text-secondary hover:text-text-primary transition-colors mb-8"
       >
         &larr; All Dolls
       </Link>

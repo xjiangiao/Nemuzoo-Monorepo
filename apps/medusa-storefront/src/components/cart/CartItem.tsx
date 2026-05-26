@@ -22,10 +22,10 @@ interface CartItemProps {
 
 export default function CartItem({ item, onUpdateQuantity, onRemove }: CartItemProps) {
   return (
-    <div className="flex gap-4 py-6 border-b border-[var(--color-border-primary)]">
+    <div className="flex gap-4 py-6 border-b border-border-primary">
       <Link
         href={`/products/${item.handle}`}
-        className="shrink-0 w-24 h-24 bg-[var(--color-surface-secondary)] rounded-lg overflow-hidden relative"
+        className="shrink-0 w-24 h-24 bg-surface-secondary rounded-lg overflow-hidden relative"
       >
         {item.thumbnail ? (
           <Image
@@ -36,7 +36,7 @@ export default function CartItem({ item, onUpdateQuantity, onRemove }: CartItemP
             className="object-cover"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-[var(--color-text-muted)] text-xs">
+          <div className="w-full h-full flex items-center justify-center text-text-muted text-xs">
             No Image
           </div>
         )}
@@ -47,17 +47,17 @@ export default function CartItem({ item, onUpdateQuantity, onRemove }: CartItemP
           <div>
             <Link
               href={`/products/${item.handle}`}
-              className="text-sm font-medium text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors"
+              className="text-sm font-medium text-text-primary hover:text-accent transition-colors"
             >
               {item.title}
             </Link>
             {item.variant && (
-              <p className="text-xs text-[var(--color-text-muted)] mt-0.5">
+              <p className="text-xs text-text-muted mt-0.5">
                 {item.variant?.title}
               </p>
             )}
           </div>
-          <p className="text-sm font-medium text-[var(--color-text-primary)] ml-4">
+          <p className="text-sm font-medium text-text-primary ml-4">
             {formatPrice(item.unit_price * item.quantity, item.currency_code)}
           </p>
         </div>
@@ -70,7 +70,7 @@ export default function CartItem({ item, onUpdateQuantity, onRemove }: CartItemP
           <button
             type="button"
             onClick={() => onRemove(item.id)}
-            className="text-xs text-[var(--color-text-muted)] hover:text-[var(--color-error)] transition-colors ml-4"
+            className="text-xs text-text-muted hover:text-error transition-colors ml-4"
           >
             Remove
           </button>
