@@ -28,7 +28,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       href={`/products/${product.handle}`}
       className="group block"
     >
-      <div className="aspect-square bg-[var(--color-surface-secondary)] rounded-xl overflow-hidden mb-4 relative">
+      <div className="aspect-square bg-surface-secondary rounded-xl overflow-hidden mb-4 relative">
         {thumbnail ? (
           <Image
             src={thumbnail}
@@ -38,7 +38,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-[var(--color-text-muted)]">
+          <div className="w-full h-full flex items-center justify-center text-text-muted">
             No Image
           </div>
         )}
@@ -47,8 +47,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="space-y-1">
         <div className="flex items-center gap-2">
           <h3
-            className="text-base lg:text-lg font-medium text-[var(--color-text-primary)]"
-            style={{ fontFamily: "var(--font-heading)" }}
+            className="text-base lg:text-lg font-medium text-text-primary font-heading"
           >
             {product.title}
           </h3>
@@ -57,7 +56,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
         </div>
         {price && (
-          <p className="text-sm text-[var(--color-text-secondary)]">
+          <p className="text-sm text-text-secondary">
             {formatPrice(price.amount, price.currency_code)}
           </p>
         )}

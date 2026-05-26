@@ -16,18 +16,17 @@ export default function EmptyState({
   return (
     <div className={`flex flex-col items-center justify-center py-16 text-center ${className}`}>
       {icon && (
-        <div className="text-5xl text-[var(--color-text-muted)] mb-4">
+        <div className="text-5xl text-text-muted mb-4">
           {icon}
         </div>
       )}
       <h3
-        className="text-xl font-medium text-[var(--color-text-primary)]"
-        style={{ fontFamily: "var(--font-heading)" }}
+        className="text-xl font-medium text-text-primary font-heading"
       >
         {title}
       </h3>
       {description && (
-        <p className="mt-2 text-sm text-[var(--color-text-secondary)] max-w-sm">
+        <p className="mt-2 text-sm text-text-secondary max-w-sm">
           {description}
         </p>
       )}

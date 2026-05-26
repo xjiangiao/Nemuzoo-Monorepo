@@ -21,26 +21,25 @@ const footerLinks = {
 
 export default function Footer() {
   return (
-    <footer className="bg-[var(--color-surface-muted)] border-t border-[var(--color-border-primary)] pt-16 pb-8">
+    <footer className="bg-surface-muted border-t border-border-primary pt-16 pb-8">
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand */}
           <div>
             <Link
               href="/"
-              className="text-lg font-bold text-[var(--color-text-primary)]"
-              style={{ fontFamily: "var(--font-heading)" }}
+              className="text-lg font-bold text-text-primary font-heading"
             >
               Nemuzoo
             </Link>
-            <p className="mt-3 text-sm text-[var(--color-text-secondary)] leading-relaxed">
+            <p className="mt-3 text-sm text-text-secondary leading-relaxed">
               Knitted companions for quiet nights and gentle hearts.
             </p>
           </div>
 
           {/* Shop Links */}
           <div>
-            <h4 className="text-sm font-semibold text-[var(--color-text-primary)] mb-3">
+            <h4 className="text-sm font-semibold text-text-primary mb-3">
               Shop
             </h4>
             <ul className="space-y-2">
@@ -48,7 +47,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+                    className="text-sm text-text-secondary hover:text-text-primary transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -59,7 +58,7 @@ export default function Footer() {
 
           {/* Company Links */}
           <div>
-            <h4 className="text-sm font-semibold text-[var(--color-text-primary)] mb-3">
+            <h4 className="text-sm font-semibold text-text-primary mb-3">
               Company
             </h4>
             <ul className="space-y-2">
@@ -67,7 +66,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+                    className="text-sm text-text-secondary hover:text-text-primary transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -78,7 +77,7 @@ export default function Footer() {
 
           {/* Policy Links */}
           <div>
-            <h4 className="text-sm font-semibold text-[var(--color-text-primary)] mb-3">
+            <h4 className="text-sm font-semibold text-text-primary mb-3">
               Policies
             </h4>
             <ul className="space-y-2">
@@ -86,7 +85,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+                    className="text-sm text-text-secondary hover:text-text-primary transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -96,7 +95,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-[var(--color-border-primary)] pt-8 text-center text-sm text-[var(--color-text-muted)]">
+        <div className="border-t border-border-primary pt-8 text-center text-sm text-text-muted">
           &copy; {new Date().getFullYear()} Nemuzoo. All rights reserved.
         </div>
       </Container>

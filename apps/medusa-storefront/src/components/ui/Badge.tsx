@@ -9,10 +9,10 @@ interface BadgeProps {
 }
 
 const variantClasses: Record<BadgeVariant, string> = {
-  accent: "bg-[var(--color-accent-subtle)] text-[var(--color-accent)]",
-  warm: "bg-[var(--color-warm-subtle)] text-[var(--color-warm)]",
+  accent: "bg-accent-subtle text-accent",
+  warm: "bg-warm-subtle text-warm",
   neutral:
-    "bg-[var(--color-surface-secondary)] text-[var(--color-text-secondary)]",
+    "bg-surface-secondary text-text-secondary",
 };
 
 const sizeClasses: Record<BadgeSize, string> = {

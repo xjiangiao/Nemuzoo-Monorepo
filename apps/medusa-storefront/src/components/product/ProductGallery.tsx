@@ -16,7 +16,7 @@ export default function ProductGallery({
 
   if (images.length === 0) {
     return (
-      <div className="aspect-square bg-[var(--color-surface-secondary)] rounded-xl flex items-center justify-center text-[var(--color-text-muted)]">
+      <div className="aspect-square bg-surface-secondary rounded-xl flex items-center justify-center text-text-muted">
         No Image
       </div>
     );
@@ -24,7 +24,7 @@ export default function ProductGallery({
 
   return (
     <div className="space-y-4">
-      <div className="aspect-square bg-[var(--color-surface-secondary)] rounded-xl overflow-hidden relative">
+      <div className="aspect-square bg-surface-secondary rounded-xl overflow-hidden relative">
         <Image
           src={images[activeIndex].url}
           alt={images[activeIndex].alt || title}
@@ -44,8 +44,8 @@ export default function ProductGallery({
               onClick={() => setActiveIndex(i)}
               className={`shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors relative ${
                 i === activeIndex
-                  ? "border-[var(--color-accent)]"
-                  : "border-transparent hover:border-[var(--color-border-primary)]"
+                  ? "border-accent"
+                  : "border-transparent hover:border-border-primary"
               }`}
               aria-label={`View image ${i + 1}`}
             >

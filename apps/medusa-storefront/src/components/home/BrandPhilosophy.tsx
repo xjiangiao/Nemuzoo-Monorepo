@@ -4,15 +4,14 @@ import StarDecoration from "@/components/ui/StarDecoration";
 
 export default function BrandPhilosophy() {
   return (
-    <section className="py-20 lg:py-28 bg-[var(--color-surface-secondary)]">
+    <section className="py-20 lg:py-28 bg-surface-secondary">
       <Container>
         <FadeInView>
           <div className="max-w-xl mx-auto text-center">
             <div className="flex items-center justify-center gap-3 mb-6">
               <StarDecoration variant="warm" size="sm" />
               <span
-                className="text-sm text-[var(--color-warm)] tracking-widest uppercase"
-                style={{ fontFamily: "var(--font-heading)" }}
+                className="text-sm text-warm tracking-widest uppercase font-heading"
               >
                 Nemuzoo
               </span>
@@ -20,7 +19,7 @@ export default function BrandPhilosophy() {
             </div>
 
             <p
-              className="text-lg lg:text-xl text-[var(--color-text-secondary)] leading-relaxed"
+              className="text-lg lg:text-xl text-text-secondary leading-relaxed"
               style={{ fontWeight: 300 }}
             >
               <em>Nemu</em> (眠る) means &ldquo;sleep&rdquo; in Japanese.{" "}

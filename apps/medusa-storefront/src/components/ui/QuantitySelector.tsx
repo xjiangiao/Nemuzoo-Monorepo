@@ -16,24 +16,24 @@ export default function QuantitySelector({
   disabled = false,
 }: QuantitySelectorProps) {
   return (
-    <div className="inline-flex items-center rounded-lg border border-[var(--color-border-primary)] overflow-hidden">
+    <div className="inline-flex items-center rounded-lg border border-border-primary overflow-hidden">
       <button
         type="button"
         onClick={() => onChange(Math.max(min, value - 1))}
         disabled={disabled || value <= min}
-        className="w-9 h-9 flex items-center justify-center text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-secondary)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+        className="w-9 h-9 flex items-center justify-center text-text-secondary hover:bg-surface-secondary disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         aria-label="Decrease quantity"
       >
         −
       </button>
-      <span className="w-12 text-center text-sm text-[var(--color-text-primary)] font-medium select-none">
+      <span className="w-12 text-center text-sm text-text-primary font-medium select-none">
         {value}
       </span>
       <button
         type="button"
         onClick={() => onChange(Math.min(max, value + 1))}
         disabled={disabled || value >= max}
-        className="w-9 h-9 flex items-center justify-center text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-secondary)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+        className="w-9 h-9 flex items-center justify-center text-text-secondary hover:bg-surface-secondary disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         aria-label="Increase quantity"
       >
         +

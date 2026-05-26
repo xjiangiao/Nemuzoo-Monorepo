@@ -41,7 +41,11 @@ export default function FadeInView({
   return (
     <div
       ref={ref}
-      className={`${visible ? "animate-[slide-up_0.6s_ease-out] opacity-100" : "opacity-0"} ${className}`}
+      className={`transition-all duration-700 ease-out ${
+        visible
+          ? "translate-y-0 opacity-100"
+          : "translate-y-4 opacity-0"
+      } ${className}`}
     >
       {children}
     </div>

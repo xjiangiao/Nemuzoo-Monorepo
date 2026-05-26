@@ -3,6 +3,7 @@ import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 
 const nextConfig: NextConfig = {
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
@@ -13,10 +14,22 @@ const nextConfig: NextConfig = {
         hostname: "static.nemuzoo.com",
       },
       {
+        protocol: "https",
+        hostname: "medusa-public-images.s3.eu-west-1.amazonaws.com",
+      },
+      {
         protocol: "http",
         hostname: "localhost",
       },
     ],
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/store/:path*",
+        destination: `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/:path*`,
+      },
+    ];
   },
 };
 

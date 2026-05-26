@@ -18,6 +18,7 @@
     "storefront:build:cloudflare": "pnpm --filter=@nemuzoo/medusa-storefront run build:cloudflare"
   },
   "pnpm": {
+    "onlyBuiltDependencies": ["esbuild", "sharp", "unrs-resolver", "workerd"],
     "overrides": {
       "@types/react": "19.0.5",
       "@types/react-dom": "19.0.5"

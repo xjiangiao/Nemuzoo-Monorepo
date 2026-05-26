@@ -16,13 +16,13 @@ interface ButtonProps {
 
 const variantClasses: Record<ButtonVariant, string> = {
   accent:
-    "bg-[var(--color-accent)] text-[var(--color-text-inverse)] hover:bg-[var(--color-accent-hover)]",
+    "bg-accent text-text-inverse hover:bg-accent-hover",
   warm:
-    "bg-[var(--color-warm)] text-[var(--color-text-inverse)] hover:bg-[var(--color-warm-hover)]",
+    "bg-warm text-text-inverse hover:bg-warm-hover",
   outline:
-    "border border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[var(--color-accent-subtle)]",
+    "border border-accent text-accent hover:bg-accent-subtle",
   ghost:
-    "text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-secondary)] hover:text-[var(--color-text-primary)]",
+    "text-text-secondary hover:bg-surface-secondary hover:text-text-primary",
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -41,7 +41,7 @@ export default function Button({
   className = "",
   type = "button",
 }: ButtonProps) {
-  const classes = `inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 ${
+  const classes = `inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${
     disabled ? "opacity-50 cursor-not-allowed pointer-events-none" : ""
   } ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
 

@@ -8,9 +8,9 @@ interface StarDecorationProps {
 }
 
 const colorMap: Record<StarVariant, string> = {
-  warm: "text-[var(--color-warm)]",
-  accent: "text-[var(--color-accent-soft)]",
-  muted: "text-[var(--color-text-muted)]",
+  warm: "text-warm",
+  accent: "text-accent-soft",
+  muted: "text-text-muted",
 };
 
 const sizeMap: Record<StarSize, number> = {
