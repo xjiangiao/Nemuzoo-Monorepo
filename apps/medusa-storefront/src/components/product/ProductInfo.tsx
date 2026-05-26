@@ -26,6 +26,16 @@ interface ProductInfoProps {
   };
 }
 
+/**
+ * Renders product details and purchase controls for a given product, including variant selection,
+ * price resolution (uses variant.calculated_price when available, otherwise falls back to the first variant price),
+ * optional personality badge and story section, quantity selection, and an Add to Cart flow with success/error states.
+ *
+ * @param product - Product data used to populate the UI. Expected fields used: `title`, optional `description`,
+ *   optional `variants` (each with `id`, optional `title`, optional `calculated_price`, optional `prices`), and
+ *   optional `metadata` entries `personality` and `story`.
+ * @returns The rendered React element containing the product information and purchase controls.
+ */
 export default function ProductInfo({ product }: ProductInfoProps) {
   const [quantity, setQuantity] = useState(1);
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);

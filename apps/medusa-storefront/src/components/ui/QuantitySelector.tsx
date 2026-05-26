@@ -8,6 +8,16 @@ interface QuantitySelectorProps {
   disabled?: boolean;
 }
 
+/**
+ * Renders a quantity stepper with decrement and increment controls and a centered numeric display.
+ *
+ * @param value - Current quantity shown by the selector.
+ * @param onChange - Callback invoked with the updated clamped quantity when the user increments or decrements.
+ * @param min - Minimum allowed quantity (defaults to `1`).
+ * @param max - Maximum allowed quantity (defaults to `99`).
+ * @param disabled - When `true`, disables both buttons and prevents changes (defaults to `false`).
+ * @returns A React element representing the quantity selector control.
+ */
 export default function QuantitySelector({
   value,
   onChange,

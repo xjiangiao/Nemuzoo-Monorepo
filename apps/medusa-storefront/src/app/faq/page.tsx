@@ -42,6 +42,14 @@ const faqs = [
   },
 ];
 
+/**
+ * Render the Frequently Asked Questions page with an accordion-style list of questions and answers.
+ *
+ * The component displays a centered header with a decorative accent and maps a list of question/answer
+ * pairs to interactive `<details>` elements that reveal each answer.
+ *
+ * @returns The JSX element representing the FAQ page layout with accordion items.
+ */
 export default function FAQPage() {
   return (
     <Container className="py-16 lg:py-20">

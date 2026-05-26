@@ -2,6 +2,12 @@ import { create } from "zustand";
 import medusaClient from "@/lib/medusa-client";
 import type { Customer } from "@/types";
 
+/**
+ * Retrieves the currently authenticated customer from the storefront, optionally using a provided bearer token.
+ *
+ * @param token - Optional bearer token to include as `Authorization: Bearer <token>` when fetching the customer
+ * @returns The retrieved `Customer`, or `null` if the response contains no customer
+ */
 async function getCurrentCustomer(token?: string): Promise<Customer | null> {
   const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
   const { customer } = await medusaClient.store.customer.retrieve(
@@ -12,6 +18,11 @@ async function getCurrentCustomer(token?: string): Promise<Customer | null> {
   return customer as unknown as Customer;
 }
 
+/**
+ * Authenticate a customer using their email and password against the Medusa auth endpoint.
+ *
+ * Performs a login with the "emailpass" strategy and updates the Medusa client session; any errors from the API propagate to the caller.
+ */
 async function authenticateCustomer(email: string, password: string) {
   await medusaClient.auth.login("customer", "emailpass", { email, password });
 }

@@ -25,6 +25,14 @@ interface Product {
   metadata?: Record<string, unknown> | null;
 }
 
+/**
+ * Renders the "All Dolls" products page with loading, error, empty, and populated states.
+ *
+ * Shows a skeleton grid while loading, an error state with a retry action when loading fails,
+ * a no-results empty state when the product list is empty, and a product grid when products are available.
+ *
+ * @returns The page element that displays the products listing and its UI states.
+ */
 export default function ProductsPage() {
   const { data: products, isLoading, error, refetch } = useQuery({
     queryKey: ["products"],

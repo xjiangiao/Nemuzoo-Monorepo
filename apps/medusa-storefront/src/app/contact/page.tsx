@@ -7,6 +7,15 @@ export const metadata: Metadata = {
   description: "Get in touch with Nemuzoo — we would love to hear from you.",
 };
 
+/**
+ * Renders the Contact page with support and order contact details.
+ *
+ * Displays a centered heading and descriptive paragraph, two bordered email
+ * contact cards for general support and order inquiries, and a short
+ * response-time note — all wrapped in the shared `Container`.
+ *
+ * @returns A JSX element representing the Contact page layout
+ */
 export default function ContactPage() {
   return (
     <Container className="py-16 lg:py-20">

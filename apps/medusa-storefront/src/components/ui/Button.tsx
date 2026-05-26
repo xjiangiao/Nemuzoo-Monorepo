@@ -51,6 +51,15 @@ interface ButtonProps
   href?: string;
 }
 
+/**
+ * Renders a styled button; if `href` is provided and the button is not disabled, renders a link with the same styling.
+ *
+ * @param className - Additional class names to merge with the component's generated classes.
+ * @param variant - Visual variant to apply to the button (controls color and emphasis).
+ * @param size - Size variant to apply (controls height, padding, and icon sizing).
+ * @param href - If provided and the button is not disabled, the destination URL for a rendered link.
+ * @returns A React element representing a styled button or a styled link when `href` is used.
+ */
 function Button({
   className,
   variant = "default",

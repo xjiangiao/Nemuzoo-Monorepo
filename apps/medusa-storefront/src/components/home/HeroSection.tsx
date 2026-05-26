@@ -2,6 +2,11 @@ import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
 import StarDecoration from "@/components/ui/StarDecoration";
 
+/**
+ * Render the homepage hero section with a radial gradient background, animated star decorations, a centered headline and subtitle, and a primary call-to-action button.
+ *
+ * @returns The hero section JSX element containing background decorations, centered marketing content, and a CTA button.
+ */
 export default function HeroSection() {
   return (
     <section className="relative min-h-[80vh] md:min-h-[90vh] flex items-center overflow-hidden"

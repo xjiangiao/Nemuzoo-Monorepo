@@ -41,6 +41,15 @@ const registerSchema = z
 type LoginData = z.infer<typeof loginSchema>;
 type RegisterData = z.infer<typeof registerSchema>;
 
+/**
+ * Render an authentication modal with separate "Sign In" and "Create Account" tabs.
+ *
+ * Manages form state and zod validation for both login and registration flows, invokes
+ * the auth store's `login` and `register` actions, displays shared error and loading
+ * states, and clears/resets forms and errors when switching tabs or closing the dialog.
+ *
+ * @returns The JSX element for the authentication modal dialog.
+ */
 export default function AuthModal() {
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState("login");

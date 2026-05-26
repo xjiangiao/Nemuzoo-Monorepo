@@ -4,6 +4,15 @@ import { useAuthStore } from "@/lib/auth/store";
 import AuthModal from "@/components/auth/AuthModal";
 import { formatDate } from "@/lib/utils";
 
+/**
+ * Renders the account page UI, showing loading, unauthenticated, or authenticated states.
+ *
+ * When loading, displays a centered loading message. When the user is unauthenticated,
+ * shows a sign-in prompt and the authentication modal. When authenticated, shows the
+ * profile (name, email, optional member-since date) and an orders section.
+ *
+ * @returns A React element representing the account page UI.
+ */
 export default function AccountPage() {
   const { customer, isAuthenticated, isLoading } = useAuthStore();
 

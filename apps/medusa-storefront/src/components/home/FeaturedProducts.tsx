@@ -24,6 +24,14 @@ interface Product {
   metadata?: Record<string, unknown> | null;
 }
 
+/**
+ * Renders a featured-products section that fetches products and displays up to four highlighted items.
+ *
+ * The section includes a heading, a responsive grid of loading skeletons while products are being fetched,
+ * the featured product grid when items are available, and a centered "View All Dolls" button linking to `/products`.
+ *
+ * @returns A React element containing the featured products section with loading and empty-state behavior.
+ */
 export default function FeaturedProducts() {
   const { data: products, isLoading } = useQuery({
     queryKey: ["products"],

@@ -42,11 +42,23 @@ function storeCartId(id: string) {
   localStorage.setItem(CART_STORAGE_KEY, id);
 }
 
+/**
+ * Removes the persisted cart ID from localStorage.
+ *
+ * This is a no-op when executed outside a browser environment (for example, during SSR).
+ */
 function clearStoredCartId() {
   if (typeof window === "undefined") return;
   localStorage.removeItem(CART_STORAGE_KEY);
 }
 
+/**
+ * Map Medusa cart line items into the local CartItem shape.
+ *
+ * @param cart - Medusa cart object; `cart.region.currency_code` is used to determine the `currency_code` fallback.
+ * @param items - Optional array of Medusa cart line item objects. Each item may include `id`, `quantity`, `title`, `variant` (with `variant.product.handle`), `thumbnail`, and `unit_price`.
+ * @returns An array of `CartItem` objects with fields `id`, `quantity` (defaults to `0`), `title` (defaults to `"Item"`), `handle` (from `variant.product.handle` or `""`), `thumbnail`, `variant`, `unit_price` (defaults to `0`), and `currency_code` (from `cart.region.currency_code` or `"USD"`).
+ */
 function mapItems(cart: any, items?: any[]): CartItem[] {
   return (items || []).map((item: any) => ({
     id: item.id,

@@ -8,6 +8,16 @@ export const metadata: Metadata = {
     "Nemuzoo terms of service — conditions for using our website and purchasing our products.",
 };
 
+/**
+ * Render the Terms of Service page for Nemuzoo.
+ *
+ * Renders a styled, responsive page containing the Terms of Service content,
+ * including sections for Acceptance of Terms, Products, Pricing & Payment,
+ * Orders, Shipping & Delivery, Returns & Refunds, Intellectual Property,
+ * Limitation of Liability, Governing Law, Changes to Terms, and Contact.
+ *
+ * @returns The Terms of Service page as a React element.
+ */
 export default function TermsPage() {
   return (
     <Container className="py-16 lg:py-20">

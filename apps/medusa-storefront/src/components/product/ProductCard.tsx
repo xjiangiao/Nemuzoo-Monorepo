@@ -22,6 +22,12 @@ interface ProductCardProps {
   priority?: boolean;
 }
 
+/**
+ * Renders a clickable product tile that links to the product's page and displays a square thumbnail, title, optional personality badge, and optional formatted price.
+ *
+ * @param product - Product data containing at least `id`, `title`, and `handle`. May include `thumbnail`, `images`, `variants`, `metadata`, and optional pricing fields; if `metadata.personality` is a string it will be shown as a badge.
+ * @returns A JSX element representing the product card linked to `/products/[handle]`.
+ */
 export default function ProductCard({ product }: ProductCardProps) {
   const thumbnail = getProductThumbnail(product);
   const price = getProductPrice(product);

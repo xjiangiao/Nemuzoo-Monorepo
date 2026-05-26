@@ -8,6 +8,16 @@ export const metadata: Metadata = {
     "Nemuzoo shipping information and return policy — worldwide shipping with easy 30-day returns.",
 };
 
+/**
+ * Renders the Shipping & Returns page for Nemuzoo.
+ *
+ * The page includes sections for Shipping (processing times, worldwide delivery,
+ * tracking, and import duties), Returns & Exchanges (30-day return window,
+ * eligibility requirements, and return initiation via support email), and Damaged
+ * or Lost Items (contact window and resolution options).
+ *
+ * @returns A React element representing the Shipping & Returns page.
+ */
 export default function ShippingPage() {
   return (
     <Container className="py-16 lg:py-20">

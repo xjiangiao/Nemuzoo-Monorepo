@@ -8,6 +8,15 @@ export const metadata: Metadata = {
     "Nemuzoo privacy policy — how we collect, use, and protect your personal information.",
 };
 
+/**
+ * Renders the site's Privacy Policy page.
+ *
+ * The page presents the full privacy policy content (introduction, information collected,
+ * usage, third-party services, user rights, cookies, data retention, changes, and contact)
+ * inside the app layout.
+ *
+ * @returns The Privacy Policy page as a JSX element
+ */
 export default function PrivacyPage() {
   return (
     <Container className="py-16 lg:py-20">

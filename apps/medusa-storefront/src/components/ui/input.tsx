@@ -3,6 +3,14 @@ import { Input as InputPrimitive } from "@base-ui/react/input"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Styled wrapper around the @base-ui Input primitive that applies a default set of Tailwind classes and forwards native input props.
+ *
+ * @param className - Additional class names to merge with the component's default styles
+ * @param type - The HTML input `type` attribute to apply to the underlying input
+ * @param props - Additional native input props forwarded to the underlying input element
+ * @returns The rendered input element with merged class names and forwarded props
+ */
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
     <InputPrimitive

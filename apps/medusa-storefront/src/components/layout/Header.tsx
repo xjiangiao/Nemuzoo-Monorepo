@@ -6,6 +6,13 @@ import CartIcon from "@/components/cart/CartIcon";
 import AccountIcon from "@/components/auth/AccountIcon";
 import { Menu, X } from "lucide-react";
 
+/**
+ * Renders a responsive, sticky top navigation header with a brand link, desktop navigation links, account and cart icons, and a toggleable mobile menu.
+ *
+ * The component maintains internal `menuOpen` state to control the mobile menu visibility. On medium and larger screens the desktop navigation is shown; on smaller screens a toggle button opens a mobile menu containing the same navigation links. Mobile menu links close the menu when clicked. ARIA attributes on the toggle reflect the menu state.
+ *
+ * @returns The header element containing navigation links, account and cart icons, and a conditionally rendered mobile menu.
+ */
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 

@@ -10,6 +10,13 @@ import ProductInfo from "@/components/product/ProductInfo";
 import SkeletonCard from "@/components/ui/SkeletonCard";
 import Button from "@/components/ui/Button";
 
+/**
+ * Render a product detail page for the current route `handle`.
+ *
+ * Displays a loading skeleton while the product is being fetched, a centered "Not Found" view when no product exists for the handle, or the product detail layout (gallery and product info) on success.
+ *
+ * @returns A React element containing the product page UI (loading skeleton, not-found view, or product detail layout).
+ */
 export default function ProductPage() {
   const { handle } = useParams<{ handle: string }>();
 

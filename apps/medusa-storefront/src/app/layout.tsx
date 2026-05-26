@@ -38,6 +38,15 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * Defines the application's root HTML layout including global metadata, site shell, and providers.
+ *
+ * Renders the <html> and <body> wrappers, injects site Organization JSON-LD, and composes the page shell
+ * with Providers, Header, main content area, and Footer.
+ *
+ * @param children - Routed page content to render inside the layout's main area between header and footer
+ * @returns The root HTML element for the application layout
+ */
 export default function RootLayout({
   children,
 }: Readonly<{

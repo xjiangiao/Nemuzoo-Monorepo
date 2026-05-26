@@ -14,6 +14,14 @@ import {
 import { UserIcon } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
+/**
+ * Renders an account dropdown menu that displays the current customer (first and last name or email)
+ * and provides actions to navigate to the account page or sign out.
+ *
+ * Selecting "Sign Out" triggers the configured logout action and refreshes router data.
+ *
+ * @returns A React element representing the account dropdown menu.
+ */
 export default function AuthMenu() {
   const { customer, logout } = useAuthStore();
   const router = useRouter();
