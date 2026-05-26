@@ -74,6 +74,7 @@ export default function CartPage() {
             subtotal={subtotal}
             total={subtotal}
             currency_code={items[0]?.currency_code || "USD"}
+            checkoutHref="/checkout"
           />
         </div>
       </div>

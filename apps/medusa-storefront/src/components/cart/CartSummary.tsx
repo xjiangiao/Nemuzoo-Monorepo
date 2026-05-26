@@ -6,6 +6,7 @@ interface CartSummaryProps {
   shipping?: number;
   total: number;
   currency_code: string;
+  checkoutHref?: string;
 }
 
 export default function CartSummary({
@@ -13,6 +14,7 @@ export default function CartSummary({
   shipping,
   total,
   currency_code,
+  checkoutHref,
 }: CartSummaryProps) {
   return (
     <div className="bg-surface-elevated rounded-xl p-6 border border-border-primary">
@@ -49,8 +51,14 @@ export default function CartSummary({
         </div>
       </div>
 
-      <Button variant="accent" size="lg" className="w-full mt-6" disabled>
-        Checkout — Coming Soon
+      <Button
+        variant="accent"
+        size="lg"
+        className="w-full mt-6"
+        href={checkoutHref}
+        disabled={!checkoutHref}
+      >
+        Checkout
       </Button>
     </div>
   );
