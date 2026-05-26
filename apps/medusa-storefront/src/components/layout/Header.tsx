@@ -1,9 +1,21 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import CartIcon from "@/components/cart/CartIcon";
+import AccountIcon from "@/components/auth/AccountIcon";
+import { Menu, X } from "lucide-react";
 
+/**
+ * Renders a responsive, sticky top navigation header with a brand link, desktop navigation links, account and cart icons, and a toggleable mobile menu.
+ *
+ * The component maintains internal `menuOpen` state to control the mobile menu visibility. On medium and larger screens the desktop navigation is shown; on smaller screens a toggle button opens a mobile menu containing the same navigation links. Mobile menu links close the menu when clicked. ARIA attributes on the toggle reflect the menu state.
+ *
+ * @returns The header element containing navigation links, account and cart icons, and a conditionally rendered mobile menu.
+ */
 export default function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <header className="sticky top-0 z-50 backdrop-blur-md bg-surface-primary/80 border-b border-border-primary">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
@@ -29,10 +41,43 @@ export default function Header() {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          <AccountIcon />
+          <button
+            type="button"
+            className="md:hidden p-2 text-text-secondary hover:text-text-primary transition-colors"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-site-nav"
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
           <CartIcon />
         </div>
       </div>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div className="md:hidden border-t border-border-primary bg-surface-primary/95 backdrop-blur-md">
+          <nav id="mobile-site-nav" className="px-4 sm:px-6 py-4 space-y-1">
+            <Link
+              href="/products"
+              onClick={() => setMenuOpen(false)}
+              className="block px-4 py-3 rounded-lg text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-surface-secondary transition-colors"
+            >
+              Shop
+            </Link>
+            <Link
+              href="/about"
+              onClick={() => setMenuOpen(false)}
+              className="block px-4 py-3 rounded-lg text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-surface-secondary transition-colors"
+            >
+              About
+            </Link>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

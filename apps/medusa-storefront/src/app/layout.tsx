@@ -3,6 +3,10 @@ import "./globals.css";
 import { Providers } from "@/lib/providers";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-geist'});
 
 const siteUrl = "https://www.nemuzoo.com";
 
@@ -34,13 +38,22 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * Defines the application's root HTML layout including global metadata, site shell, and providers.
+ *
+ * Renders the <html> and <body> wrappers, injects site Organization JSON-LD, and composes the page shell
+ * with Providers, Header, main content area, and Footer.
+ *
+ * @param children - Routed page content to render inside the layout's main area between header and footer
+ * @returns The root HTML element for the application layout
+ */
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
+    <html lang="en" className={cn("h-full antialiased", "font-sans", geist.variable)}>
       <body className="min-h-full flex flex-col bg-surface-primary text-text-primary font-body">
         <script
           type="application/ld+json"

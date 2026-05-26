@@ -20,6 +20,14 @@ interface CartItemProps {
   onRemove: (id: string) => void;
 }
 
+/**
+ * Render a cart line item with thumbnail, product link, variant (if any), line total, quantity controls, and a remove action.
+ *
+ * @param item - Cart line item containing identifiers (`id`, `handle`), display data (`title`, optional `thumbnail`, optional `variant.title`), and pricing/quantity (`quantity`, `unit_price`, `currency_code`).
+ * @param onUpdateQuantity - Called with `(id, quantity)` when the item's quantity changes.
+ * @param onRemove - Called with `(id)` when the item is removed.
+ * @returns The React element representing the cart line item.
+ */
 export default function CartItem({ item, onUpdateQuantity, onRemove }: CartItemProps) {
   return (
     <div className="flex gap-4 py-6 border-b border-border-primary">
@@ -70,7 +78,7 @@ export default function CartItem({ item, onUpdateQuantity, onRemove }: CartItemP
           <button
             type="button"
             onClick={() => onRemove(item.id)}
-            className="text-xs text-text-muted hover:text-error transition-colors ml-4"
+            className="text-xs text-text-muted hover:text-error transition-colors ml-4 py-1"
           >
             Remove
           </button>

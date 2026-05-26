@@ -2,9 +2,14 @@ import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
 import StarDecoration from "@/components/ui/StarDecoration";
 
+/**
+ * Render the homepage hero section with a radial gradient background, animated star decorations, a centered headline and subtitle, and a primary call-to-action button.
+ *
+ * @returns The hero section JSX element containing background decorations, centered marketing content, and a CTA button.
+ */
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden"
+    <section className="relative min-h-[80vh] md:min-h-[90vh] flex items-center overflow-hidden"
       style={{
         background:
           "radial-gradient(ellipse 60% 50% at 50% 40%, var(--color-surface-elevated) 0%, var(--color-surface-primary) 100%)",
@@ -12,37 +17,37 @@ export default function HeroSection() {
     >
       {/* Floating stars decoration */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div className="absolute top-[15%] left-[10%] animate-float opacity-60" style={{ animationDelay: "0s" }}>
+        <div className="absolute top-[12%] md:top-[15%] left-[5%] md:left-[10%] animate-float opacity-60" style={{ animationDelay: "0s" }}>
           <StarDecoration size="lg" variant="warm" />
         </div>
-        <div className="absolute top-[25%] right-[15%] animate-float opacity-40" style={{ animationDelay: "0.5s" }}>
+        <div className="hidden md:block absolute top-[25%] right-[15%] animate-float opacity-40" style={{ animationDelay: "0.5s" }}>
           <StarDecoration size="md" variant="accent" />
         </div>
-        <div className="absolute bottom-[30%] left-[20%] animate-float opacity-50" style={{ animationDelay: "1s" }}>
+        <div className="absolute bottom-[35%] md:bottom-[30%] left-[8%] md:left-[20%] animate-float opacity-50" style={{ animationDelay: "1s" }}>
           <StarDecoration size="sm" variant="warm" />
         </div>
-        <div className="absolute top-[40%] right-[25%] animate-float opacity-30" style={{ animationDelay: "0.3s" }}>
+        <div className="hidden sm:block absolute top-[40%] right-[25%] animate-float opacity-30" style={{ animationDelay: "0.3s" }}>
           <StarDecoration size="md" variant="accent" />
         </div>
-        <div className="absolute bottom-[20%] right-[10%] animate-float opacity-45" style={{ animationDelay: "0.8s" }}>
+        <div className="absolute bottom-[15%] md:bottom-[20%] right-[5%] md:right-[10%] animate-float opacity-45" style={{ animationDelay: "0.8s" }}>
           <StarDecoration size="sm" variant="warm" />
         </div>
       </div>
 
-      <Container className="relative z-10 py-20">
+      <Container className="relative z-10 py-16 md:py-20">
         <div className="max-w-2xl mx-auto text-center">
           <h1
-            className="text-5xl lg:text-7xl font-bold text-text-primary leading-[1.1] animate-fade-in font-heading"
+            className="text-4xl sm:text-5xl lg:text-7xl font-bold text-text-primary leading-[1.1] animate-fade-in font-heading"
           >
             The one you hold tight before falling asleep
           </h1>
           <p
-            className="mt-6 text-lg lg:text-xl text-text-secondary max-w-lg mx-auto animate-fade-in"
+            className="mt-4 md:mt-6 text-base md:text-lg lg:text-xl text-text-secondary max-w-lg mx-auto animate-fade-in"
             style={{ fontWeight: 300, animationDelay: "0.2s", animationFillMode: "both" }}
           >
             Knitted companions for quiet nights and gentle hearts.
           </p>
-          <div className="mt-10 animate-fade-in" style={{ animationDelay: "0.4s", animationFillMode: "both" }}>
+          <div className="mt-8 md:mt-10 animate-fade-in" style={{ animationDelay: "0.4s", animationFillMode: "both" }}>
             <Button variant="warm" size="lg" href="/products">
               Meet the Zoo
             </Button>

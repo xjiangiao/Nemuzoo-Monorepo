@@ -1,66 +1,94 @@
-import Link from "next/link";
+import React from "react"
+import { Button as ButtonPrimitive } from "@base-ui/react/button"
+import { cva, type VariantProps } from "class-variance-authority"
+import Link from "next/link"
 
-type ButtonVariant = "accent" | "warm" | "outline" | "ghost";
-type ButtonSize = "sm" | "md" | "lg";
+import { cn } from "@/lib/utils"
 
-interface ButtonProps {
-  children: React.ReactNode;
-  variant?: ButtonVariant;
-  size?: ButtonSize;
+const buttonVariants = cva(
+  "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
+        accent:
+          "bg-accent text-accent-foreground hover:bg-accent-hover",
+        warm: "bg-warm text-accent-foreground hover:bg-warm-hover",
+        outline:
+          "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
+        ghost:
+          "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
+        destructive:
+          "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
+        link: "text-primary underline-offset-4 hover:underline",
+      },
+      size: {
+        default:
+          "h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
+        xs: "h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
+        sm: "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
+        md: "h-9 gap-1.5 px-4 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3",
+        lg: "h-10 gap-2 px-6 has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4",
+        icon: "size-8",
+        "icon-xs":
+          "size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
+        "icon-sm":
+          "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
+        "icon-lg": "size-9",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
+
+interface ButtonProps
+  extends ButtonPrimitive.Props,
+    VariantProps<typeof buttonVariants> {
   href?: string;
-  onClick?: () => void;
-  disabled?: boolean;
-  className?: string;
-  type?: "button" | "submit";
 }
 
-const variantClasses: Record<ButtonVariant, string> = {
-  accent:
-    "bg-accent text-text-inverse hover:bg-accent-hover",
-  warm:
-    "bg-warm text-text-inverse hover:bg-warm-hover",
-  outline:
-    "border border-accent text-accent hover:bg-accent-subtle",
-  ghost:
-    "text-text-secondary hover:bg-surface-secondary hover:text-text-primary",
-};
-
-const sizeClasses: Record<ButtonSize, string> = {
-  sm: "py-1.5 px-4 text-sm",
-  md: "py-2.5 px-6 text-base",
-  lg: "py-3 px-8 text-lg",
-};
-
-export default function Button({
-  children,
-  variant = "accent",
-  size = "md",
+/**
+ * Renders a styled button; if `href` is provided and the button is not disabled, renders a link with the same styling.
+ *
+ * @param className - Additional class names to merge with the component's generated classes.
+ * @param variant - Visual variant to apply to the button (controls color and emphasis).
+ * @param size - Size variant to apply (controls height, padding, and icon sizing).
+ * @param href - If provided and the button is not disabled, the destination URL for a rendered link.
+ * @returns A React element representing a styled button or a styled link when `href` is used.
+ */
+function Button({
+  className,
+  variant = "default",
+  size = "default",
   href,
-  onClick,
-  disabled = false,
-  className = "",
-  type = "button",
+  ...props
 }: ButtonProps) {
-  const classes = `inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${
-    disabled ? "opacity-50 cursor-not-allowed pointer-events-none" : ""
-  } ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
-
-  if (href && !disabled) {
+  if (href && !props.disabled) {
+    const { children, ...rest } = props;
     return (
-      <Link href={href} className={classes}>
+      <Link
+        href={href}
+        className={cn(buttonVariants({ variant, size, className }))}
+        {...(rest as Omit<React.ComponentProps<typeof Link>, "href" | "className">)}
+      >
         {children}
       </Link>
     );
   }
 
   return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-      className={classes}
-    >
-      {children}
-    </button>
-  );
+    <ButtonPrimitive
+      data-slot="button"
+      className={cn(buttonVariants({ variant, size, className }))}
+      {...props}
+    />
+  )
 }
+
+export { Button, buttonVariants, type ButtonProps }
+export default Button

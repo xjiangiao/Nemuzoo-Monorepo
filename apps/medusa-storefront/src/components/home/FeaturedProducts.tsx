@@ -2,29 +2,28 @@
 
 import { useQuery } from "@tanstack/react-query";
 import medusaClient from "@/lib/medusa-client";
+import type { Product } from "@/types";
 import Container from "@/components/layout/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ProductGrid from "@/components/product/ProductGrid";
 import SkeletonCard from "@/components/ui/SkeletonCard";
 import Button from "@/components/ui/Button";
 
-interface Product {
-  id: string;
-  title: string;
-  handle: string;
-  thumbnail?: string;
-  images?: Array<{ url: string; alt?: string }>;
-  variants?: Array<{
-    prices?: Array<{ amount: number; currency_code: string }>;
-  }>;
-  metadata?: Record<string, string>;
-}
-
+/**
+ * Renders a featured-products section that fetches products and displays up to four highlighted items.
+ *
+ * The section includes a heading, a responsive grid of loading skeletons while products are being fetched,
+ * the featured product grid when items are available, and a centered "View All Dolls" button linking to `/products`.
+ *
+ * @returns A React element containing the featured products section with loading and empty-state behavior.
+ */
 export default function FeaturedProducts() {
   const { data: products, isLoading } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      medusaClient.products.list().then((res) => (res.products as Product[]) || []),
+      medusaClient.store.product
+        .list()
+        .then((res) => (res.products as unknown as Product[]) || []),
   });
 
   const featured = products?.slice(0, 4) || [];

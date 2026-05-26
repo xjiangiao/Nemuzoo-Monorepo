@@ -7,6 +7,10 @@ export interface Variant {
   id: string;
   title: string;
   prices?: Price[];
+  calculated_price?: {
+    calculated_amount?: number | null;
+    currency_code?: string | null;
+  } | null;
 }
 
 export interface Product {
@@ -16,8 +20,8 @@ export interface Product {
   thumbnail?: string;
   description?: string;
   images?: Array<{ url: string; alt?: string }>;
-  variants?: Variant[];
-  metadata?: Record<string, string>;
+  variants?: Variant[] | null;
+  metadata?: Record<string, unknown> | null;
 }
 
 export interface CartItemData {
@@ -36,4 +40,15 @@ export interface CartSummaryData {
   tax?: number;
   total: number;
   currency_code: string;
+}
+
+export interface Customer {
+  id: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  phone?: string | null;
+  has_account: boolean;
+  created_at: string;
+  metadata?: Record<string, unknown>;
 }

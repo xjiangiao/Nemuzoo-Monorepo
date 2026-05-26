@@ -2,26 +2,26 @@ import Link from "next/link";
 import Image from "next/image";
 import Badge from "@/components/ui/Badge";
 import { formatPrice, getProductThumbnail, getProductPrice } from "@/lib/utils";
+import type { Product } from "@/types";
 
 interface ProductCardProps {
-  product: {
-    id: string;
-    title: string;
-    handle: string;
-    thumbnail?: string;
-    images?: Array<{ url: string; alt?: string }>;
-    variants?: Array<{
-      prices?: Array<{ amount: number; currency_code: string }>;
-    }>;
-    metadata?: Record<string, string>;
-  };
+  product: Product;
   priority?: boolean;
 }
 
+/**
+ * Renders a clickable product tile that links to the product's page and displays a square thumbnail, title, optional personality badge, and optional formatted price.
+ *
+ * @param product - Product data containing at least `id`, `title`, and `handle`. May include `thumbnail`, `images`, `variants`, `metadata`, and optional pricing fields; if `metadata.personality` is a string it will be shown as a badge.
+ * @returns A JSX element representing the product card linked to `/products/[handle]`.
+ */
 export default function ProductCard({ product }: ProductCardProps) {
   const thumbnail = getProductThumbnail(product);
   const price = getProductPrice(product);
-  const personality = product.metadata?.personality;
+  const personality =
+    typeof product.metadata?.personality === "string"
+      ? product.metadata.personality
+      : null;
 
   return (
     <Link

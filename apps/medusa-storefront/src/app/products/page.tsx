@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import medusaClient from "@/lib/medusa-client";
+import type { Product } from "@/types";
 import Container from "@/components/layout/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ProductGrid from "@/components/product/ProductGrid";
@@ -9,25 +10,21 @@ import SkeletonCard from "@/components/ui/SkeletonCard";
 import EmptyState from "@/components/ui/EmptyState";
 import Button from "@/components/ui/Button";
 
-interface Product {
-  id: string;
-  title: string;
-  handle: string;
-  thumbnail?: string;
-  images?: Array<{ url: string; alt?: string }>;
-  variants?: Array<{
-    prices?: Array<{ amount: number; currency_code: string }>;
-  }>;
-  metadata?: Record<string, string>;
-}
-
+/**
+ * Renders the "All Dolls" products page with loading, error, empty, and populated states.
+ *
+ * Shows a skeleton grid while loading, an error state with a retry action when loading fails,
+ * a no-results empty state when the product list is empty, and a product grid when products are available.
+ *
+ * @returns The page element that displays the products listing and its UI states.
+ */
 export default function ProductsPage() {
   const { data: products, isLoading, error, refetch } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      medusaClient.products
+      medusaClient.store.product
         .list()
-        .then((res) => (res.products as Product[]) || []),
+        .then((res) => (res.products as unknown as Product[]) || []),
   });
 
   return (

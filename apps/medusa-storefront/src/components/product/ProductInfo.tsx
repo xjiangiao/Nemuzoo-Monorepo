@@ -12,16 +12,30 @@ interface ProductInfoProps {
   product: {
     id: string;
     title: string;
-    description?: string;
+    description?: string | null;
     variants?: Array<{
       id: string;
-      title: string;
+      title: string | null;
+      calculated_price?: {
+        calculated_amount?: number | null;
+        currency_code?: string | null;
+      } | null;
       prices?: Array<{ amount: number; currency_code: string }>;
-    }>;
-    metadata?: Record<string, string>;
+    }> | null;
+    metadata?: Record<string, unknown> | null;
   };
 }
 
+/**
+ * Renders product details and purchase controls for a given product, including variant selection,
+ * price resolution (uses variant.calculated_price when available, otherwise falls back to the first variant price),
+ * optional personality badge and story section, quantity selection, and an Add to Cart flow with success/error states.
+ *
+ * @param product - Product data used to populate the UI. Expected fields used: `title`, optional `description`,
+ *   optional `variants` (each with `id`, optional `title`, optional `calculated_price`, optional `prices`), and
+ *   optional `metadata` entries `personality` and `story`.
+ * @returns The rendered React element containing the product information and purchase controls.
+ */
 export default function ProductInfo({ product }: ProductInfoProps) {
   const [quantity, setQuantity] = useState(1);
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
@@ -36,9 +50,21 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 
   const variants = product.variants || [];
   const selectedVariant = variants[selectedVariantIndex];
-  const price = selectedVariant?.prices?.[0];
-  const personality = product.metadata?.personality;
-  const story = product.metadata?.story;
+  const calculatedPrice = selectedVariant?.calculated_price;
+  const price =
+    typeof calculatedPrice?.calculated_amount === "number" &&
+    calculatedPrice.currency_code
+      ? {
+          amount: calculatedPrice.calculated_amount,
+          currency_code: calculatedPrice.currency_code,
+        }
+      : selectedVariant?.prices?.[0];
+  const personality =
+    typeof product.metadata?.personality === "string"
+      ? product.metadata.personality
+      : null;
+  const story =
+    typeof product.metadata?.story === "string" ? product.metadata.story : null;
 
   const handleAddToCart = async () => {
     if (!selectedVariant) return;
@@ -106,13 +132,13 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                   key={v.id}
                   type="button"
                   onClick={() => setSelectedVariantIndex(i)}
-                  className={`px-4 py-2 text-sm rounded-lg border transition-colors ${
+                  className={`px-5 py-2.5 md:px-4 md:py-2 text-sm rounded-lg border transition-colors ${
                     i === selectedVariantIndex
                       ? "border-accent text-accent bg-accent-subtle"
                       : "border-border-primary text-text-secondary hover:border-accent hover:text-text-primary"
                   }`}
                 >
-                  {v.title}
+                  {v.title || "Default"}
                 </button>
               ))}
             </div>
