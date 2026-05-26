@@ -1,8 +1,17 @@
+import { State } from "country-state-city";
+
+export type AddressKind = "shipping" | "billing";
+
 export type CountryOption = {
   code: string;
   label: string;
   regionId: string;
   currencyCode: string;
+};
+
+export type ProvinceOption = {
+  code: string;
+  label: string;
 };
 
 export type RegionCountry = {
@@ -18,66 +27,56 @@ export type RegionWithCountries = {
   countries?: RegionCountry[];
 };
 
-export type StateOption = {
-  code: string;
-  label: string;
+export type CustomerAddress = {
+  id?: string;
+  address_name?: string | null;
+  is_default_shipping?: boolean;
+  is_default_billing?: boolean;
+  first_name?: string | null;
+  last_name?: string | null;
+  address_1?: string | null;
+  address_2?: string | null;
+  city?: string | null;
+  province?: string | null;
+  postal_code?: string | null;
+  country_code?: string | null;
+  phone?: string | null;
+};
+
+export type AddressFormValues = {
+  firstName: string;
+  lastName: string;
+  address1: string;
+  address2: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  countryCode: string;
+  phone: string;
+};
+
+export type SavedAddressFormValues = AddressFormValues & {
+  id: string;
 };
 
 export const DEFAULT_COUNTRY_CODE = "us";
 
-export const US_STATES: StateOption[] = [
-  { code: "al", label: "Alabama" },
-  { code: "ak", label: "Alaska" },
-  { code: "az", label: "Arizona" },
-  { code: "ar", label: "Arkansas" },
-  { code: "ca", label: "California" },
-  { code: "co", label: "Colorado" },
-  { code: "ct", label: "Connecticut" },
-  { code: "de", label: "Delaware" },
-  { code: "fl", label: "Florida" },
-  { code: "ga", label: "Georgia" },
-  { code: "hi", label: "Hawaii" },
-  { code: "id", label: "Idaho" },
-  { code: "il", label: "Illinois" },
-  { code: "in", label: "Indiana" },
-  { code: "ia", label: "Iowa" },
-  { code: "ks", label: "Kansas" },
-  { code: "ky", label: "Kentucky" },
-  { code: "la", label: "Louisiana" },
-  { code: "me", label: "Maine" },
-  { code: "md", label: "Maryland" },
-  { code: "ma", label: "Massachusetts" },
-  { code: "mi", label: "Michigan" },
-  { code: "mn", label: "Minnesota" },
-  { code: "ms", label: "Mississippi" },
-  { code: "mo", label: "Missouri" },
-  { code: "mt", label: "Montana" },
-  { code: "ne", label: "Nebraska" },
-  { code: "nv", label: "Nevada" },
-  { code: "nh", label: "New Hampshire" },
-  { code: "nj", label: "New Jersey" },
-  { code: "nm", label: "New Mexico" },
-  { code: "ny", label: "New York" },
-  { code: "nc", label: "North Carolina" },
-  { code: "nd", label: "North Dakota" },
-  { code: "oh", label: "Ohio" },
-  { code: "ok", label: "Oklahoma" },
-  { code: "or", label: "Oregon" },
-  { code: "pa", label: "Pennsylvania" },
-  { code: "ri", label: "Rhode Island" },
-  { code: "sc", label: "South Carolina" },
-  { code: "sd", label: "South Dakota" },
-  { code: "tn", label: "Tennessee" },
-  { code: "tx", label: "Texas" },
-  { code: "ut", label: "Utah" },
-  { code: "vt", label: "Vermont" },
-  { code: "va", label: "Virginia" },
-  { code: "wa", label: "Washington" },
-  { code: "wv", label: "West Virginia" },
-  { code: "wi", label: "Wisconsin" },
-  { code: "wy", label: "Wyoming" },
-  { code: "dc", label: "District of Columbia" },
-];
+export const emptyAddressValues: AddressFormValues = {
+  firstName: "",
+  lastName: "",
+  address1: "",
+  address2: "",
+  city: "",
+  province: "",
+  postalCode: "",
+  countryCode: DEFAULT_COUNTRY_CODE,
+  phone: "",
+};
+
+export const emptySavedAddressValues: SavedAddressFormValues = {
+  id: "",
+  ...emptyAddressValues,
+};
 
 function getCountryCode(country: RegionCountry) {
   return (country.iso_2 || country.code || "").toLowerCase();
@@ -125,6 +124,88 @@ export function buildCountryOptions(
   });
 }
 
-export function getStateOptions(countryCode: string): StateOption[] {
-  return countryCode.toLowerCase() === "us" ? US_STATES : [];
+export function getProvinceOptions(countryCode: string): ProvinceOption[] {
+  if (!countryCode) return [];
+
+  return State.getStatesOfCountry(countryCode.toUpperCase()).map((state) => ({
+    code: state.isoCode.toLowerCase(),
+    label: state.name,
+  }));
+}
+
+export function normalizeProvince(value?: string | null) {
+  return value?.toLowerCase() || "";
+}
+
+export function addressToFormValues(
+  address?: CustomerAddress | null,
+  fallback: Partial<Pick<AddressFormValues, "firstName" | "lastName">> = {}
+): AddressFormValues {
+  return {
+    ...emptyAddressValues,
+    firstName: address?.first_name || fallback.firstName || "",
+    lastName: address?.last_name || fallback.lastName || "",
+    address1: address?.address_1 || "",
+    address2: address?.address_2 || "",
+    city: address?.city || "",
+    province: normalizeProvince(address?.province),
+    postalCode: address?.postal_code || "",
+    countryCode: address?.country_code || DEFAULT_COUNTRY_CODE,
+    phone: address?.phone || "",
+  };
+}
+
+export function savedAddressToFormValues(
+  address?: CustomerAddress | null,
+  fallback: Partial<Pick<AddressFormValues, "firstName" | "lastName">> = {}
+): SavedAddressFormValues {
+  return {
+    id: address?.id || "",
+    ...addressToFormValues(address, fallback),
+  };
+}
+
+export function addressFormToPayload(
+  values: AddressFormValues,
+  kind?: AddressKind
+) {
+  return {
+    first_name: values.firstName,
+    last_name: values.lastName,
+    phone: values.phone || null,
+    address_1: values.address1,
+    address_2: values.address2 || null,
+    city: values.city,
+    province: values.province || null,
+    postal_code: values.postalCode,
+    country_code: values.countryCode,
+    ...(kind
+      ? {
+          address_name:
+            kind === "shipping" ? "Shipping address" : "Billing address",
+          ...(kind === "shipping" ? { is_default_shipping: true } : {}),
+          ...(kind === "billing" ? { is_default_billing: true } : {}),
+        }
+      : {}),
+  };
+}
+
+export function validateAddressValues(values: AddressFormValues) {
+  if (!values.firstName.trim() || !values.lastName.trim()) {
+    return "Enter first and last name.";
+  }
+
+  if (
+    !values.address1.trim() ||
+    !values.city.trim() ||
+    !values.postalCode.trim()
+  ) {
+    return "Enter a complete address.";
+  }
+
+  if (getProvinceOptions(values.countryCode).length && !values.province.trim()) {
+    return "Select a state or province.";
+  }
+
+  return null;
 }

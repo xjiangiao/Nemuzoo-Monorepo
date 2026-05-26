@@ -1,8 +1,43 @@
 import { create } from "zustand";
 import medusaClient from "@/lib/medusa-client";
 
-const cartFields =
+export const cartFields =
   "*items,*items.variant,*items.variant.product,*region";
+
+export const checkoutCartFields =
+  "*items,*items.variant,*items.variant.product,*region,*shipping_methods,*payment_collection";
+
+export type CartAddressPayload = {
+  first_name?: string | null;
+  last_name?: string | null;
+  phone?: string | null;
+  address_1?: string | null;
+  address_2?: string | null;
+  city?: string | null;
+  province?: string | null;
+  postal_code?: string | null;
+  country_code?: string | null;
+};
+
+export interface CheckoutCart {
+  id: string;
+  email?: string | null;
+  currency_code: string;
+  region_id?: string | null;
+  subtotal?: number;
+  item_subtotal?: number;
+  shipping_total?: number;
+  tax_total?: number;
+  total?: number;
+  shipping_address?: CartAddressPayload | null;
+  items?: Array<{
+    id: string;
+    title: string;
+    quantity: number;
+    total?: number;
+  }>;
+  shipping_methods?: unknown[];
+}
 
 export interface CartItem {
   id: string;
@@ -17,12 +52,26 @@ export interface CartItem {
 
 interface CartState {
   cartId: string | null;
+  cart: CheckoutCart | null;
   items: CartItem[];
   isLoading: boolean;
   error: string | null;
 
   setCartId: (id: string) => void;
   setItems: (items: CartItem[]) => void;
+  retrieveCart: (fields?: string) => Promise<CheckoutCart | null>;
+  transferCart: (fields?: string) => Promise<CheckoutCart | null>;
+  updateCartRegion: (
+    regionId: string,
+    fields?: string
+  ) => Promise<CheckoutCart | null>;
+  updateCartAddress: (
+    email: string,
+    address: CartAddressPayload,
+    regionId?: string,
+    fields?: string
+  ) => Promise<CheckoutCart | null>;
+  setCartFromResponse: (cart: any) => void;
   hydrate: () => Promise<void>;
   addToCart: (variantId: string, quantity: number) => Promise<void>;
   updateQuantity: (lineId: string, quantity: number) => Promise<void>;
@@ -74,6 +123,7 @@ function mapItems(cart: any, items?: any[]): CartItem[] {
 
 export const useCartStore = create<CartState>((set, get) => ({
   cartId: null,
+  cart: null,
   items: [],
   isLoading: true,
   error: null,
@@ -84,6 +134,83 @@ export const useCartStore = create<CartState>((set, get) => ({
   },
 
   setItems: (items: CartItem[]) => set({ items }),
+
+  setCartFromResponse: (cart: any) => {
+    if (cart?.id) {
+      storeCartId(cart.id);
+    }
+
+    set({
+      cartId: cart?.id || null,
+      cart: (cart || null) as CheckoutCart | null,
+      items: mapItems(cart || {}, cart?.items),
+      error: null,
+    });
+  },
+
+  retrieveCart: async (fields = checkoutCartFields) => {
+    const { cartId } = get();
+    if (!cartId) return null;
+
+    const { cart } = await medusaClient.store.cart.retrieve(cartId, {
+      fields,
+    });
+
+    get().setCartFromResponse(cart);
+    return cart as CheckoutCart;
+  },
+
+  transferCart: async (fields = checkoutCartFields) => {
+    const { cartId } = get();
+    if (!cartId) return null;
+
+    const { cart } = await medusaClient.store.cart.transferCart(cartId, {
+      fields,
+    });
+
+    get().setCartFromResponse(cart);
+    return cart as CheckoutCart;
+  },
+
+  updateCartRegion: async (regionId: string, fields = checkoutCartFields) => {
+    const { cartId } = get();
+    if (!cartId) return null;
+
+    const { cart } = await medusaClient.store.cart.update(
+      cartId,
+      {
+        region_id: regionId,
+      },
+      { fields }
+    );
+
+    get().setCartFromResponse(cart);
+    return cart as CheckoutCart;
+  },
+
+  updateCartAddress: async (
+    email: string,
+    address: CartAddressPayload,
+    regionId?: string,
+    fields = checkoutCartFields
+  ) => {
+    const { cartId } = get();
+    if (!cartId) return null;
+
+    const { cart } = await medusaClient.store.cart.update(
+      cartId,
+      {
+        email,
+        ...(regionId ? { region_id: regionId } : {}),
+        shipping_address: address,
+        billing_address: address,
+      },
+      { fields }
+    );
+
+    get().setCartFromResponse(cart);
+    return cart as CheckoutCart;
+  },
 
   hydrate: async () => {
     const storedId = getStoredCartId();
@@ -98,13 +225,14 @@ export const useCartStore = create<CartState>((set, get) => ({
       });
       set({
         cartId: storedId,
+        cart: cart as CheckoutCart,
         items: mapItems(cart, cart.items),
         isLoading: false,
       });
     } catch {
       // Cart expired or invalid
       clearStoredCartId();
-      set({ cartId: null, items: [], isLoading: false });
+      set({ cartId: null, cart: null, items: [], isLoading: false });
     }
   },
 
@@ -131,7 +259,11 @@ export const useCartStore = create<CartState>((set, get) => ({
         },
         { fields: cartFields }
       );
-      set({ items: mapItems(cart, cart.items), error: null });
+      set({
+        cart: cart as CheckoutCart,
+        items: mapItems(cart, cart.items),
+        error: null,
+      });
     } catch (e) {
       set({ error: "Failed to add item to cart." });
       throw e;
@@ -167,7 +299,11 @@ export const useCartStore = create<CartState>((set, get) => ({
         throw new Error("Cart response missing cart.");
       }
 
-      set({ items: mapItems(cart, cart.items), error: null });
+      set({
+        cart: cart as CheckoutCart,
+        items: mapItems(cart, cart.items),
+        error: null,
+      });
     } catch {
       set({ error: "Failed to update cart." });
     }
@@ -188,7 +324,11 @@ export const useCartStore = create<CartState>((set, get) => ({
         throw new Error("Cart response missing cart.");
       }
 
-      set({ items: mapItems(cart, cart.items), error: null });
+      set({
+        cart: cart as CheckoutCart,
+        items: mapItems(cart, cart.items),
+        error: null,
+      });
     } catch {
       set({ error: "Failed to remove item from cart." });
     }
@@ -196,6 +336,6 @@ export const useCartStore = create<CartState>((set, get) => ({
 
   clearCart: () => {
     clearStoredCartId();
-    set({ cartId: null, items: [], isLoading: false, error: null });
+    set({ cartId: null, cart: null, items: [], isLoading: false, error: null });
   },
 }));
