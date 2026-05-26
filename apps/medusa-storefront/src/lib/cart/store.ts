@@ -110,8 +110,9 @@ export const useCartStore = create<CartState>((set, get) => ({
 
       const { cart } = await medusaClient.carts.retrieve(currentCartId!);
       set({ items: mapItems(cart, cart.items), error: null });
-    } catch {
+    } catch (e) {
       set({ error: "Failed to add item to cart." });
+      throw e;
     }
   },
 

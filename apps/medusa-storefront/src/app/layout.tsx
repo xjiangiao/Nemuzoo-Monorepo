@@ -41,7 +41,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
-      <head>
+      <body className="min-h-full flex flex-col bg-surface-primary text-text-primary font-body">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -55,8 +55,6 @@ export default function RootLayout({
             }),
           }}
         />
-      </head>
-      <body className="min-h-full flex flex-col bg-surface-primary text-text-primary font-body">
         <Providers>
           <Header />
           <main className="flex-1">{children}</main>
