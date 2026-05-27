@@ -1,19 +1,20 @@
 import type { NextConfig } from "next";
 import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+import { resolveImageKitEndpoint } from "./src/lib/imagekit";
 
-const imageKitUrlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
+const imageKitUrlEndpoint = resolveImageKitEndpoint(
+  process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT
+);
 const imageKitRemotePattern = imageKitUrlEndpoint
   ? (() => {
-      try {
-        const url = new URL(imageKitUrlEndpoint);
+      const url = new URL(imageKitUrlEndpoint);
+      const protocol: "http" | "https" =
+        url.protocol === "http:" ? "http" : "https";
 
-        return {
-          protocol: url.protocol.replace(":", "") as "http" | "https",
-          hostname: url.hostname,
-        };
-      } catch {
-        return null;
-      }
+      return {
+        protocol,
+        hostname: url.hostname,
+      };
     })()
   : null;
 

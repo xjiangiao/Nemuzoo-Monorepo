@@ -5,8 +5,11 @@ import { useState } from "react";
 import { ImageKitProvider } from "@imagekit/next";
 import { CartHydrate } from "@/lib/cart/cart-hydrate";
 import { AuthHydrate } from "@/lib/auth/auth-hydrate";
+import { resolveImageKitEndpoint } from "@/lib/imagekit";
 
-const imageKitUrlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
+const imageKitUrlEndpoint = resolveImageKitEndpoint(
+  process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT
+);
 
 /**
  * Wraps application content with React Query and hydration providers for auth and cart state.
