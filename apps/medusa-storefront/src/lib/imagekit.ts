@@ -22,7 +22,21 @@ export function isLocalImagePath(src: string) {
   );
 }
 
-const isAbsoluteUrl = (src: string) => /^https?:\/\//.test(src);
+const imageKitProxyHosts = ["static.nemuzoo.com"];
+
+export function shouldProxyWithImageKit(src: string) {
+  try {
+    const parsed = new URL(
+      src.startsWith("/http://") || src.startsWith("/https://")
+        ? src.slice(1)
+        : src
+    );
+
+    return imageKitProxyHosts.includes(parsed.hostname);
+  } catch {
+    return false;
+  }
+}
 
 export function getImageKitSrc(src: string, urlEndpoint: string) {
   if (src.startsWith(`${urlEndpoint}/`)) {
@@ -33,5 +47,5 @@ export function getImageKitSrc(src: string, urlEndpoint: string) {
     return `/${encodeURIComponent(src.slice(1))}`;
   }
 
-  return isAbsoluteUrl(src) ? `/${encodeURIComponent(src)}` : src;
+  return `/${encodeURIComponent(src)}`;
 }

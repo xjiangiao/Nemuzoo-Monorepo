@@ -3,8 +3,8 @@ import { Image as ImageKitImage } from "@imagekit/next";
 import type { IKImageProps, Transformation } from "@imagekit/next";
 import {
   getImageKitSrc,
-  isLocalImagePath,
   resolveImageKitEndpoint,
+  shouldProxyWithImageKit,
 } from "@/lib/imagekit";
 
 type ProductImageProps = Omit<
@@ -20,7 +20,7 @@ type ProductImageProps = Omit<
 };
 
 const imageKitUrlEndpoint = resolveImageKitEndpoint(
-  process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT
+  process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT,
 );
 
 export default function ProductImage({
@@ -28,7 +28,7 @@ export default function ProductImage({
   transformation,
   ...props
 }: ProductImageProps) {
-  if (!imageKitUrlEndpoint || isLocalImagePath(src)) {
+  if (!imageKitUrlEndpoint || !shouldProxyWithImageKit(src)) {
     return <Image src={src} {...props} />;
   }
 
