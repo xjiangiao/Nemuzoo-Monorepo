@@ -15,7 +15,7 @@ interface ProductCardProps {
  * @param product - Product data containing at least `id`, `title`, and `handle`. May include `thumbnail`, `images`, `variants`, `metadata`, and optional pricing fields; if `metadata.personality` is a string it will be shown as a badge.
  * @returns A JSX element representing the product card linked to `/products/[handle]`.
  */
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, priority = false }: ProductCardProps) {
   const thumbnail = getProductThumbnail(product);
   const price = getProductPrice(product);
   const personality =
@@ -35,6 +35,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             alt={product.title}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            priority={priority}
             transformation={[
               { width: 800, height: 800, crop: "maintain_ratio" },
               { quality: 85, format: "auto" },

@@ -20,10 +20,10 @@ const isAbsoluteUrl = (src: string) => /^https?:\/\//.test(src);
 
 const getImageKitSrc = (src: string) => {
   if (src.startsWith("/http://") || src.startsWith("/https://")) {
-    return src;
+    return `/${encodeURIComponent(src.slice(1))}`;
   }
 
-  return isAbsoluteUrl(src) ? `/${src}` : src;
+  return isAbsoluteUrl(src) ? `/${encodeURIComponent(src)}` : src;
 };
 
 export default function ProductImage({
