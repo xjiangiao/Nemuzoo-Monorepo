@@ -31,6 +31,7 @@ export default function CheckoutIdentityStep({
   const setMode = useCheckoutStore((s) => s.setMode);
   const loginAndTransferCart = useCheckoutStore((s) => s.loginAndTransferCart);
   const isLoggingIn = useCheckoutStore((s) => s.isLoggingIn);
+  const loginError = useCheckoutStore((s) => s.loginError);
   const { register, handleSubmit } = useForm<LoginValues>({
     defaultValues: {
       email: "",
@@ -114,6 +115,7 @@ export default function CheckoutIdentityStep({
               "Sign in"
             )}
           </Button>
+          {loginError && <p className="text-sm text-error">{loginError}</p>}
         </form>
       )}
     </section>

@@ -24,7 +24,6 @@ export default function CheckoutAddressStep({
 }: CheckoutAddressStepProps) {
   const countries = useAddressStore((s) => s.countries);
   const selectCountry = useCheckoutStore((s) => s.selectCountry);
-  const isSubmitting = useCheckoutStore((s) => s.isSubmitting);
   const isRefreshingOptions = useCheckoutStore((s) => s.isRefreshingOptions);
 
   return (
@@ -52,9 +51,8 @@ export default function CheckoutAddressStep({
         title="Shipping Address"
         countries={countries}
         defaultValues={defaultValues}
-        submitLabel="Place Order"
-        submittingLabel="Placing order..."
-        isSubmitting={isSubmitting}
+        submitLabel="Continue"
+        hideSubmit
         disabled={isRefreshingOptions}
         onCountryChange={selectCountry}
         onSubmit={onSubmit}

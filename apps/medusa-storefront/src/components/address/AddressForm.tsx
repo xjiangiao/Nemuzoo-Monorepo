@@ -24,6 +24,7 @@ type AddressFormProps = {
   defaultValues?: AddressFormValues;
   submitLabel: string;
   submittingLabel?: string;
+  hideSubmit?: boolean;
   isSubmitting?: boolean;
   disabled?: boolean;
   fieldsDisabled?: boolean;
@@ -40,6 +41,7 @@ export default function AddressForm({
   defaultValues = emptyAddressValues,
   submitLabel,
   submittingLabel = "Saving...",
+  hideSubmit,
   isSubmitting,
   disabled,
   fieldsDisabled,
@@ -235,21 +237,23 @@ export default function AddressForm({
 
       {footer}
 
-      <Button
-        type="submit"
-        variant="accent"
-        className="mt-5"
-        disabled={disabled || isSubmitting || !countries.length}
-      >
-        {isSubmitting ? (
-          <>
-            <Spinner data-icon="inline-start" />
-            {submittingLabel}
-          </>
-        ) : (
-          submitLabel
-        )}
-      </Button>
+      {!hideSubmit && (
+        <Button
+          type="submit"
+          variant="accent"
+          className="mt-5"
+          disabled={disabled || isSubmitting || !countries.length}
+        >
+          {isSubmitting ? (
+            <>
+              <Spinner data-icon="inline-start" />
+              {submittingLabel}
+            </>
+          ) : (
+            submitLabel
+          )}
+        </Button>
+      )}
     </form>
   );
 }

@@ -2,6 +2,8 @@ import {
   getShippingOptionAmount,
   type ShippingOption,
 } from "@/lib/checkout/store";
+import Button from "@/components/ui/Button";
+import { Spinner } from "@/components/ui/spinner";
 import { formatPrice } from "@/lib/utils";
 
 type CheckoutOrderSummaryProps = {
@@ -19,6 +21,8 @@ type CheckoutOrderSummaryProps = {
   shippingTotal: number;
   currencyCode: string;
   error?: string | null;
+  isSubmitting?: boolean;
+  isSubmitDisabled?: boolean;
 };
 
 export default function CheckoutOrderSummary({
@@ -31,6 +35,8 @@ export default function CheckoutOrderSummary({
   shippingTotal,
   currencyCode,
   error,
+  isSubmitting,
+  isSubmitDisabled,
 }: CheckoutOrderSummaryProps) {
   const shippingPreview = selectedShippingOption
     ? getShippingOptionAmount(selectedShippingOption)
@@ -78,6 +84,24 @@ export default function CheckoutOrderSummary({
       </div>
 
       {error && <p className="mt-4 text-sm text-error">{error}</p>}
+
+      <Button
+        type="submit"
+        form="checkout-address-form"
+        variant="accent"
+        size="lg"
+        className="mt-6 w-full"
+        disabled={isSubmitting || isSubmitDisabled}
+      >
+        {isSubmitting ? (
+          <>
+            <Spinner data-icon="inline-start" />
+            Placing order...
+          </>
+        ) : (
+          "Place Order"
+        )}
+      </Button>
     </aside>
   );
 }

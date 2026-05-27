@@ -49,6 +49,7 @@ interface CheckoutState {
   isLoggingIn: boolean;
   isSubmitting: boolean;
   error: string | null;
+  loginError: string | null;
 
   setMode: (mode: CheckoutMode) => void;
   setSelectedShippingOptionId: (id: string) => void;
@@ -60,7 +61,11 @@ interface CheckoutState {
   }>;
   selectCountry: (countryCode: string) => Promise<void>;
   loginAndTransferCart: (values: LoginValues) => Promise<boolean>;
-  placeOrder: (values: AddressFormValues, email: string) => Promise<string | null>;
+  placeOrder: (
+    shippingValues: AddressFormValues,
+    email: string,
+    billingValues?: AddressFormValues
+  ) => Promise<string | null>;
   clearError: () => void;
   reset: () => void;
 }
@@ -97,8 +102,9 @@ export const useCheckoutStore = create<CheckoutState>((set, get) => ({
   isLoggingIn: false,
   isSubmitting: false,
   error: null,
+  loginError: null,
 
-  setMode: (mode) => set({ mode, error: null }),
+  setMode: (mode) => set({ mode, error: null, loginError: null }),
   setSelectedShippingOptionId: (id) => set({ selectedShippingOptionId: id }),
   setSelectedPaymentProviderId: (id) => set({ selectedPaymentProviderId: id }),
 
@@ -238,13 +244,16 @@ export const useCheckoutStore = create<CheckoutState>((set, get) => ({
   },
 
   loginAndTransferCart: async ({ email, password }) => {
-    set({ isLoggingIn: true, error: null });
+    set({ isLoggingIn: true, loginError: null });
 
     try {
       const didLogin = await useAuthStore.getState().login(email, password);
 
       if (!didLogin) {
-        set({ error: "Invalid email or password.", isLoggingIn: false });
+        set({
+          loginError: "Invalid email or password.",
+          isLoggingIn: false,
+        });
         return false;
       }
 
@@ -261,7 +270,7 @@ export const useCheckoutStore = create<CheckoutState>((set, get) => ({
     } catch (e) {
       set({
         isLoggingIn: false,
-        error:
+        loginError:
           e instanceof Error
             ? e.message
             : "Could not sign in for checkout. Please try again.",
@@ -270,7 +279,7 @@ export const useCheckoutStore = create<CheckoutState>((set, get) => ({
     }
   },
 
-  placeOrder: async (values, email) => {
+  placeOrder: async (shippingValues, email, billingValues) => {
     const {
       mode,
       selectedPaymentProviderId,
@@ -279,7 +288,7 @@ export const useCheckoutStore = create<CheckoutState>((set, get) => ({
     const cart = useCartStore.getState().cart;
     const isAuthenticated = useAuthStore.getState().isAuthenticated;
     const customer = useAuthStore.getState().customer;
-    const country = getSelectedCountry(values.countryCode);
+    const country = getSelectedCountry(shippingValues.countryCode);
 
     if (!cart) {
       set({ error: "Your cart is not ready yet." });
@@ -325,10 +334,19 @@ export const useCheckoutStore = create<CheckoutState>((set, get) => ({
             .transferCart(checkoutCartFields)) || cart;
       }
 
-      const address = addressFormToPayload(values);
+      const shippingAddress = addressFormToPayload(shippingValues);
+      const billingAddress = addressFormToPayload(
+        billingValues || shippingValues
+      );
       const cartWithAddress = await useCartStore
         .getState()
-        .updateCartAddress(email, address, country.regionId, checkoutCartFields);
+        .updateCartAddress(
+          email,
+          shippingAddress,
+          country.regionId,
+          billingAddress,
+          checkoutCartFields
+        );
 
       if (!cartWithAddress) {
         throw new Error("Cart address update failed.");
@@ -337,7 +355,7 @@ export const useCheckoutStore = create<CheckoutState>((set, get) => ({
       if (isAuthenticated) {
         await useAddressStore
           .getState()
-          .syncCheckoutAddress(values, customer, undefined);
+          .syncCheckoutAddress(shippingValues, customer, undefined);
       }
 
       const { cart: cartWithShipping } =
@@ -400,6 +418,7 @@ export const useCheckoutStore = create<CheckoutState>((set, get) => ({
       isLoggingIn: false,
       isSubmitting: false,
       error: null,
+      loginError: null,
     }),
 }));
 

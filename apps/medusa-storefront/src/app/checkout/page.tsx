@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import CheckoutAddressStep from "@/components/checkout/CheckoutAddressStep";
+import CheckoutBillingStep from "@/components/checkout/CheckoutBillingStep";
 import CheckoutIdentityStep from "@/components/checkout/CheckoutIdentityStep";
 import CheckoutOrderSummary from "@/components/checkout/CheckoutOrderSummary";
 import CheckoutPaymentStep from "@/components/checkout/CheckoutPaymentStep";
@@ -38,6 +39,8 @@ export default function CheckoutPage() {
   const loadCheckout = useCheckoutStore((s) => s.loadCheckout);
   const placeOrder = useCheckoutStore((s) => s.placeOrder);
   const isLoading = useCheckoutStore((s) => s.isLoading);
+  const isSubmitting = useCheckoutStore((s) => s.isSubmitting);
+  const isRefreshingOptions = useCheckoutStore((s) => s.isRefreshingOptions);
   const error = useCheckoutStore((s) => s.error);
   const shippingOptions = useCheckoutStore((s) => s.shippingOptions);
   const selectedShippingOptionId = useCheckoutStore(
@@ -45,6 +48,9 @@ export default function CheckoutPage() {
   );
   const [addressValues, setAddressValues] =
     useState<AddressFormValues>(emptyAddressValues);
+  const [billingAddressValues, setBillingAddressValues] =
+    useState<AddressFormValues>(emptyAddressValues);
+  const [billingSameAsShipping, setBillingSameAsShipping] = useState(true);
   const [email, setEmail] = useState("");
 
   const selectedCountry = useMemo(
@@ -68,6 +74,7 @@ export default function CheckoutPage() {
     if (isCancelled?.()) return;
 
     setAddressValues(result.addressValues);
+    setBillingAddressValues(result.addressValues);
     setEmail(result.cart?.email || customer?.email || "");
   }, [customer, loadCheckout]);
 
@@ -101,19 +108,39 @@ export default function CheckoutPage() {
     };
   }, [authHydrated, isAuthenticated, refreshCheckout, setMode]);
 
-  async function handleAddressSubmit(values: AddressFormValues) {
-    const validationError = validateAddressValues(values);
+  async function handlePlaceOrder(
+    shippingValues: AddressFormValues,
+    billingValues?: AddressFormValues
+  ) {
+    const validationError = validateAddressValues(shippingValues);
 
     if (validationError) {
       useCheckoutStore.setState({ error: validationError });
       return;
     }
 
-    const orderId = await placeOrder(values, email);
+    const finalBillingValues = billingSameAsShipping
+      ? shippingValues
+      : billingValues || billingAddressValues;
+    const billingValidationError = billingSameAsShipping
+      ? null
+      : validateAddressValues(finalBillingValues);
+
+    if (billingValidationError) {
+      useCheckoutStore.setState({ error: billingValidationError });
+      return;
+    }
+
+    const orderId = await placeOrder(shippingValues, email, finalBillingValues);
 
     if (orderId) {
       router.push(`/checkout/success?order_id=${orderId}`);
     }
+  }
+
+  function submitAddressForm(formId: string) {
+    const form = document.getElementById(formId) as HTMLFormElement | null;
+    form?.requestSubmit();
   }
 
   if (isLoading || !authHydrated || (cartId && !cart)) {
@@ -162,7 +189,33 @@ export default function CheckoutPage() {
                 defaultValues={addressValues}
                 isAuthenticated={isAuthenticated}
                 onEmailChange={setEmail}
-                onSubmit={handleAddressSubmit}
+                onSubmit={(values) => {
+                  setAddressValues(values);
+
+                  if (billingSameAsShipping) {
+                    void handlePlaceOrder(values, values);
+                    return;
+                  }
+
+                  submitAddressForm("checkout-billing-address-form");
+                }}
+              />
+              <CheckoutBillingStep
+                countries={countries}
+                defaultValues={billingAddressValues}
+                sameAsShipping={billingSameAsShipping}
+                isDisabled={isRefreshingOptions}
+                onSameAsShippingChange={(sameAsShipping) => {
+                  setBillingSameAsShipping(sameAsShipping);
+
+                  if (sameAsShipping) {
+                    setBillingAddressValues(addressValues);
+                  }
+                }}
+                onSubmit={(values) => {
+                  setBillingAddressValues(values);
+                  void handlePlaceOrder(addressValues, values);
+                }}
               />
               <CheckoutShippingStep currencyCode={currencyCode} />
               <CheckoutPaymentStep />
@@ -180,6 +233,10 @@ export default function CheckoutPage() {
           shippingTotal={cart.shipping_total || 0}
           currencyCode={currencyCode}
           error={error}
+          isSubmitting={isSubmitting}
+          isSubmitDisabled={
+            isRefreshingOptions || mode === "choose" || mode === "login"
+          }
         />
       </div>
     </Container>

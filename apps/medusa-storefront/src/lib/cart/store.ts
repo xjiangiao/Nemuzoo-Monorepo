@@ -67,8 +67,9 @@ interface CartState {
   ) => Promise<CheckoutCart | null>;
   updateCartAddress: (
     email: string,
-    address: CartAddressPayload,
+    shippingAddress: CartAddressPayload,
     regionId?: string,
+    billingAddress?: CartAddressPayload,
     fields?: string
   ) => Promise<CheckoutCart | null>;
   setCartFromResponse: (cart: any) => void;
@@ -190,8 +191,9 @@ export const useCartStore = create<CartState>((set, get) => ({
 
   updateCartAddress: async (
     email: string,
-    address: CartAddressPayload,
+    shippingAddress: CartAddressPayload,
     regionId?: string,
+    billingAddress?: CartAddressPayload,
     fields = checkoutCartFields
   ) => {
     const { cartId } = get();
@@ -202,8 +204,8 @@ export const useCartStore = create<CartState>((set, get) => ({
       {
         email,
         ...(regionId ? { region_id: regionId } : {}),
-        shipping_address: address,
-        billing_address: address,
+        shipping_address: shippingAddress,
+        billing_address: billingAddress || shippingAddress,
       },
       { fields }
     );
