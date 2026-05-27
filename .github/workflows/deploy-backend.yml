@@ -89,7 +89,7 @@ jobs:
                   start_period: 30s
             COMPOSEEOF
 
-            # Write .env from GitHub Secrets on every deploy
+            # Write .env from GitHub Secrets and Variables on every deploy
             cat > .env << 'ENVEOF'
             NODE_ENV=production
             PORT=9000
@@ -103,10 +103,22 @@ jobs:
             MEDUSA_ADMIN_ONBOARDING_TYPE=default
             R2_FILE_URL=${{ secrets.R2_FILE_URL }}
             R2_ENDPOINT=${{ secrets.R2_ENDPOINT }}
-            R2_BUCKET=${{ secrets.R2_BUCKET }}
+            R2_BUCKET=${{ vars.R2_BUCKET }}
             R2_ACCESS_KEY_ID=${{ secrets.R2_ACCESS_KEY_ID }}
             R2_SECRET_ACCESS_KEY=${{ secrets.R2_SECRET_ACCESS_KEY }}
             ENVEOF
+
+            missing_env=""
+            for name in DATABASE_URL REDIS_URL JWT_SECRET COOKIE_SECRET STORE_CORS ADMIN_CORS AUTH_CORS R2_FILE_URL R2_ENDPOINT R2_BUCKET R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY; do
+              if ! grep -q "^${name}=." .env; then
+                missing_env="${missing_env} ${name}"
+              fi
+            done
+
+            if [ -n "$missing_env" ]; then
+              echo "Missing deploy environment values:${missing_env}"
+              exit 1
+            fi
 
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             docker pull ghcr.io/${{ env.IMAGE_NAME }}:latest

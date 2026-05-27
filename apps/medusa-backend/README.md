@@ -54,7 +54,7 @@ Required environment variables:
 - `R2_ACCESS_KEY_ID`: R2 API token access key ID.
 - `R2_SECRET_ACCESS_KEY`: R2 API token secret access key.
 
-Production deploys write these values from GitHub Secrets in `.github/workflows/deploy-backend.yml`. The backend fails fast on production startup if any required R2 variable is missing, while Docker image builds can still run before deploy-time secrets are injected.
+Production deploys write these values from GitHub Secrets and Repository Variables in `.github/workflows/deploy-backend.yml`. `R2_BUCKET` is read from Repository Variables, while the access keys and endpoint are read from Secrets. If any R2 value is missing at production startup, the backend logs the missing names and keeps running, but file uploads will fail until the deploy configuration is corrected.
 
 ## What is Medusa
 

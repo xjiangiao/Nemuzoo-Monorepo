@@ -13,13 +13,27 @@ const requiredR2EnvNames = [
 const missingR2EnvNames = requiredR2EnvNames.filter((name) => !process.env[name])
 
 if (process.env.NODE_ENV === "production" && missingR2EnvNames.length) {
-  throw new Error(
-    `Missing required R2 environment variables: ${missingR2EnvNames.join(", ")}`
+  console.warn(
+    `Missing R2 environment variables: ${missingR2EnvNames.join(", ")}. File uploads will fail until they are configured.`
   )
 }
 
 const getR2Env = (name: string) => {
   return process.env[name] || `missing-${name.toLowerCase()}`
+}
+
+const getR2Endpoint = () => {
+  return process.env.R2_ENDPOINT || "https://example.com"
+}
+
+const getR2FileUrl = () => {
+  const fileUrl = process.env.R2_FILE_URL
+
+  if (!fileUrl) {
+    return "https://example.com"
+  }
+
+  return /^https?:\/\//.test(fileUrl) ? fileUrl : `https://${fileUrl}`
 }
 
 module.exports = defineConfig({
@@ -43,10 +57,10 @@ module.exports = defineConfig({
             resolve: "@medusajs/file-s3",
             id: "r2",
             options: {
-              file_url: getR2Env("R2_FILE_URL"),
+              file_url: getR2FileUrl(),
               access_key_id: getR2Env("R2_ACCESS_KEY_ID"),
               secret_access_key: getR2Env("R2_SECRET_ACCESS_KEY"),
-              endpoint: getR2Env("R2_ENDPOINT"),
+              endpoint: getR2Endpoint(),
               bucket: getR2Env("R2_BUCKET"),
               region: "auto",
               additional_client_config: {
