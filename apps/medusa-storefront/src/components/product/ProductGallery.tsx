@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import ProductImage from "@/components/media/ProductImage";
 
 interface ProductGalleryProps {
   images: Array<{ url: string; alt?: string }>;
@@ -25,12 +25,16 @@ export default function ProductGallery({
   return (
     <div className="space-y-4">
       <div className="aspect-square bg-surface-secondary rounded-xl overflow-hidden relative">
-        <Image
+        <ProductImage
           src={images[activeIndex].url}
           alt={images[activeIndex].alt || title}
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
           priority
+          transformation={[
+            { width: 1200, height: 1200, crop: "maintain_ratio" },
+            { quality: 88, format: "auto" },
+          ]}
           className="object-cover"
         />
       </div>
@@ -49,11 +53,15 @@ export default function ProductGallery({
               }`}
               aria-label={`View image ${i + 1}`}
             >
-              <Image
+              <ProductImage
                 src={img.url}
                 alt={img.alt || `${title} ${i + 1}`}
                 fill
                 sizes="80px"
+                transformation={[
+                  { width: 160, height: 160, crop: "maintain_ratio" },
+                  { quality: 80, format: "auto" },
+                ]}
                 className="object-cover"
               />
             </button>

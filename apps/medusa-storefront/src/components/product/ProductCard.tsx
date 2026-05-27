@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
 import Badge from "@/components/ui/Badge";
+import ProductImage from "@/components/media/ProductImage";
 import { formatPrice, getProductThumbnail, getProductPrice } from "@/lib/utils";
 import type { Product } from "@/types";
 
@@ -30,11 +30,15 @@ export default function ProductCard({ product }: ProductCardProps) {
     >
       <div className="aspect-square bg-surface-secondary rounded-xl overflow-hidden mb-4 relative">
         {thumbnail ? (
-          <Image
+          <ProductImage
             src={thumbnail}
             alt={product.title}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            transformation={[
+              { width: 800, height: 800, crop: "maintain_ratio" },
+              { quality: 85, format: "auto" },
+            ]}
             className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
           />
         ) : (
