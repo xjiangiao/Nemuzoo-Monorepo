@@ -42,6 +42,20 @@ Visit the [Quickstart Guide](https://docs.medusajs.com/learn/installation) to se
 
 Visit the [Docs](https://docs.medusajs.com/learn/installation#get-started) to learn more about our system requirements.
 
+## Cloudflare R2 file storage
+
+This backend stores uploaded Medusa files through the `@medusajs/file-s3` provider, configured for Cloudflare R2 in `medusa-config.ts`.
+
+Required environment variables:
+
+- `R2_FILE_URL`: public base URL used by Medusa when returning uploaded file URLs. Use a public bucket URL or a custom domain, not the private S3 API endpoint.
+- `R2_ENDPOINT`: Cloudflare R2 S3 API endpoint, usually `https://<account-id>.r2.cloudflarestorage.com`.
+- `R2_BUCKET`: target R2 bucket name.
+- `R2_ACCESS_KEY_ID`: R2 API token access key ID.
+- `R2_SECRET_ACCESS_KEY`: R2 API token secret access key.
+
+Production deploys write these values from GitHub Secrets in `.github/workflows/deploy-backend.yml`. The backend fails fast on production startup if any required R2 variable is missing, while Docker image builds can still run before deploy-time secrets are injected.
+
 ## What is Medusa
 
 Medusa is a set of commerce modules and tools that allow you to build rich, reliable, and performant commerce applications without reinventing core commerce logic. The modules can be customized and used to build advanced ecommerce stores, marketplaces, or any product that needs foundational commerce primitives. All modules are open-source and freely available on npm.
