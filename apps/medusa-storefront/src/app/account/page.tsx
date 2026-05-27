@@ -116,6 +116,7 @@ function AccountSectionButton({
     <button
       type="button"
       onClick={onClick}
+      aria-pressed={isActive}
       className={`rounded-xl border p-4 text-left transition-colors ${
         isActive
           ? "border-accent bg-accent/10"

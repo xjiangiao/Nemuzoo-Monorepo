@@ -36,7 +36,7 @@ export default function CheckoutOrderSummary({
     ? getShippingOptionAmount(selectedShippingOption)
     : shippingTotal;
   const total = hasShippingMethod
-    ? cartTotal ?? subtotal + shippingPreview
+    ? cartTotal ?? subtotal + shippingPreview + taxTotal
     : subtotal + shippingPreview + taxTotal;
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useMemo } from "react";
 import { useForm, useWatch } from "react-hook-form";
 
 import Button from "@/components/ui/Button";
@@ -59,7 +59,10 @@ export default function AddressForm({
     defaultValues,
   });
   const countryCode = useWatch({ control, name: "countryCode" });
-  const provinceOptions = getProvinceOptions(countryCode);
+  const provinceOptions = useMemo(
+    () => getProvinceOptions(countryCode),
+    [countryCode]
+  );
   const hasProvinceOptions = provinceOptions.length > 0;
   const areFieldsDisabled = fieldsDisabled ?? disabled;
 
@@ -144,7 +147,7 @@ export default function AddressForm({
         </div>
         <div className="space-y-2">
           <Label htmlFor={`${id || "address"}-province`}>
-            {hasProvinceOptions ? "State / Province" : "State / Province"}
+            State / Province
           </Label>
           {hasProvinceOptions ? (
             <select

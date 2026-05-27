@@ -38,6 +38,7 @@ export default function CheckoutAddressStep({
           <Input
             id="checkout-email"
             type="email"
+            form="checkout-address-form"
             value={email}
             onChange={(event) => onEmailChange(event.target.value)}
             disabled={isAuthenticated}

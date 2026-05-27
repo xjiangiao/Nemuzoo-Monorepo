@@ -150,7 +150,7 @@ export function addressToFormValues(
     city: address?.city || "",
     province: normalizeProvince(address?.province),
     postalCode: address?.postal_code || "",
-    countryCode: address?.country_code || DEFAULT_COUNTRY_CODE,
+    countryCode: (address?.country_code || DEFAULT_COUNTRY_CODE).toLowerCase(),
     phone: address?.phone || "",
   };
 }
@@ -178,7 +178,7 @@ export function addressFormToPayload(
     city: values.city,
     province: values.province || null,
     postal_code: values.postalCode,
-    country_code: values.countryCode,
+    country_code: values.countryCode.toLowerCase(),
     ...(kind
       ? {
           address_name:

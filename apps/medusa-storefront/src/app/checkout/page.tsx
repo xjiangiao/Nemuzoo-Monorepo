@@ -116,7 +116,7 @@ export default function CheckoutPage() {
     }
   }
 
-  if (isLoading || !authHydrated) {
+  if (isLoading || !authHydrated || (cartId && !cart)) {
     return (
       <Container className="py-16 lg:py-20">
         <div className="flex items-center gap-2 text-sm text-text-secondary">

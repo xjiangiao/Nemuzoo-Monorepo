@@ -138,9 +138,9 @@ export const useAddressStore = create<AddressState>((set, get) => ({
     addressId?: string
   ) => {
     const { customerAddresses, saveCustomerAddress } = get();
-    const currentAddress =
-      customerAddresses.find((address) => address.id === addressId) ||
-      customerAddresses[0];
+    const currentAddress = addressId
+      ? customerAddresses.find((address) => address.id === addressId)
+      : undefined;
 
     await medusaClient.store.customer.update({
       first_name: values.firstName,

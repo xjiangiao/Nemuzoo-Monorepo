@@ -20,7 +20,7 @@ export default function AccountProfileCard({ customer }: AccountProfileCardProps
         </div>
         <div>
           <span className="text-text-muted">Email</span>
-          <p className="text-text-primary">{customer?.email}</p>
+          <p className="text-text-primary">{customer?.email || "-"}</p>
         </div>
         {customer?.created_at && (
           <div>

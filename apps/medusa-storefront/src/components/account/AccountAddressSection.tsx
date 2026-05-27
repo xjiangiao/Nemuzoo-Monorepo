@@ -48,22 +48,34 @@ export default function AccountAddressSection({
     let cancelled = false;
 
     async function loadAddresses() {
-      const [, addresses] = await Promise.all([
-        loadCountries(),
-        loadCustomerAddresses(),
-      ]);
+      try {
+        const [, addresses] = await Promise.all([
+          loadCountries(),
+          loadCustomerAddresses(),
+        ]);
 
-      if (cancelled) return;
+        if (cancelled) return;
 
-      const defaultShipping =
-        addresses.find((address) => address.is_default_shipping) ||
-        addresses[0];
-      const defaultBilling = addresses.find(
-        (address) => address.is_default_billing
-      );
+        const defaultShipping =
+          addresses.find((address) => address.is_default_shipping) ||
+          addresses[0];
+        const defaultBilling = addresses.find(
+          (address) => address.is_default_billing
+        );
 
-      setShippingValues(savedAddressToFormValues(defaultShipping, fallbackName));
-      setBillingValues(savedAddressToFormValues(defaultBilling, fallbackName));
+        setShippingValues(
+          savedAddressToFormValues(defaultShipping, fallbackName)
+        );
+        setBillingValues(savedAddressToFormValues(defaultBilling, fallbackName));
+      } catch (e) {
+        if (cancelled) return;
+
+        setError(
+          e instanceof Error ? e.message : "Could not load your saved addresses."
+        );
+        setShippingValues(savedAddressToFormValues(undefined, fallbackName));
+        setBillingValues(savedAddressToFormValues(undefined, fallbackName));
+      }
     }
 
     void loadAddresses();
