@@ -34,7 +34,7 @@ export default function ProductImage({
 
   return (
     <ImageKitImage
-      src={getImageKitSrc(src, imageKitUrlEndpoint)}
+      src={getImageKitSrc(src)}
       transformation={transformation}
       urlEndpoint={imageKitUrlEndpoint}
       {...props}

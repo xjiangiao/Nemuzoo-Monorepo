@@ -22,7 +22,7 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 Product images are uploaded by Medusa to Cloudflare R2 and delivered through ImageKit in the storefront. Set `NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT` to the ImageKit URL endpoint configured to proxy `https://static.nemuzoo.com`.
 
-The storefront wraps absolute Medusa image URLs in ImageKit's encoded web proxy format, so the Medusa backend and stored product image URLs do not need to change.
+The storefront converts absolute Medusa R2 image URLs into ImageKit-relative paths, so the Medusa backend and stored product image URLs do not need to change.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 

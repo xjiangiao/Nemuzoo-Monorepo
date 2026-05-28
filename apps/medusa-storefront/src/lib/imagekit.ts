@@ -14,23 +14,11 @@ export function resolveImageKitEndpoint(value?: string) {
   }
 }
 
-export function isLocalImagePath(src: string) {
-  return (
-    src.startsWith("/") &&
-    !src.startsWith("/http://") &&
-    !src.startsWith("/https://")
-  );
-}
-
 const imageKitProxyHosts = ["static.nemuzoo.com"];
 
 export function shouldProxyWithImageKit(src: string) {
   try {
-    const parsed = new URL(
-      src.startsWith("/http://") || src.startsWith("/https://")
-        ? src.slice(1)
-        : src
-    );
+    const parsed = new URL(src);
 
     return imageKitProxyHosts.includes(parsed.hostname);
   } catch {
@@ -38,14 +26,11 @@ export function shouldProxyWithImageKit(src: string) {
   }
 }
 
-export function getImageKitSrc(src: string, urlEndpoint: string) {
-  if (src.startsWith(`${urlEndpoint}/`)) {
-    return src.slice(urlEndpoint.length);
+export function getImageKitSrc(src: string) {
+  try {
+    const parsed = new URL(src);
+    return `${parsed.pathname}${parsed.search}`;
+  } catch {
+    return src;
   }
-
-  if (src.startsWith("/http://") || src.startsWith("/https://")) {
-    return `/${encodeURIComponent(src.slice(1))}`;
-  }
-
-  return `/${encodeURIComponent(src)}`;
 }
