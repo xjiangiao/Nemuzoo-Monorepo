@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import ProductImage from "@/components/media/ProductImage";
 import QuantitySelector from "@/components/ui/QuantitySelector";
 import { formatPrice } from "@/lib/utils";
 
@@ -36,11 +36,15 @@ export default function CartItem({ item, onUpdateQuantity, onRemove }: CartItemP
         className="shrink-0 w-24 h-24 bg-surface-secondary rounded-lg overflow-hidden relative"
       >
         {item.thumbnail ? (
-          <Image
+          <ProductImage
             src={item.thumbnail}
             alt={item.title}
             fill
             sizes="96px"
+            transformation={[
+              { width: 192, height: 192, crop: "maintain_ratio" },
+              { quality: 80, format: "auto" },
+            ]}
             className="object-cover"
           />
         ) : (

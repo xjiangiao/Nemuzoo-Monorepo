@@ -1,5 +1,22 @@
 import type { NextConfig } from "next";
 import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+import { resolveImageKitEndpoint } from "./src/lib/imagekit";
+
+const imageKitUrlEndpoint = resolveImageKitEndpoint(
+  process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT
+);
+const imageKitRemotePattern = imageKitUrlEndpoint
+  ? (() => {
+      const url = new URL(imageKitUrlEndpoint);
+      const protocol: "http" | "https" =
+        url.protocol === "http:" ? "http" : "https";
+
+      return {
+        protocol,
+        hostname: url.hostname,
+      };
+    })()
+  : null;
 
 const nextConfig: NextConfig = {
   images: {
@@ -17,6 +34,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "medusa-public-images.s3.eu-west-1.amazonaws.com",
       },
+      {
+        protocol: "https",
+        hostname: "ik.imagekit.io",
+      },
+      ...(imageKitRemotePattern ? [imageKitRemotePattern] : []),
       {
         protocol: "http",
         hostname: "localhost",

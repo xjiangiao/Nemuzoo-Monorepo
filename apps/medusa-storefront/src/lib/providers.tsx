@@ -2,8 +2,14 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
+import { ImageKitProvider } from "@imagekit/next";
 import { CartHydrate } from "@/lib/cart/cart-hydrate";
 import { AuthHydrate } from "@/lib/auth/auth-hydrate";
+import { resolveImageKitEndpoint } from "@/lib/imagekit";
+
+const imageKitUrlEndpoint = resolveImageKitEndpoint(
+  process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT
+);
 
 /**
  * Wraps application content with React Query and hydration providers for auth and cart state.
@@ -28,11 +34,21 @@ export function Providers({ children }: { children: React.ReactNode }) {
       })
   );
 
-  return (
+  const content = (
     <QueryClientProvider client={queryClient}>
       <AuthHydrate>
         <CartHydrate>{children}</CartHydrate>
       </AuthHydrate>
     </QueryClientProvider>
+  );
+
+  if (!imageKitUrlEndpoint) {
+    return content;
+  }
+
+  return (
+    <ImageKitProvider urlEndpoint={imageKitUrlEndpoint}>
+      {content}
+    </ImageKitProvider>
   );
 }

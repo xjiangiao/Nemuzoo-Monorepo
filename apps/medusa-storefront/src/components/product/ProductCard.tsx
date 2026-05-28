@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
 import Badge from "@/components/ui/Badge";
+import ProductImage from "@/components/media/ProductImage";
 import { formatPrice, getProductThumbnail, getProductPrice } from "@/lib/utils";
 import type { Product } from "@/types";
 
@@ -15,7 +15,7 @@ interface ProductCardProps {
  * @param product - Product data containing at least `id`, `title`, and `handle`. May include `thumbnail`, `images`, `variants`, `metadata`, and optional pricing fields; if `metadata.personality` is a string it will be shown as a badge.
  * @returns A JSX element representing the product card linked to `/products/[handle]`.
  */
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, priority = false }: ProductCardProps) {
   const thumbnail = getProductThumbnail(product);
   const price = getProductPrice(product);
   const personality =
@@ -30,11 +30,16 @@ export default function ProductCard({ product }: ProductCardProps) {
     >
       <div className="aspect-square bg-surface-secondary rounded-xl overflow-hidden mb-4 relative">
         {thumbnail ? (
-          <Image
+          <ProductImage
             src={thumbnail}
             alt={product.title}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            priority={priority}
+            transformation={[
+              { width: 800, height: 800, crop: "maintain_ratio" },
+              { quality: 85, format: "auto" },
+            ]}
             className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
           />
         ) : (
