@@ -36,17 +36,22 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/favicon-32x32.png",
+        url: "/nemuzoo-icon.svg",
+        type: "image/svg+xml",
+      },
+      {
+        url: "/nemuzoo-icon-32.png",
         type: "image/png",
         sizes: "32x32",
       },
       {
-        url: "/favicon.svg",
-        type: "image/svg+xml",
+        url: "/nemuzoo-icon-16.png",
+        type: "image/png",
+        sizes: "16x16",
       },
     ],
-    shortcut: "/favicon-32x32.png",
-    apple: "/apple-touch-icon.png",
+    shortcut: "/nemuzoo-icon-32.png",
+    apple: "/nemuzoo-apple-touch-icon.png",
   },
 };
 
@@ -65,8 +70,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("h-full antialiased", "font-sans")}>
-      <body className="min-h-full flex flex-col bg-surface-primary text-text-primary font-body">
+    <html
+      lang="en"
+      className={cn("h-full antialiased", "font-sans")}
+      suppressHydrationWarning
+    >
+      <body className="flex min-h-full flex-col bg-surface-primary font-body text-text-primary">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

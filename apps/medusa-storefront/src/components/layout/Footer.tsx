@@ -32,7 +32,7 @@ export default function Footer() {
                 alt="nemuzoo"
                 width={148}
                 height={22}
-                className="h-6 w-auto opacity-80"
+                className="opacity-80"
               />
             </Link>
             <p className="mt-3 text-sm text-text-secondary leading-relaxed">

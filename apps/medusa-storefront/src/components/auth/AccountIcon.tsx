@@ -15,8 +15,8 @@ export default function AccountIcon() {
 
   if (!hydrated && isLoading) {
     return (
-      <div className="p-2 text-text-muted" aria-hidden="true">
-        <UserIcon className="size-4 opacity-40" />
+      <div className="flex h-10 w-10 items-center justify-center text-text-muted" aria-hidden="true">
+        <UserIcon className="size-5 opacity-40" />
       </div>
     );
   }

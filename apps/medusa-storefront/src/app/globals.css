@@ -4,7 +4,7 @@
 /*
  ---break---
 */
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is([data-theme="dark"] *));
 
 /* ============================================
    Nemuzoo Design Tokens
@@ -71,31 +71,54 @@
   --sidebar-ring: var(--color-accent);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-surface-primary: #181618;
-    --color-surface-secondary: rgba(255, 255, 255, 0.075);
-    --color-surface-elevated: rgba(255, 255, 255, 0.09);
-    --color-surface-muted: rgba(205, 198, 225, 0.10);
-    --color-text-primary: #F4EEE7;
-    --color-text-secondary: rgba(244, 238, 231, 0.70);
-    --color-text-muted: #B9B0C8;
-    --color-text-inverse: #2E2E33;
-    --color-accent: #A7B0C6;
-    --color-accent-hover: #BAC3D7;
-    --color-accent-soft: #CDC6E1;
-    --color-accent-light: rgba(205, 198, 225, 0.18);
-    --color-accent-subtle: rgba(205, 198, 225, 0.12);
-    --color-warm: #F4EEE7;
-    --color-warm-hover: #FFFFFF;
-    --color-warm-light: rgba(255, 255, 255, 0.12);
-    --color-warm-subtle: rgba(255, 255, 255, 0.08);
-    --color-border-primary: rgba(255, 255, 255, 0.14);
-    --color-border-secondary: rgba(255, 255, 255, 0.10);
-    --color-success: #7A9E7A;
-    --color-error: #CC8080;
-    --color-warning: #C4A864;
-  }
+[data-theme="light"] {
+  --color-surface-primary: #F7F5F2;
+  --color-surface-secondary: #EDE9E2;
+  --color-surface-elevated: rgba(255, 255, 255, 0.68);
+  --color-surface-muted: #F1EEF5;
+  --color-text-primary: #2E2E33;
+  --color-text-secondary: rgba(46, 46, 51, 0.68);
+  --color-text-muted: #8E879C;
+  --color-text-inverse: #FFFFFF;
+  --color-accent: #A7B0C6;
+  --color-accent-hover: #8E99B4;
+  --color-accent-soft: #CDC6E1;
+  --color-accent-light: #E7E3F1;
+  --color-accent-subtle: rgba(205, 198, 225, 0.36);
+  --color-warm: #2E2E33;
+  --color-warm-hover: #44424B;
+  --color-warm-light: #EDE9E2;
+  --color-warm-subtle: rgba(237, 233, 226, 0.74);
+  --color-border-primary: rgba(46, 46, 51, 0.10);
+  --color-border-secondary: rgba(46, 46, 51, 0.07);
+  --color-success: #8FAF8F;
+  --color-error: #C49090;
+  --color-warning: #D4B874;
+}
+
+[data-theme="dark"] {
+  --color-surface-primary: #181618;
+  --color-surface-secondary: rgba(255, 255, 255, 0.075);
+  --color-surface-elevated: rgba(255, 255, 255, 0.09);
+  --color-surface-muted: rgba(205, 198, 225, 0.10);
+  --color-text-primary: #F4EEE7;
+  --color-text-secondary: rgba(244, 238, 231, 0.70);
+  --color-text-muted: #B9B0C8;
+  --color-text-inverse: #2E2E33;
+  --color-accent: #A7B0C6;
+  --color-accent-hover: #BAC3D7;
+  --color-accent-soft: #CDC6E1;
+  --color-accent-light: rgba(205, 198, 225, 0.18);
+  --color-accent-subtle: rgba(205, 198, 225, 0.12);
+  --color-warm: #F4EEE7;
+  --color-warm-hover: #FFFFFF;
+  --color-warm-light: rgba(255, 255, 255, 0.12);
+  --color-warm-subtle: rgba(255, 255, 255, 0.08);
+  --color-border-primary: rgba(255, 255, 255, 0.14);
+  --color-border-secondary: rgba(255, 255, 255, 0.10);
+  --color-success: #7A9E7A;
+  --color-error: #CC8080;
+  --color-warning: #C4A864;
 }
 
 /* --- Register with Tailwind v4 @theme --- */
@@ -225,6 +248,26 @@
   transform-origin: top center;
 }
 
+.theme-toggle-sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.theme-toggle-moon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0);
+}
+
+[data-theme="dark"] .theme-toggle-sun {
+  opacity: 0;
+  transform: rotate(90deg) scale(0);
+}
+
+[data-theme="dark"] .theme-toggle-moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
 /* --- Base Styles --- */
 body {
   background-color: var(--color-surface-primary);
@@ -236,6 +279,17 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
+}
+
+button:not(:disabled),
+a[href],
+[role="button"]:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
 }
 
 .soft-shadow {
@@ -259,7 +313,7 @@ h1, h2, h3, h4, h5, h6 {
     linear-gradient(145deg, #CDC6E1, #A7B0C6);
 }
 
-@media (prefers-color-scheme: dark) {
+[data-theme="dark"] {
   .soft-shadow {
     box-shadow: 0 28px 70px rgba(0, 0, 0, 0.32);
   }
@@ -287,7 +341,7 @@ h1, h2, h3, h4, h5, h6 {
 /*
  ---break---
 */
-.dark {
+[data-theme="dark"] {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
