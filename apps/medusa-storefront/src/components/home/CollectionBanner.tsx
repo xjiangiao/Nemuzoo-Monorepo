@@ -38,7 +38,7 @@ export default function CollectionBanners() {
             <Link
               key={col.title}
               href={col.href}
-              className="soft-shadow group rounded-[2rem] border border-border-primary bg-surface-elevated p-8 transition hover:-translate-y-1 lg:p-10"
+              className="soft-shadow group rounded-[2rem] border border-border-primary bg-surface-elevated p-8 transition-colors hover:bg-white/70 lg:p-10"
             >
               <div className="flex items-center gap-2 mb-4">
                 <StarDecoration size="sm" variant="accent" />

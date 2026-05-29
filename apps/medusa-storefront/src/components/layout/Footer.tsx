@@ -10,11 +10,10 @@ const footerLinks = {
   ],
   company: [
     { label: "About Nemuzoo", href: "/about" },
-    { label: "FAQ", href: "/faq" },
+    { label: "Care & FAQ", href: "/faq" },
     { label: "Contact", href: "/contact" },
   ],
   policies: [
-    { label: "Shipping & Returns", href: "/shipping" },
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
   ],

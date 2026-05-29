@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import CartIcon from "@/components/cart/CartIcon";
@@ -16,9 +16,37 @@ import { Menu, X } from "lucide-react";
  */
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!headerRef.current?.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [menuOpen]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border-primary bg-surface-primary/85 backdrop-blur-xl">
+    <header
+      ref={headerRef}
+      className="sticky top-0 z-50 border-b border-border-primary bg-surface-primary/85 backdrop-blur-xl"
+    >
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 lg:px-8">
         <Link
           href="/"
@@ -58,6 +86,7 @@ export default function Header() {
 
         <div className="flex items-center gap-3">
           <AccountIcon />
+          <CartIcon />
           <button
             type="button"
             className="rounded-full border border-border-primary bg-surface-elevated p-2 text-text-secondary transition-colors hover:text-text-primary md:hidden"
@@ -68,14 +97,16 @@ export default function Header() {
           >
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
-          <CartIcon />
         </div>
       </div>
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden border-t border-border-primary bg-surface-primary/95 backdrop-blur-xl">
-          <nav id="mobile-site-nav" className="space-y-1 px-5 py-4">
+        <div className="absolute left-0 right-0 top-full z-10 md:hidden">
+          <nav
+            id="mobile-site-nav"
+            className="mobile-menu-panel mx-4 mt-3 space-y-1 rounded-[2rem] border border-border-primary bg-surface-primary/95 p-3 shadow-xl backdrop-blur-xl"
+          >
             <Link
               href="/products"
               onClick={() => setMenuOpen(false)}

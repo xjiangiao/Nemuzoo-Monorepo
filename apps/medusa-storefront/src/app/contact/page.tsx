@@ -1,68 +1,104 @@
 import type { Metadata } from "next";
 import Container from "@/components/layout/Container";
-import StarDecoration from "@/components/ui/StarDecoration";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with Nemuzoo — we would love to hear from you.",
+  description: "Get in touch with Nemuzoo for plush, order, and care support.",
 };
 
-/**
- * Renders the Contact page with support and order contact details.
- *
- * Displays a centered heading and descriptive paragraph, two bordered email
- * contact cards for general support and order inquiries, and a short
- * response-time note — all wrapped in the shared `Container`.
- *
- * @returns A JSX element representing the Contact page layout
- */
+const contacts = [
+  {
+    label: "General support",
+    email: "support@nemuzoo.com",
+    description: "Care questions, product details, gifting, and anything soft.",
+  },
+  {
+    label: "Order help",
+    email: "orders@nemuzoo.com",
+    description: "Shipping updates, returns, exchanges, and order changes.",
+  },
+];
+
 export default function ContactPage() {
   return (
-    <Container className="py-16 lg:py-20">
-      <div className="max-w-2xl mx-auto text-center">
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <StarDecoration variant="warm" size="sm" />
-          <span className="text-sm text-warm tracking-widest uppercase font-heading">
-            Contact
-          </span>
-        </div>
-        <h1 className="text-4xl lg:text-5xl font-bold text-text-primary mb-4 font-heading">
-          We Would Love to Hear from You
-        </h1>
-        <p className="text-base text-text-secondary mb-12 max-w-md mx-auto" style={{ fontWeight: 300 }}>
-          Whether you have a question about a doll, need help with an order, or
-          just want to say hello — we are here for you.
-        </p>
+    <main>
+      <Container className="grid gap-10 py-14 lg:grid-cols-[0.85fr_1fr] lg:py-16">
+        <section>
+          <p className="font-mono text-xs uppercase tracking-[0.24em] text-text-muted">
+            contact
+          </p>
+          <h1 className="mt-4 max-w-3xl font-heading text-5xl font-black leading-[0.96] text-text-primary sm:text-6xl lg:text-7xl">
+            Questions, order help, or a soft hello.
+          </h1>
+          <p className="mt-7 max-w-xl text-lg leading-8 text-text-secondary">
+            Tell us what you need and we will point you to the clearest next
+            step. We aim to respond within 24 hours on business days.
+          </p>
+        </section>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
-          <div className="bg-surface-elevated rounded-xl p-6 border border-border-primary">
-            <h3 className="text-sm font-medium text-text-primary font-heading mb-2">
-              Email
-            </h3>
-            <a
-              href="mailto:support@nemuzoo.com"
-              className="text-sm text-accent hover:text-accent-hover transition-colors"
-            >
-              support@nemuzoo.com
-            </a>
+        <section className="relative overflow-hidden rounded-[2.5rem] bg-surface-secondary p-6 md:p-8">
+          <div className="grain absolute inset-0 opacity-70" aria-hidden="true" />
+          <div className="relative grid gap-5">
+            {contacts.map((item) => (
+              <article
+                key={item.email}
+                className="rounded-[2rem] bg-white/65 p-6 backdrop-blur"
+              >
+                <p className="font-mono text-xs uppercase tracking-[0.18em] text-text-muted">
+                  {item.label}
+                </p>
+                <a
+                  href={`mailto:${item.email}`}
+                  className="mt-3 block break-words font-heading text-2xl font-black text-[#2E2E33] transition-colors hover:text-[#5C5963]"
+                >
+                  {item.email}
+                </a>
+                <p className="mt-3 text-sm leading-7 text-[#2E2E33]/65">
+                  {item.description}
+                </p>
+              </article>
+            ))}
           </div>
-          <div className="bg-surface-elevated rounded-xl p-6 border border-border-primary">
-            <h3 className="text-sm font-medium text-text-primary font-heading mb-2">
-              Order Inquiries
-            </h3>
-            <a
-              href="mailto:orders@nemuzoo.com"
-              className="text-sm text-accent hover:text-accent-hover transition-colors"
-            >
-              orders@nemuzoo.com
-            </a>
-          </div>
-        </div>
+        </section>
+      </Container>
 
-        <p className="mt-10 text-sm text-text-muted" style={{ fontWeight: 300 }}>
-          We aim to respond within 24 hours on business days.
-        </p>
-      </div>
-    </Container>
+      <section className="border-y border-border-primary bg-white/45">
+        <Container className="grid gap-6 py-14 md:grid-cols-3">
+          <article className="rounded-[2rem] bg-surface-primary p-7">
+            <p className="font-mono text-xs uppercase tracking-[0.18em] text-text-muted">
+              01
+            </p>
+            <h2 className="mt-4 font-heading text-2xl font-black text-text-primary">
+              Include your order number
+            </h2>
+            <p className="mt-3 text-sm leading-7 text-text-secondary">
+              It helps us find shipping, returns, and product details quickly.
+            </p>
+          </article>
+          <article className="rounded-[2rem] bg-surface-primary p-7">
+            <p className="font-mono text-xs uppercase tracking-[0.18em] text-text-muted">
+              02
+            </p>
+            <h2 className="mt-4 font-heading text-2xl font-black text-text-primary">
+              Send a photo when useful
+            </h2>
+            <p className="mt-3 text-sm leading-7 text-text-secondary">
+              For care questions or damaged packages, one clear image is enough.
+            </p>
+          </article>
+          <article className="rounded-[2rem] bg-surface-primary p-7">
+            <p className="font-mono text-xs uppercase tracking-[0.18em] text-text-muted">
+              03
+            </p>
+            <h2 className="mt-4 font-heading text-2xl font-black text-text-primary">
+              Check Care & FAQ first
+            </h2>
+            <p className="mt-3 text-sm leading-7 text-text-secondary">
+              Shipping, cleaning, gifting, and returns now live together there.
+            </p>
+          </article>
+        </Container>
+      </section>
+    </main>
   );
 }

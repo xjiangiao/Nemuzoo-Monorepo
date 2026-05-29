@@ -26,7 +26,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
   return (
     <Link
       href={`/products/${product.handle}`}
-      className="soft-shadow group block rounded-[2rem] bg-surface-elevated p-4 transition hover:-translate-y-1"
+      className="soft-shadow group block rounded-[2rem] bg-surface-elevated p-4 transition-colors hover:bg-white/80"
     >
       <div className="relative mb-4 aspect-square overflow-hidden rounded-[1.5rem] bg-surface-secondary">
         {thumbnail ? (

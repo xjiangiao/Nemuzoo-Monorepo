@@ -1,90 +1,91 @@
 import type { Metadata } from "next";
 import Container from "@/components/layout/Container";
-import StarDecoration from "@/components/ui/StarDecoration";
 
 export const metadata: Metadata = {
-  title: "FAQ",
-  description: "Frequently asked questions about Nemuzoo dolls — materials, care, shipping, and more.",
+  title: "Care & FAQ",
+  description:
+    "Care, shipping, gifting, and returns for Nemuzoo plush companions.",
 };
 
 const faqs = [
   {
-    q: "What are Nemuzoo dolls made of?",
-    a: "Each doll is hand-knitted using carefully selected natural yarns. The filling is hypoallergenic polyester fiber, making them soft, lightweight, and safe for all ages.",
+    q: "Who are nemuzoo plush made for?",
+    a: "For anyone who likes soft objects with a collectible feel: young design shoppers, gift buyers, kids who want a calm bedtime companion, and adults who want a quiet desk or sofa friend.",
   },
   {
-    q: "Are Nemuzoo dolls machine washable?",
-    a: "We recommend gentle hand wash in lukewarm water with mild detergent. Gently squeeze out water — do not wring. Lay flat to dry in a shaded spot. This keeps your doll soft and shaped for years.",
+    q: "How should I clean a plush?",
+    a: "Spot clean with a mild soap and cool water, then air dry fully. Avoid bleach, high heat, and machine drying to protect the shape and surface texture.",
   },
   {
-    q: "How long does shipping take?",
-    a: "Orders are processed within 3–5 business days. Shipping times vary by destination — typically 7–14 business days for international orders. You will receive a tracking number once your order ships.",
+    q: "Do you offer gift packaging?",
+    a: "Gift-ready styles are marked in the shop. Boxed sets include soft wrap and a note card area, so the order feels intentional without extra clutter.",
+  },
+  {
+    q: "What is the return policy?",
+    a: "Unused items can be returned or exchanged within 30 days of delivery. Please keep the original packaging and order number when possible so support can help quickly. Buyers are responsible for return shipping costs, and original shipping fees are non-refundable.",
+  },
+  {
+    q: "When will my order ship?",
+    a: "In-stock plush typically ship within 2-4 business days. Preorder and first-drop items show their estimated ship window on the product page.",
   },
   {
     q: "Do you ship internationally?",
-    a: "Yes, we ship worldwide. International shipping costs are calculated at checkout. Please note that customs fees or import duties may apply depending on your country.",
+    a: "Yes, we ship worldwide. Shipping costs and estimated delivery times are calculated at checkout based on your destination. International deliveries may be affected by customs processing and local postal service timing.",
   },
   {
-    q: "What is your return policy?",
-    a: "We accept returns within 30 days of delivery. Items must be unused and in original condition. The buyer is responsible for return shipping costs. See our Shipping & Returns page for full details.",
+    q: "Will I receive tracking?",
+    a: "Yes. Once your order ships, you will receive a tracking number by email. Import duties, customs fees, or local taxes may apply on arrival and are the buyer's responsibility.",
   },
   {
-    q: "Can I change or cancel my order?",
-    a: "We can modify or cancel orders within 24 hours of placement. After that, the order may already be in processing. Contact us as soon as possible and we will do our best to help.",
-  },
-  {
-    q: "Are these dolls suitable for children?",
-    a: "Nemuzoo dolls are designed as emotional companions for all ages. They are made with safe, non-toxic materials. However, they are not intended as toys for infants or young children due to small parts.",
-  },
-  {
-    q: "Do you offer gift wrapping?",
-    a: "Currently we do not offer gift wrapping, but each doll is carefully packaged in a soft cotton bag — ready to gift as is.",
+    q: "What if my order arrives damaged or is lost?",
+    a: "Contact us within 7 days of the estimated delivery date if an order arrives damaged or does not arrive. We will help with a replacement or refund depending on the situation.",
   },
 ];
 
-/**
- * Render the Frequently Asked Questions page with an accordion-style list of questions and answers.
- *
- * The component displays a centered header with a decorative accent and maps a list of question/answer
- * pairs to interactive `<details>` elements that reveal each answer.
- *
- * @returns The JSX element representing the FAQ page layout with accordion items.
- */
 export default function FAQPage() {
   return (
-    <Container className="py-16 lg:py-20">
-      <div className="mx-auto max-w-3xl">
-        <div className="flex items-center gap-3 mb-4">
-          <StarDecoration variant="accent" size="sm" />
-          <span className="font-mono text-xs uppercase tracking-[0.24em] text-text-muted">
-            FAQ
-          </span>
-        </div>
-        <h1 className="mb-10 font-heading text-5xl font-black text-text-primary lg:text-6xl">
-          Frequently Asked Questions
+    <Container
+      as="main"
+      className="grid gap-10 py-14 lg:grid-cols-[0.55fr_1fr] lg:py-16"
+    >
+      <aside>
+        <p className="font-mono text-xs uppercase tracking-[0.24em] text-text-muted">
+          care & support
+        </p>
+        <h1 className="mt-4 font-heading text-5xl font-black leading-tight text-text-primary sm:text-6xl">
+          Shipping, cleaning, gifting, and returns.
         </h1>
-
-        <div className="space-y-4">
-          {faqs.map((faq) => (
-            <details
-              key={faq.q}
-              className="group rounded-[2rem] border border-border-primary bg-surface-elevated p-6"
-            >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-bold text-text-primary transition-colors hover:text-accent">
-                <span>{faq.q}</span>
-                <span className="text-text-muted group-open:rotate-180 transition-transform shrink-0">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="6 9 12 15 18 9" />
-                  </svg>
-                </span>
-              </summary>
-              <p className="mt-4 text-sm leading-7 text-text-secondary">
-                {faq.a}
-              </p>
-            </details>
-          ))}
+        <div className="mt-8 rounded-[2rem] bg-white/55 p-6">
+          <p className="text-sm leading-7 text-text-secondary">
+            Made for US shoppers: clear delivery expectations, simple care
+            language, and gift-friendly policies before checkout.
+          </p>
         </div>
-      </div>
+      </aside>
+
+      <section className="space-y-4" aria-label="Frequently asked questions">
+        {faqs.map((faq, index) => (
+          <details
+            key={faq.q}
+            open={index === 0}
+            className="group rounded-[2rem] bg-surface-elevated p-6"
+          >
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-left font-heading text-2xl font-black leading-tight text-text-primary">
+              <span>{faq.q}</span>
+              <span
+                className="grid size-9 shrink-0 place-items-center rounded-full bg-accent-subtle text-xl leading-none text-text-primary"
+                aria-hidden="true"
+              >
+                <span className="group-open:hidden">+</span>
+                <span className="hidden group-open:block">-</span>
+              </span>
+            </summary>
+            <p className="mt-4 max-w-3xl leading-7 text-text-secondary">
+              {faq.a}
+            </p>
+          </details>
+        ))}
+      </section>
     </Container>
   );
 }
