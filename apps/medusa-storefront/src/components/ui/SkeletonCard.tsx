@@ -1,10 +1,10 @@
 export default function SkeletonCard({ className = "" }: { className?: string }) {
   return (
-    <div className={`rounded-xl overflow-hidden ${className}`}>
-      <div className="aspect-square bg-surface-secondary animate-pulse rounded-xl" />
+    <div className={`soft-shadow overflow-hidden rounded-[2rem] bg-surface-elevated p-4 ${className}`}>
+      <div className="aspect-square animate-pulse rounded-[1.5rem] bg-surface-secondary" />
       <div className="mt-3 space-y-2 px-1">
-        <div className="h-4 bg-surface-secondary animate-pulse rounded w-3/4" />
-        <div className="h-3 bg-surface-secondary animate-pulse rounded w-1/2" />
+        <div className="h-4 w-3/4 animate-pulse rounded-full bg-surface-secondary" />
+        <div className="h-3 w-1/2 animate-pulse rounded-full bg-surface-secondary" />
       </div>
     </div>
   );

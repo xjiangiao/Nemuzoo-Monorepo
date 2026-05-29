@@ -3,10 +3,7 @@ import "./globals.css";
 import { Providers } from "@/lib/providers";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
-
-const geist = Geist({subsets:['latin'],variable:'--font-geist'});
 
 const siteUrl = "https://www.nemuzoo.com";
 
@@ -36,6 +33,21 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: [
+      {
+        url: "/favicon-32x32.png",
+        type: "image/png",
+        sizes: "32x32",
+      },
+      {
+        url: "/favicon.svg",
+        type: "image/svg+xml",
+      },
+    ],
+    shortcut: "/favicon-32x32.png",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 /**
@@ -53,7 +65,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("h-full antialiased", "font-sans", geist.variable)}>
+    <html lang="en" className={cn("h-full antialiased", "font-sans")}>
       <body className="min-h-full flex flex-col bg-surface-primary text-text-primary font-body">
         <script
           type="application/ld+json"

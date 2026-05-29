@@ -25,22 +25,24 @@ const values = [
 
 export default function ValueProps() {
   return (
-    <section className="py-20 lg:py-28">
+    <section className="border-y border-border-primary bg-white/45 py-14">
       <Container>
         <FadeInView>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {values.map((v) => (
-              <div key={v.title} className="text-center">
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-warm-subtle text-warm mb-5">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            {values.map((v, index) => (
+              <div key={v.title}>
+                <p className="mb-4 font-heading text-xs font-bold uppercase tracking-[0.24em] text-text-muted">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-full bg-accent-subtle text-text-primary">
                   {v.icon}
                 </div>
                 <h3
-                  className="text-lg font-medium text-text-primary mb-2 font-heading"
+                  className="mb-3 font-heading text-2xl font-black text-text-primary"
                 >
                   {v.title}
                 </h3>
-                <p className="text-sm text-text-secondary leading-relaxed"
-                   style={{ fontWeight: 300 }}>
+                <p className="text-sm leading-7 text-text-secondary">
                   {v.description}
                 </p>
               </div>

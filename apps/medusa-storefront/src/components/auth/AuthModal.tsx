@@ -120,39 +120,62 @@ export default function AuthModal() {
       </Button>
 
       <Dialog open={open} onOpenChange={handleOpenChange}>
-        <DialogContent className="sm:max-w-sm" showCloseButton={false}>
-          <DialogHeader>
-            <DialogTitle>
+        <DialogContent
+          className="top-24 grid max-h-[calc(100dvh-7rem)] translate-y-0 grid-rows-[auto_minmax(0,1fr)] overflow-hidden rounded-[2rem] border border-border-primary bg-[#F7F5F2] p-6 text-[#2E2E33] shadow-2xl ring-0 sm:max-w-sm"
+          showCloseButton={false}
+        >
+          <DialogHeader className="gap-2">
+            <DialogTitle className="text-2xl font-black leading-tight text-[#2E2E33]">
               {tab === "login" ? "Welcome back" : "Create an account"}
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-sm leading-6 text-[#2E2E33]/68">
               {tab === "login"
                 ? "Sign in to your account to continue."
                 : "Join Nemuzoo and start your collection."}
             </DialogDescription>
           </DialogHeader>
 
-          <Tabs value={tab} onValueChange={handleTabChange}>
-            <TabsList className="w-full">
-              <TabsTrigger value="login" className="flex-1">
+          <Tabs
+            value={tab}
+            onValueChange={handleTabChange}
+            className="min-h-0"
+          >
+            <TabsList className="relative h-11 w-full overflow-hidden rounded-full bg-[#EDE9E2] p-1 text-[#2E2E33]/65">
+              <span
+                aria-hidden="true"
+                className={`absolute bottom-1 left-1 top-1 w-[calc(50%-0.25rem)] rounded-full bg-white shadow-sm transition-transform duration-200 ease-out ${
+                  tab === "register" ? "translate-x-full" : "translate-x-0"
+                }`}
+              />
+              <TabsTrigger
+                value="login"
+                className="relative z-10 flex-1 rounded-full bg-transparent text-sm font-bold transition-colors data-active:bg-transparent data-active:text-[#2E2E33] data-active:shadow-none"
+              >
                 Sign In
               </TabsTrigger>
-              <TabsTrigger value="register" className="flex-1">
+              <TabsTrigger
+                value="register"
+                className="relative z-10 flex-1 rounded-full bg-transparent text-sm font-bold transition-colors data-active:bg-transparent data-active:text-[#2E2E33] data-active:shadow-none"
+              >
                 Create Account
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="login">
+            <TabsContent
+              value="login"
+              className="auth-tab-panel -mx-1 min-h-0 overflow-y-auto px-1 pb-1"
+            >
               <form
                 onSubmit={loginForm.handleSubmit(handleLogin)}
-                className="flex flex-col gap-4 pt-2"
+                className="flex flex-col gap-4 pt-3"
               >
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="login-email">Email</Label>
+                  <Label htmlFor="login-email" className="text-[#2E2E33]">Email</Label>
                   <Input
                     id="login-email"
                     type="email"
                     placeholder="you@example.com"
+                    className="h-11 rounded-full border-[#2E2E33]/15 bg-white px-4 text-[#2E2E33] placeholder:text-[#8E879C] focus-visible:ring-[#A7B0C6]/45"
                     aria-invalid={!!loginForm.formState.errors.email}
                     {...loginForm.register("email")}
                   />
@@ -164,11 +187,12 @@ export default function AuthModal() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="login-password">Password</Label>
+                  <Label htmlFor="login-password" className="text-[#2E2E33]">Password</Label>
                   <Input
                     id="login-password"
                     type="password"
                     placeholder="At least 6 characters"
+                    className="h-11 rounded-full border-[#2E2E33]/15 bg-white px-4 text-[#2E2E33] placeholder:text-[#8E879C] focus-visible:ring-[#A7B0C6]/45"
                     aria-invalid={!!loginForm.formState.errors.password}
                     {...loginForm.register("password")}
                   />
@@ -183,7 +207,7 @@ export default function AuthModal() {
 
                 <Button
                   type="submit"
-                  variant="accent"
+                  variant="warm"
                   size="md"
                   disabled={isLoading}
                   className="w-full"
@@ -200,17 +224,21 @@ export default function AuthModal() {
               </form>
             </TabsContent>
 
-            <TabsContent value="register">
+            <TabsContent
+              value="register"
+              className="auth-tab-panel -mx-1 min-h-0 overflow-y-auto px-1 pb-1"
+            >
               <form
                 onSubmit={registerForm.handleSubmit(handleRegister)}
-                className="flex flex-col gap-4 pt-2"
+                className="flex flex-col gap-4 pt-3"
               >
                 <div className="flex gap-3">
                   <div className="flex flex-col gap-2 flex-1">
-                    <Label htmlFor="reg-first">First Name</Label>
+                    <Label htmlFor="reg-first" className="text-[#2E2E33]">First Name</Label>
                     <Input
                       id="reg-first"
                       placeholder="First"
+                      className="h-11 rounded-full border-[#2E2E33]/15 bg-white px-4 text-[#2E2E33] placeholder:text-[#8E879C] focus-visible:ring-[#A7B0C6]/45"
                       aria-invalid={!!registerForm.formState.errors.firstName}
                       {...registerForm.register("firstName")}
                     />
@@ -221,10 +249,11 @@ export default function AuthModal() {
                     )}
                   </div>
                   <div className="flex flex-col gap-2 flex-1">
-                    <Label htmlFor="reg-last">Last Name</Label>
+                    <Label htmlFor="reg-last" className="text-[#2E2E33]">Last Name</Label>
                     <Input
                       id="reg-last"
                       placeholder="Last"
+                      className="h-11 rounded-full border-[#2E2E33]/15 bg-white px-4 text-[#2E2E33] placeholder:text-[#8E879C] focus-visible:ring-[#A7B0C6]/45"
                       aria-invalid={!!registerForm.formState.errors.lastName}
                       {...registerForm.register("lastName")}
                     />
@@ -237,11 +266,12 @@ export default function AuthModal() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="reg-email">Email</Label>
+                  <Label htmlFor="reg-email" className="text-[#2E2E33]">Email</Label>
                   <Input
                     id="reg-email"
                     type="email"
                     placeholder="you@example.com"
+                    className="h-11 rounded-full border-[#2E2E33]/15 bg-white px-4 text-[#2E2E33] placeholder:text-[#8E879C] focus-visible:ring-[#A7B0C6]/45"
                     aria-invalid={!!registerForm.formState.errors.email}
                     {...registerForm.register("email")}
                   />
@@ -253,11 +283,12 @@ export default function AuthModal() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="reg-password">Password</Label>
+                  <Label htmlFor="reg-password" className="text-[#2E2E33]">Password</Label>
                   <Input
                     id="reg-password"
                     type="password"
                     placeholder="At least 6 characters"
+                    className="h-11 rounded-full border-[#2E2E33]/15 bg-white px-4 text-[#2E2E33] placeholder:text-[#8E879C] focus-visible:ring-[#A7B0C6]/45"
                     aria-invalid={!!registerForm.formState.errors.password}
                     {...registerForm.register("password")}
                   />
@@ -269,11 +300,12 @@ export default function AuthModal() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="reg-confirm">Confirm Password</Label>
+                  <Label htmlFor="reg-confirm" className="text-[#2E2E33]">Confirm Password</Label>
                   <Input
                     id="reg-confirm"
                     type="password"
                     placeholder="Repeat your password"
+                    className="h-11 rounded-full border-[#2E2E33]/15 bg-white px-4 text-[#2E2E33] placeholder:text-[#8E879C] focus-visible:ring-[#A7B0C6]/45"
                     aria-invalid={
                       !!registerForm.formState.errors.confirmPassword
                     }
@@ -290,7 +322,7 @@ export default function AuthModal() {
 
                 <Button
                   type="submit"
-                  variant="accent"
+                  variant="warm"
                   size="md"
                   disabled={isLoading}
                   className="w-full"

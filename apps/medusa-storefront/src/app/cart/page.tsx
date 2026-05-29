@@ -6,7 +6,6 @@ import CartItem from "@/components/cart/CartItem";
 import CartSummary from "@/components/cart/CartSummary";
 import EmptyState from "@/components/ui/EmptyState";
 import Button from "@/components/ui/Button";
-import StarDecoration from "@/components/ui/StarDecoration";
 import SkeletonCard from "@/components/ui/SkeletonCard";
 import { useCartStore } from "@/lib/cart/store";
 
@@ -32,7 +31,6 @@ export default function CartPage() {
     return (
       <Container className="py-16 lg:py-20">
         <EmptyState
-          icon={<StarDecoration variant="muted" size="lg" />}
           title="Your cart is ready for a companion"
           description="Browse our collection and find the doll that speaks to you."
           action={

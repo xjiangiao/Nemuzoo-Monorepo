@@ -8,32 +8,31 @@
 
 /* ============================================
    Nemuzoo Design Tokens
-   Night Comfort — Japanese Healing Style
+   Soft plush storefront
    ============================================ */
 
-/* --- Light Mode (月光透过窗帘) --- */
 :root {
-  --font-heading: "M PLUS Rounded 1c", sans-serif;
-  --font-body: "Noto Sans", sans-serif;
-  --color-surface-primary: #F7F5F0;
-  --color-surface-secondary: #E8E0D8;
-  --color-surface-elevated: #FDFCF9;
-  --color-surface-muted: #F0EDE5;
-  --color-text-primary: #3A4454;
-  --color-text-secondary: #6B7482;
-  --color-text-muted: #9BA3AE;
-  --color-text-inverse: #F7F5F0;
-  --color-accent: #8A9DAF;
-  --color-accent-hover: #7A8FA2;
-  --color-accent-soft: #A8B8C8;
-  --color-accent-light: #C9D3DD;
-  --color-accent-subtle: #E8EDF2;
-  --color-warm: #D4A574;
-  --color-warm-hover: #C29264;
-  --color-warm-light: #E6C8A8;
-  --color-warm-subtle: #F5E8D8;
-  --color-border-primary: #E0DAD2;
-  --color-border-secondary: #EBE5DD;
+  --font-heading: "Nunito Sans", "Avenir Next", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --font-body: -apple-system, "BlinkMacSystemFont", "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  --color-surface-primary: #F7F5F2;
+  --color-surface-secondary: #EDE9E2;
+  --color-surface-elevated: rgba(255, 255, 255, 0.68);
+  --color-surface-muted: #F1EEF5;
+  --color-text-primary: #2E2E33;
+  --color-text-secondary: rgba(46, 46, 51, 0.68);
+  --color-text-muted: #8E879C;
+  --color-text-inverse: #FFFFFF;
+  --color-accent: #A7B0C6;
+  --color-accent-hover: #8E99B4;
+  --color-accent-soft: #CDC6E1;
+  --color-accent-light: #E7E3F1;
+  --color-accent-subtle: rgba(205, 198, 225, 0.36);
+  --color-warm: #2E2E33;
+  --color-warm-hover: #44424B;
+  --color-warm-light: #EDE9E2;
+  --color-warm-subtle: rgba(237, 233, 226, 0.74);
+  --color-border-primary: rgba(46, 46, 51, 0.10);
+  --color-border-secondary: rgba(46, 46, 51, 0.07);
   --color-success: #8FAF8F;
   --color-error: #C49090;
   --color-warning: #D4B874;
@@ -61,7 +60,7 @@
   --chart-3: var(--color-surface-secondary);
   --chart-4: var(--color-accent-soft);
   --chart-5: var(--color-warm-light);
-  --radius: 0.625rem;
+  --radius: 1rem;
   --sidebar: var(--color-surface-secondary);
   --sidebar-foreground: var(--color-text-primary);
   --sidebar-primary: var(--color-accent);
@@ -72,28 +71,27 @@
   --sidebar-ring: var(--color-accent);
 }
 
-/* --- Dark Mode (深夜卧室，只留一盏小夜灯) --- */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-surface-primary: #1A1E2A;
-    --color-surface-secondary: #232836;
-    --color-surface-elevated: #2A3040;
-    --color-surface-muted: #1F2330;
-    --color-text-primary: #E4E0D8;
-    --color-text-secondary: #A0A6B0;
-    --color-text-muted: #6B7280;
-    --color-text-inverse: #F7F5F0;
-    --color-accent: #A0B8CC;
-    --color-accent-hover: #B0C8DA;
-    --color-accent-soft: #8A9DAF;
-    --color-accent-light: #5A6D80;
-    --color-accent-subtle: #252D3A;
-    --color-warm: #DEB88C;
-    --color-warm-hover: #E8C8A0;
-    --color-warm-light: #8A7060;
-    --color-warm-subtle: #2E2820;
-    --color-border-primary: #2D3340;
-    --color-border-secondary: #262B36;
+    --color-surface-primary: #181618;
+    --color-surface-secondary: rgba(255, 255, 255, 0.075);
+    --color-surface-elevated: rgba(255, 255, 255, 0.09);
+    --color-surface-muted: rgba(205, 198, 225, 0.10);
+    --color-text-primary: #F4EEE7;
+    --color-text-secondary: rgba(244, 238, 231, 0.70);
+    --color-text-muted: #B9B0C8;
+    --color-text-inverse: #2E2E33;
+    --color-accent: #A7B0C6;
+    --color-accent-hover: #BAC3D7;
+    --color-accent-soft: #CDC6E1;
+    --color-accent-light: rgba(205, 198, 225, 0.18);
+    --color-accent-subtle: rgba(205, 198, 225, 0.12);
+    --color-warm: #F4EEE7;
+    --color-warm-hover: #FFFFFF;
+    --color-warm-light: rgba(255, 255, 255, 0.12);
+    --color-warm-subtle: rgba(255, 255, 255, 0.08);
+    --color-border-primary: rgba(255, 255, 255, 0.14);
+    --color-border-secondary: rgba(255, 255, 255, 0.10);
     --color-success: #7A9E7A;
     --color-error: #CC8080;
     --color-warning: #C4A864;
@@ -129,18 +127,18 @@
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
-  --font-heading: var(--font-geist);
-  --font-body: "Noto Sans", sans-serif;
-  --shadow-sm: 0 1px 2px rgba(58, 68, 84, 0.06);
-  --shadow-md: 0 4px 12px rgba(58, 68, 84, 0.08);
-  --shadow-lg: 0 8px 24px rgba(58, 68, 84, 0.10);
-  --shadow-xl: 0 16px 40px rgba(58, 68, 84, 0.12);
-  --shadow-glow: 0 0 20px rgba(212, 165, 116, 0.15);
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+  --shadow-sm: 0 2px 8px rgba(46, 46, 51, 0.05);
+  --shadow-md: 0 12px 32px rgba(46, 46, 51, 0.07);
+  --shadow-lg: 0 24px 55px rgba(46, 46, 51, 0.075);
+  --shadow-xl: 0 28px 70px rgba(46, 46, 51, 0.08);
+  --shadow-glow: 0 0 24px rgba(205, 198, 225, 0.22);
   --animate-fade-in: fade-in 0.5s ease-out;
   --animate-slide-up: slide-up 0.6s ease-out;
   --animate-float: float 3s ease-in-out infinite;
   --animate-twinkle: twinkle 2s ease-in-out infinite;
-  --font-sans: var(--font-geist);
+  --font-sans: var(--font-body);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -196,6 +194,37 @@
   50% { opacity: 1; }
 }
 
+@keyframes auth-tab-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mobile-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.auth-tab-panel {
+  animation: auth-tab-in 180ms ease-out;
+}
+
+.mobile-menu-panel {
+  animation: mobile-menu-in 160ms ease-out;
+  transform-origin: top center;
+}
+
 /* --- Base Styles --- */
 body {
   background-color: var(--color-surface-primary);
@@ -207,6 +236,42 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
+}
+
+.soft-shadow {
+  box-shadow: 0 28px 70px rgba(46, 46, 51, 0.08);
+}
+
+.grain {
+  background-image: radial-gradient(rgba(46, 46, 51, 0.055) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.plush-cream {
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.9), transparent 30%),
+    linear-gradient(145deg, #F7F5F2, #EDE9E2);
+}
+
+.plush-oval {
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.88), transparent 32%),
+    linear-gradient(145deg, #CDC6E1, #A7B0C6);
+}
+
+@media (prefers-color-scheme: dark) {
+  .soft-shadow {
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.32);
+  }
+
+  .grain {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  }
+
+  img[src$="nemuzoo-wordmark.svg"] {
+    filter: invert(1) brightness(1.9) contrast(0.82);
+    opacity: 0.92;
+  }
 }
 
 /* --- Accessibility --- */

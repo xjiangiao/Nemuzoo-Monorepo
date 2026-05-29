@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Container from "@/components/layout/Container";
 
 const footerLinks = {
@@ -9,11 +10,10 @@ const footerLinks = {
   ],
   company: [
     { label: "About Nemuzoo", href: "/about" },
-    { label: "FAQ", href: "/faq" },
+    { label: "Care & FAQ", href: "/faq" },
     { label: "Contact", href: "/contact" },
   ],
   policies: [
-    { label: "Shipping & Returns", href: "/shipping" },
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
   ],
@@ -21,25 +21,29 @@ const footerLinks = {
 
 export default function Footer() {
   return (
-    <footer className="bg-surface-muted border-t border-border-primary pt-16 pb-8">
+    <footer className="border-t border-border-primary bg-surface-primary py-10">
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="mb-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <Link
-              href="/"
-              className="text-lg font-bold text-text-primary font-heading"
-            >
-              Nemuzoo
+            <Link href="/" className="inline-flex" aria-label="Nemuzoo home">
+              <Image
+                src="/nemuzoo-wordmark.svg"
+                alt="nemuzoo"
+                width={148}
+                height={22}
+                className="h-6 w-auto opacity-80"
+              />
             </Link>
             <p className="mt-3 text-sm text-text-secondary leading-relaxed">
-              Knitted companions for quiet nights and gentle hearts.
+              Soft companions for bedrooms, desks, gifting, and gentle everyday
+              rituals.
             </p>
           </div>
 
           {/* Shop Links */}
           <div>
-            <h4 className="text-sm font-semibold text-text-primary mb-3">
+            <h4 className="mb-3 font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
               Shop
             </h4>
             <ul className="space-y-2">
@@ -58,7 +62,7 @@ export default function Footer() {
 
           {/* Company Links */}
           <div>
-            <h4 className="text-sm font-semibold text-text-primary mb-3">
+            <h4 className="mb-3 font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
               Company
             </h4>
             <ul className="space-y-2">
@@ -77,7 +81,7 @@ export default function Footer() {
 
           {/* Policy Links */}
           <div>
-            <h4 className="text-sm font-semibold text-text-primary mb-3">
+            <h4 className="mb-3 font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
               Policies
             </h4>
             <ul className="space-y-2">

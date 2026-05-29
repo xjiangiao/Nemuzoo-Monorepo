@@ -32,12 +32,12 @@ export default function FeaturedProducts() {
     <section className="py-20 lg:py-28">
       <Container>
         <SectionHeading
-          title="Meet Your Nighttime Companions"
-          subtitle="Each doll has a name, a personality, and a quiet story waiting for you."
+          title="The first plush drop"
+          subtitle="Each companion is soft, collectible, and calm enough to live beautifully in grown-up spaces."
         />
 
         {isLoading && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:gap-8">
             {Array.from({ length: 4 }).map((_, i) => (
               <SkeletonCard key={i} />
             ))}
@@ -50,7 +50,7 @@ export default function FeaturedProducts() {
 
         <div className="mt-12 text-center">
           <Button variant="outline" href="/products">
-            View All Dolls &rarr;
+            View all plush &rarr;
           </Button>
         </div>
       </Container>

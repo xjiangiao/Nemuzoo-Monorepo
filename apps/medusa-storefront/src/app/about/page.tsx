@@ -1,138 +1,89 @@
 import type { Metadata } from "next";
 import Container from "@/components/layout/Container";
-import SectionHeading from "@/components/ui/SectionHeading";
-import StarDecoration from "@/components/ui/StarDecoration";
-import FadeInView from "@/components/ui/FadeInView";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "Brand Story",
   description:
-    "Nemuzoo — knitted companions for quiet nights and gentle hearts. Inspired by the Japanese word for sleep (眠る) and a zoo of soft friends.",
+    "Nemuzoo is a soft place to land: plush companions shaped by rounded arches, gentle curves, and quiet everyday comfort.",
 };
+
+const storyValues = [
+  {
+    number: "01",
+    title: "Emotional comfort",
+    description:
+      "The plush expressions stay quiet so the owner can bring their own feeling to the object.",
+  },
+  {
+    number: "02",
+    title: "Collectible softness",
+    description:
+      "Muted colors and clean packaging make each companion feel giftable, photographable, and worth keeping.",
+  },
+  {
+    number: "03",
+    title: "Online-first clarity",
+    description:
+      "Size, touch, care, and use cases are written plainly so shoppers can choose with confidence.",
+  },
+];
 
 export default function AboutPage() {
   return (
-    <Container className="py-16 lg:py-20">
-      <div className="max-w-2xl mx-auto">
-        {/* Hero */}
-        <FadeInView>
-          <div className="text-center mb-16">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <StarDecoration variant="warm" size="md" />
-            </div>
-            <h1
-              className="text-4xl lg:text-5xl font-bold text-text-primary mb-4 font-heading"
-            >
-              About Nemuzoo
-            </h1>
-            <p
-              className="text-lg text-text-secondary"
-              style={{ fontWeight: 300 }}
-            >
-              Knitted companions for quiet nights and gentle hearts.
+    <main>
+      <Container className="grid gap-10 py-16 lg:grid-cols-[1fr_0.8fr] lg:py-20">
+        <section>
+          <p className="font-heading text-xs font-bold uppercase tracking-[0.24em] text-text-muted">
+            brand story
+          </p>
+          <h1 className="mt-4 max-w-4xl font-heading text-5xl font-black leading-[0.96] text-text-primary sm:text-6xl lg:text-7xl">
+            nemuzoo is a soft place to land.
+          </h1>
+          <p className="mt-7 max-w-2xl text-lg leading-8 text-text-secondary">
+            The brand begins with a rounded wordmark: soft arches, gentle curves,
+            and a quiet rhythm. The store carries that language into plush
+            silhouettes, packaging, and care details that feel polished but easy
+            to approach.
+          </p>
+        </section>
+
+        <aside className="relative min-h-[420px] overflow-hidden rounded-[2.5rem] bg-surface-secondary p-8">
+          <div className="plush-oval soft-shadow absolute bottom-8 left-8 h-64 w-48 rounded-[48%_48%_38%_38%]" />
+          <div className="absolute right-8 top-8 max-w-[240px] rounded-[2rem] bg-white/60 p-6 backdrop-blur">
+            <p className="font-heading text-xs font-bold uppercase tracking-[0.22em] text-text-muted">
+              design language
+            </p>
+            <p className="mt-3 font-heading text-2xl font-black leading-tight text-[#2E2E33]">
+              soft arches
+              <br />
+              gentle curves
+              <br />
+              rounded rhythm
             </p>
           </div>
-        </FadeInView>
+        </aside>
+      </Container>
 
-        {/* Brand Story */}
-        <FadeInView delay={100}>
-          <section className="mb-16">
-            <SectionHeading title="What is Nemuzoo?" alignment="left" />
-            <div
-              className="space-y-4 text-base text-text-secondary leading-relaxed"
-              style={{ fontWeight: 300 }}
+      <section className="border-y border-border-primary bg-white/45">
+        <Container className="grid gap-6 py-14 md:grid-cols-3">
+          {storyValues.map((value) => (
+            <article
+              key={value.number}
+              className="rounded-[2rem] bg-surface-primary p-7"
             >
-              <p>
-                <em>Nemu</em> (眠る) means &ldquo;sleep&rdquo; in Japanese.{" "}
-                <em>Zoo</em> is a collection of companions. Together, Nemuzoo is
-                a family of hand-knitted dolls — each one ready to be the friend
-                you hold tight as you drift off.
+              <p className="font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
+                {value.number}
               </p>
-              <p>
-                We believe comfort shouldn&rsquo;t be complicated. A soft doll
-                in your arms, a quiet presence beside your pillow — sometimes
-                that is enough. Nemuzoo dolls do not try to fix loneliness. They
-                simply sit beside it. And that makes all the difference.
+              <h2 className="mt-4 font-heading text-2xl font-black text-text-primary">
+                {value.title}
+              </h2>
+              <p className="mt-3 text-sm leading-7 text-text-secondary">
+                {value.description}
               </p>
-            </div>
-          </section>
-        </FadeInView>
-
-        {/* Care Guide */}
-        <FadeInView delay={200}>
-          <section className="mb-16">
-            <SectionHeading title="Caring for Your Doll" alignment="left" />
-            <div className="space-y-6">
-              <div>
-                <h3
-                  className="text-lg font-medium text-text-primary mb-1 font-heading"
-                >
-                  Gentle Hand Wash
-                </h3>
-                <p
-                  className="text-sm text-text-secondary"
-                  style={{ fontWeight: 300 }}
-                >
-                  Use lukewarm water and mild detergent. Gently squeeze — do not
-                  wring. Lay flat to dry in a shaded spot. Your doll will be
-                  fresh and ready for another night.
-                </p>
-              </div>
-              <div>
-                <h3
-                  className="text-lg font-medium text-text-primary mb-1 font-heading"
-                >
-                  Natural Yarns
-                </h3>
-                <p
-                  className="text-sm text-text-secondary"
-                  style={{ fontWeight: 300 }}
-                >
-                  Each doll is knitted with carefully selected natural yarns.
-                  Colors may deepen slightly over time — that is the yarn
-                  settling in with you, not a flaw.
-                </p>
-              </div>
-              <div>
-                <h3
-                  className="text-lg font-medium text-text-primary mb-1 font-heading"
-                >
-                  A Little Love
-                </h3>
-                <p
-                  className="text-sm text-text-secondary"
-                  style={{ fontWeight: 300 }}
-                >
-                  Your doll is made to be held. Over time, the knit will soften
-                  and mold to your touch — like any good friendship.
-                </p>
-              </div>
-            </div>
-          </section>
-        </FadeInView>
-
-        {/* Contact placeholder */}
-        <FadeInView delay={300}>
-          <section className="text-center py-10 bg-surface-secondary rounded-2xl">
-            <StarDecoration
-              variant="accent"
-              size="md"
-              className="mx-auto mb-3"
-            />
-            <h3
-              className="text-xl font-medium text-text-primary font-heading"
-            >
-              Have a Question?
-            </h3>
-            <p
-              className="mt-2 text-sm text-text-secondary"
-              style={{ fontWeight: 300 }}
-            >
-              Reach out to us anytime. We&rsquo;d love to hear from you.
-            </p>
-          </section>
-        </FadeInView>
-      </div>
-    </Container>
+            </article>
+          ))}
+        </Container>
+      </section>
+    </main>
   );
 }

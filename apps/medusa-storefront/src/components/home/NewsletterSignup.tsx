@@ -30,17 +30,16 @@ export default function NewsletterSignup() {
   };
 
   return (
-    <section className="py-20 lg:py-28 bg-surface-secondary">
+    <section className="bg-surface-secondary py-20 lg:py-28">
       <Container>
         <FadeInView>
-          <div className="max-w-lg mx-auto text-center">
+          <div className="soft-shadow mx-auto max-w-2xl rounded-[2rem] border border-border-primary bg-surface-elevated p-8 text-center md:p-12">
             <h2
-              className="text-2xl lg:text-3xl font-medium text-text-primary font-heading"
+              className="font-heading text-4xl font-black text-text-primary"
             >
               Join the Dreamers
             </h2>
-            <p className="mt-3 text-base text-text-secondary"
-               style={{ fontWeight: 300 }}>
+            <p className="mx-auto mt-3 max-w-md text-base leading-7 text-text-secondary">
               Gentle updates about new companions, stories, and moments of
               comfort.
             </p>
@@ -61,7 +60,7 @@ export default function NewsletterSignup() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Your email address"
                     required
-                    className="px-4 py-2.5 rounded-lg bg-surface-elevated border border-border-primary text-text-primary placeholder-text-muted text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                    className="rounded-full border border-border-primary bg-white/55 px-5 py-3 text-sm text-text-primary placeholder-text-muted focus:border-transparent focus:outline-none focus:ring-2 focus:ring-accent"
                   />
                   <Button type="submit" variant="accent">
                     Try Again
@@ -77,7 +76,7 @@ export default function NewsletterSignup() {
                   placeholder="Your email address"
                   required
                   disabled={status === "loading"}
-                  className="w-full max-w-sm px-4 py-2.5 rounded-lg bg-surface-elevated border border-border-primary text-text-primary placeholder-text-muted text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent disabled:opacity-50"
+                  className="w-full max-w-sm rounded-full border border-border-primary bg-white/55 px-5 py-3 text-sm text-text-primary placeholder-text-muted focus:border-transparent focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"
                 />
                 <label className="flex items-start gap-2 text-left max-w-sm">
                   <input
