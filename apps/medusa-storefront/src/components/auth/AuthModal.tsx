@@ -140,16 +140,22 @@ export default function AuthModal() {
             onValueChange={handleTabChange}
             className="min-h-0"
           >
-            <TabsList className="h-11 w-full rounded-full bg-[#EDE9E2] p-1 text-[#2E2E33]/65">
+            <TabsList className="relative h-11 w-full overflow-hidden rounded-full bg-[#EDE9E2] p-1 text-[#2E2E33]/65">
+              <span
+                aria-hidden="true"
+                className={`absolute bottom-1 left-1 top-1 w-[calc(50%-0.25rem)] rounded-full bg-white shadow-sm transition-transform duration-200 ease-out ${
+                  tab === "register" ? "translate-x-full" : "translate-x-0"
+                }`}
+              />
               <TabsTrigger
                 value="login"
-                className="flex-1 rounded-full text-sm font-bold data-active:bg-white data-active:text-[#2E2E33] data-active:shadow-sm"
+                className="relative z-10 flex-1 rounded-full bg-transparent text-sm font-bold transition-colors data-active:bg-transparent data-active:text-[#2E2E33] data-active:shadow-none"
               >
                 Sign In
               </TabsTrigger>
               <TabsTrigger
                 value="register"
-                className="flex-1 rounded-full text-sm font-bold data-active:bg-white data-active:text-[#2E2E33] data-active:shadow-sm"
+                className="relative z-10 flex-1 rounded-full bg-transparent text-sm font-bold transition-colors data-active:bg-transparent data-active:text-[#2E2E33] data-active:shadow-none"
               >
                 Create Account
               </TabsTrigger>
@@ -157,11 +163,11 @@ export default function AuthModal() {
 
             <TabsContent
               value="login"
-              className="auth-tab-panel min-h-0 overflow-y-auto pr-1"
+              className="auth-tab-panel -mx-1 min-h-0 overflow-y-auto px-1 pb-1"
             >
               <form
                 onSubmit={loginForm.handleSubmit(handleLogin)}
-                className="flex flex-col gap-4 pt-2"
+                className="flex flex-col gap-4 pt-3"
               >
                 <div className="flex flex-col gap-2">
                   <Label htmlFor="login-email" className="text-[#2E2E33]">Email</Label>
@@ -220,11 +226,11 @@ export default function AuthModal() {
 
             <TabsContent
               value="register"
-              className="auth-tab-panel min-h-0 overflow-y-auto pr-1"
+              className="auth-tab-panel -mx-1 min-h-0 overflow-y-auto px-1 pb-1"
             >
               <form
                 onSubmit={registerForm.handleSubmit(handleRegister)}
-                className="flex flex-col gap-4 pt-2"
+                className="flex flex-col gap-4 pt-3"
               >
                 <div className="flex gap-3">
                   <div className="flex flex-col gap-2 flex-1">
