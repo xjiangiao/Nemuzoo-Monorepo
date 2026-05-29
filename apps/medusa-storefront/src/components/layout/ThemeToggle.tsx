@@ -11,7 +11,7 @@ export default function ThemeToggle({
   className?: string;
   showLabel?: boolean;
 }) {
-  const { toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <button
@@ -21,7 +21,8 @@ export default function ThemeToggle({
         showLabel ? "gap-2 px-3 text-sm font-semibold" : "w-9",
         className,
       )}
-      aria-label="Toggle color theme"
+      aria-label={`Toggle color theme, currently ${theme}`}
+      aria-pressed={theme === "dark"}
       onClick={toggleTheme}
     >
       <span className="relative inline-flex h-4 w-4 items-center justify-center">
