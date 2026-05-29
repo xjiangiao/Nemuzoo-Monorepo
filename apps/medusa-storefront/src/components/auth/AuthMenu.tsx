@@ -12,7 +12,6 @@ import {
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
 import { UserIcon } from "lucide-react";
-import { Button } from "@/components/ui/Button";
 
 /**
  * Renders an account dropdown menu that displays the current customer (first and last name or email)
@@ -35,10 +34,14 @@ export default function AuthMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
-          <Button variant="ghost" size="icon-sm" aria-label="Account menu" />
+          <button
+            type="button"
+            aria-label="Account menu"
+            className="inline-flex h-10 w-10 cursor-pointer items-center justify-center text-text-secondary transition-colors hover:text-text-primary"
+          />
         }
       >
-        <UserIcon />
+        <UserIcon size={20} />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-44">
         <DropdownMenuLabel>

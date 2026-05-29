@@ -6,6 +6,7 @@ import { ImageKitProvider } from "@imagekit/next";
 import { CartHydrate } from "@/lib/cart/cart-hydrate";
 import { AuthHydrate } from "@/lib/auth/auth-hydrate";
 import { resolveImageKitEndpoint } from "@/lib/imagekit";
+import { ThemeProvider } from "@/lib/theme";
 
 const imageKitUrlEndpoint = resolveImageKitEndpoint(
   process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT
@@ -35,11 +36,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
   );
 
   const content = (
-    <QueryClientProvider client={queryClient}>
-      <AuthHydrate>
-        <CartHydrate>{children}</CartHydrate>
-      </AuthHydrate>
-    </QueryClientProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthHydrate>
+          <CartHydrate>{children}</CartHydrate>
+        </AuthHydrate>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 
   if (!imageKitUrlEndpoint) {

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import CartIcon from "@/components/cart/CartIcon";
 import AccountIcon from "@/components/auth/AccountIcon";
+import ThemeToggle from "@/components/layout/ThemeToggle";
 import { Menu } from "lucide-react";
 
 /**
@@ -25,7 +26,7 @@ export default function Header() {
             width={188}
             height={28}
             priority
-            className="h-7 w-auto"
+            className="h-6 w-auto max-w-[132px] sm:h-7 sm:max-w-none"
           />
         </Link>
 
@@ -50,12 +51,13 @@ export default function Header() {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <ThemeToggle />
           <AccountIcon />
           <CartIcon />
           <button
             type="button"
-            className="rounded-full border border-border-primary bg-surface-elevated p-2 text-text-secondary transition-colors hover:text-text-primary md:hidden"
+            className="inline-flex h-10 w-10 cursor-pointer items-center justify-center text-text-secondary transition-colors hover:text-text-primary md:hidden"
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
             aria-controls="mobile-site-nav"

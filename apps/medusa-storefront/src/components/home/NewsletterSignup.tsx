@@ -5,6 +5,9 @@ import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
 import FadeInView from "@/components/ui/FadeInView";
 
+const newsletterInputClass =
+  "w-full max-w-sm rounded-full border border-border-primary bg-surface-primary px-5 py-3 text-sm text-text-primary placeholder:text-text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/45 disabled:bg-surface-secondary disabled:text-text-secondary disabled:placeholder:text-text-secondary disabled:opacity-100";
+
 export default function NewsletterSignup() {
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
@@ -60,7 +63,7 @@ export default function NewsletterSignup() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Your email address"
                     required
-                    className="rounded-full border border-border-primary bg-white/55 px-5 py-3 text-sm text-text-primary placeholder-text-muted focus:border-transparent focus:outline-none focus:ring-2 focus:ring-accent"
+                    className={newsletterInputClass}
                   />
                   <Button type="submit" variant="accent">
                     Try Again
@@ -76,7 +79,7 @@ export default function NewsletterSignup() {
                   placeholder="Your email address"
                   required
                   disabled={status === "loading"}
-                  className="w-full max-w-sm rounded-full border border-border-primary bg-white/55 px-5 py-3 text-sm text-text-primary placeholder-text-muted focus:border-transparent focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"
+                  className={newsletterInputClass}
                 />
                 <label className="flex items-start gap-2 text-left max-w-sm">
                   <input

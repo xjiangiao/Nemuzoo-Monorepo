@@ -12,7 +12,7 @@ export default function CartIcon({ className = "" }: { className?: string }) {
   return (
     <Link
       href="/cart"
-      className={`relative p-2 text-text-secondary hover:text-text-primary transition-colors ${className}`}
+      className={`relative inline-flex h-10 w-10 items-center justify-center text-text-secondary transition-colors hover:text-text-primary ${className}`}
       aria-label={`View cart${itemCount > 0 ? ` (${itemCount} items)` : ""}`}
     >
       <ShoppingBag size={20} />
