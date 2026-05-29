@@ -36,17 +36,16 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/favicon.svg",
-        type: "image/svg+xml",
-        media: "(prefers-color-scheme: light)",
+        url: "/favicon-32x32.png",
+        type: "image/png",
+        sizes: "32x32",
       },
       {
-        url: "/favicon-inverted.svg",
+        url: "/favicon.svg",
         type: "image/svg+xml",
-        media: "(prefers-color-scheme: dark)",
       },
     ],
-    shortcut: "/favicon.svg",
+    shortcut: "/favicon-32x32.png",
     apple: "/apple-touch-icon.png",
   },
 };

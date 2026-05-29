@@ -26,11 +26,7 @@ export default function Footer() {
         <div className="mb-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <Link
-              href="/"
-              className="inline-flex"
-              aria-label="Nemuzoo home"
-            >
+            <Link href="/" className="inline-flex" aria-label="Nemuzoo home">
               <Image
                 src="/nemuzoo-wordmark.svg"
                 alt="nemuzoo"
@@ -40,7 +36,8 @@ export default function Footer() {
               />
             </Link>
             <p className="mt-3 text-sm text-text-secondary leading-relaxed">
-              Soft companions for bedrooms, desks, gifting, and gentle everyday rituals.
+              Soft companions for bedrooms, desks, gifting, and gentle everyday
+              rituals.
             </p>
           </div>
 

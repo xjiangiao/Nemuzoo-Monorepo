@@ -17,12 +17,8 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border-primary bg-surface-primary/85 backdrop-blur-xl">
-      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 lg:px-8">
-        <Link
-          href="/"
-          className="flex items-center"
-          aria-label="Nemuzoo home"
-        >
+      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-5 lg:px-8">
+        <Link href="/" className="flex items-center" aria-label="Nemuzoo home">
           <Image
             src="/nemuzoo-wordmark.svg"
             alt="nemuzoo"
