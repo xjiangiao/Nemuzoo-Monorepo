@@ -44,7 +44,7 @@ export default function FeaturedProducts() {
           </div>
         )}
 
-        {featured.length > 0 && (
+        {!isLoading && featured.length > 0 && (
           <ProductGrid products={featured} columns={4} />
         )}
 

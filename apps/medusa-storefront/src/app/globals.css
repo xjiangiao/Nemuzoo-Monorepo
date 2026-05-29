@@ -13,7 +13,7 @@
 
 :root {
   --font-heading: "Nunito Sans", "Avenir Next", "Arial Rounded MT Bold", system-ui, sans-serif;
-  --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  --font-body: -apple-system, "BlinkMacSystemFont", "SF Pro Text", "Segoe UI", system-ui, sans-serif;
   --color-surface-primary: #F7F5F2;
   --color-surface-secondary: #EDE9E2;
   --color-surface-elevated: rgba(255, 255, 255, 0.68);

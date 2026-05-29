@@ -47,7 +47,7 @@ export const metadata: Metadata = {
       },
     ],
     shortcut: "/favicon.svg",
-    apple: "/favicon.svg",
+    apple: "/apple-touch-icon.png",
   },
 };
 

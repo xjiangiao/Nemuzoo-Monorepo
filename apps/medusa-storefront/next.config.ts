@@ -46,14 +46,15 @@ const nextConfig: NextConfig = {
     ],
   },
   async rewrites() {
+    const backendUrl = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || 'http://localhost:9000';
     return [
       {
         source: "/auth/:path*",
-        destination: `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/auth/:path*`,
+        destination: `${backendUrl}/auth/:path*`,
       },
       {
         source: "/store/:path*",
-        destination: `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/:path*`,
+        destination: `${backendUrl}/store/:path*`,
       },
     ];
   },
