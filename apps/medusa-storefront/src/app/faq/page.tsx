@@ -49,7 +49,7 @@ export default function FAQPage() {
       className="grid gap-10 py-14 lg:grid-cols-[0.55fr_1fr] lg:py-16"
     >
       <aside>
-        <p className="font-mono text-xs uppercase tracking-[0.24em] text-text-muted">
+        <p className="font-heading text-xs font-bold uppercase tracking-[0.24em] text-text-muted">
           care & support
         </p>
         <h1 className="mt-4 font-heading text-5xl font-black leading-tight text-text-primary sm:text-6xl">

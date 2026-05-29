@@ -24,7 +24,7 @@ export default function ContactPage() {
     <main>
       <Container className="grid gap-10 py-14 lg:grid-cols-[0.85fr_1fr] lg:py-16">
         <section>
-          <p className="font-mono text-xs uppercase tracking-[0.24em] text-text-muted">
+          <p className="font-heading text-xs font-bold uppercase tracking-[0.24em] text-text-muted">
             contact
           </p>
           <h1 className="mt-4 max-w-3xl font-heading text-5xl font-black leading-[0.96] text-text-primary sm:text-6xl lg:text-7xl">
@@ -44,7 +44,7 @@ export default function ContactPage() {
                 key={item.email}
                 className="rounded-[2rem] bg-white/65 p-6 backdrop-blur"
               >
-                <p className="font-mono text-xs uppercase tracking-[0.18em] text-text-muted">
+                <p className="font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
                   {item.label}
                 </p>
                 <a
@@ -65,7 +65,7 @@ export default function ContactPage() {
       <section className="border-y border-border-primary bg-white/45">
         <Container className="grid gap-6 py-14 md:grid-cols-3">
           <article className="rounded-[2rem] bg-surface-primary p-7">
-            <p className="font-mono text-xs uppercase tracking-[0.18em] text-text-muted">
+            <p className="font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
               01
             </p>
             <h2 className="mt-4 font-heading text-2xl font-black text-text-primary">
@@ -76,7 +76,7 @@ export default function ContactPage() {
             </p>
           </article>
           <article className="rounded-[2rem] bg-surface-primary p-7">
-            <p className="font-mono text-xs uppercase tracking-[0.18em] text-text-muted">
+            <p className="font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
               02
             </p>
             <h2 className="mt-4 font-heading text-2xl font-black text-text-primary">
@@ -87,7 +87,7 @@ export default function ContactPage() {
             </p>
           </article>
           <article className="rounded-[2rem] bg-surface-primary p-7">
-            <p className="font-mono text-xs uppercase tracking-[0.18em] text-text-muted">
+            <p className="font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
               03
             </p>
             <h2 className="mt-4 font-heading text-2xl font-black text-text-primary">

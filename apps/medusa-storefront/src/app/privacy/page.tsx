@@ -1,203 +1,111 @@
 import type { Metadata } from "next";
 import Container from "@/components/layout/Container";
-import StarDecoration from "@/components/ui/StarDecoration";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "Nemuzoo privacy policy — how we collect, use, and protect your personal information.",
+    "Nemuzoo privacy policy: how we collect, use, and protect your personal information.",
 };
 
-/**
- * Renders the site's Privacy Policy page.
- *
- * The page presents the full privacy policy content (introduction, information collected,
- * usage, third-party services, user rights, cookies, data retention, changes, and contact)
- * inside the app layout.
- *
- * @returns The Privacy Policy page as a JSX element
- */
+const sections = [
+  {
+    title: "Introduction",
+    body: [
+      'Nemuzoo ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or subscribe to our newsletter.',
+    ],
+  },
+  {
+    title: "Information we collect",
+    body: [
+      "Email address: when you subscribe to our newsletter, we collect your email address with your explicit consent.",
+      "Order information: when you make a purchase, we collect your name, shipping address, email, and payment details necessary to fulfill your order.",
+      "Usage data: we collect anonymous browsing information, such as pages visited and time spent, to improve our site.",
+    ],
+  },
+  {
+    title: "How we use your information",
+    body: [
+      "To send newsletter updates you have subscribed to.",
+      "To process and fulfill your orders.",
+      "To communicate with you about your orders.",
+      "To improve our website and product offerings.",
+    ],
+  },
+  {
+    title: "Third-party services",
+    body: [
+      "Resend manages our newsletter email delivery. Your email is stored securely on Resend's servers in accordance with their privacy policy.",
+      "Cloudflare hosts and serves our website, providing security and performance optimization.",
+      "Stripe processes payment transactions. We never store your full payment details.",
+    ],
+  },
+  {
+    title: "Your rights",
+    body: [
+      "You may unsubscribe from emails, request a copy of the personal data we hold about you, ask us to delete your data, or correct inaccurate personal information.",
+      "To exercise these rights, contact us at support@nemuzoo.com.",
+    ],
+  },
+  {
+    title: "Cookies and retention",
+    body: [
+      "We use essential cookies required for cart management and session handling. We do not use tracking cookies or third-party advertising cookies.",
+      "We retain personal data only as long as necessary to provide our services or as required by law. Newsletter data is retained until you unsubscribe, and order data is retained for accounting purposes.",
+    ],
+  },
+  {
+    title: "Changes and contact",
+    body: [
+      'We may update this Privacy Policy from time to time by posting the new policy on this page and updating the "Last updated" date.',
+      "If you have questions about this Privacy Policy, reach out to support@nemuzoo.com.",
+    ],
+  },
+];
+
 export default function PrivacyPage() {
   return (
-    <Container className="py-16 lg:py-20">
-      <div className="max-w-2xl mx-auto">
-        <div className="flex items-center gap-3 mb-4">
-          <StarDecoration variant="warm" size="sm" />
-          <span className="text-sm text-warm tracking-widest uppercase font-heading">
-            Privacy Policy
-          </span>
-        </div>
-        <h1 className="text-4xl lg:text-5xl font-bold text-text-primary mb-4 font-heading">
-          Privacy Policy
-        </h1>
-        <p className="text-sm text-text-muted mb-10">
-          Last updated: May 26, 2026
+    <Container
+      as="main"
+      className="grid gap-10 py-14 lg:grid-cols-[0.55fr_1fr] lg:py-16"
+    >
+      <aside>
+        <p className="font-heading text-xs font-bold uppercase tracking-[0.24em] text-text-muted">
+          policies
         </p>
-
-        <div className="prose prose-sm prose-gray max-w-none space-y-8 text-text-secondary leading-relaxed">
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Introduction
-            </h2>
-            <p style={{ fontWeight: 300 }}>
-              Nemuzoo (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is
-              committed to protecting your privacy. This Privacy Policy explains
-              how we collect, use, disclose, and safeguard your information when
-              you visit our website or subscribe to our newsletter.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Information We Collect
-            </h2>
-            <div className="space-y-2" style={{ fontWeight: 300 }}>
-              <p>
-                <strong>Email address</strong> — When you subscribe to our
-                newsletter, we collect your email address with your explicit
-                consent.
-              </p>
-              <p>
-                <strong>Order information</strong> — When you make a purchase,
-                we collect your name, shipping address, email, and payment
-                details necessary to fulfill your order.
-              </p>
-              <p>
-                <strong>Usage data</strong> — We collect anonymous browsing
-                information (pages visited, time spent) to improve our site.
-              </p>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              How We Use Your Information
-            </h2>
-            <ul
-              className="list-disc pl-5 space-y-1"
-              style={{ fontWeight: 300 }}
-            >
-              <li>To send you newsletter updates you have subscribed to</li>
-              <li>To process and fulfill your orders</li>
-              <li>To communicate with you about your orders</li>
-              <li>To improve our website and product offerings</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Third-Party Services
-            </h2>
-            <div className="space-y-3" style={{ fontWeight: 300 }}>
-              <p>We use the following third-party services:</p>
-              <ul className="list-disc pl-5 space-y-1">
-                <li>
-                  <strong>Resend</strong> — Manages our newsletter email
-                  delivery. Your email is stored securely on Resend&apos;s
-                  servers in accordance with their privacy policy.
-                </li>
-                <li>
-                  <strong>Cloudflare</strong> — Hosts and serves our website,
-                  providing security and performance optimization.
-                </li>
-                <li>
-                  <strong>Stripe</strong> — Processes payment transactions. We
-                  never store your full payment details.
-                </li>
-              </ul>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Your Rights
-            </h2>
-            <div className="space-y-2" style={{ fontWeight: 300 }}>
-              <p>You have the right to:</p>
-              <ul className="list-disc pl-5 space-y-1">
-                <li>
-                  <strong>Unsubscribe</strong> — Click the unsubscribe link in
-                  any email, or contact us to be removed from our list.
-                </li>
-                <li>
-                  <strong>Access</strong> — Request a copy of the personal data
-                  we hold about you.
-                </li>
-                <li>
-                  <strong>Delete</strong> — Request that we delete your personal
-                  data.
-                </li>
-                <li>
-                  <strong>Correct</strong> — Update any inaccurate personal
-                  information.
-                </li>
-              </ul>
-              <p className="mt-3">
-                To exercise any of these rights, contact us at{" "}
-                <a
-                  href="mailto:support@nemuzoo.com"
-                  className="text-accent hover:text-accent-hover"
-                >
-                  support@nemuzoo.com
-                </a>
-                .
-              </p>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Cookies
-            </h2>
-            <p style={{ fontWeight: 300 }}>
-              We use only essential cookies required for the functioning of our
-              store (cart management, session handling). We do not use tracking
-              cookies or third-party advertising cookies. You can configure your
-              browser to refuse cookies, but this may affect your shopping
-              experience.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Data Retention
-            </h2>
-            <p style={{ fontWeight: 300 }}>
-              We retain your personal data only as long as necessary to provide
-              our services or as required by law. Newsletter subscribers&apos;
-              data is retained until you unsubscribe. Order data is retained for
-              accounting purposes as required by applicable tax laws.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Changes to This Policy
-            </h2>
-            <p style={{ fontWeight: 300 }}>
-              We may update this Privacy Policy from time to time. We will
-              notify you of any changes by posting the new policy on this page
-              and updating the &quot;Last updated&quot; date.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Contact
-            </h2>
-            <p style={{ fontWeight: 300 }}>
-              If you have any questions about this Privacy Policy, please reach
-              out:{" "}
-              <a
-                href="mailto:support@nemuzoo.com"
-                className="text-accent hover:text-accent-hover"
-              >
-                support@nemuzoo.com
-              </a>
-            </p>
-          </section>
+        <h1 className="mt-4 font-heading text-5xl font-black leading-tight text-text-primary sm:text-6xl">
+          Privacy, data, and quiet boundaries.
+        </h1>
+        <div className="mt-8 rounded-[2rem] bg-white/55 p-6">
+          <p className="font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
+            last updated
+          </p>
+          <p className="mt-3 text-sm leading-7 text-text-secondary">
+            May 26, 2026. We collect only what is needed to run the shop, fulfill
+            orders, and send updates you ask for.
+          </p>
         </div>
-      </div>
+      </aside>
+
+      <section className="space-y-4" aria-label="Privacy policy sections">
+        {sections.map((section, index) => (
+          <article
+            key={section.title}
+            className="rounded-[2rem] bg-surface-elevated p-6"
+          >
+            <p className="font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
+              {String(index + 1).padStart(2, "0")}
+            </p>
+            <h2 className="mt-3 font-heading text-2xl font-black text-text-primary">
+              {section.title}
+            </h2>
+            <div className="mt-4 space-y-3 text-sm leading-7 text-text-secondary">
+              {section.body.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </article>
+        ))}
+      </section>
     </Container>
   );
 }

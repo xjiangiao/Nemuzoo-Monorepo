@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Container from "@/components/layout/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
-import StarDecoration from "@/components/ui/StarDecoration";
 
 interface CollectionData {
   title: string;
@@ -40,8 +39,7 @@ export default function CollectionBanners() {
               href={col.href}
               className="soft-shadow group rounded-[2rem] border border-border-primary bg-surface-elevated p-8 transition-colors hover:bg-white/70 lg:p-10"
             >
-              <div className="flex items-center gap-2 mb-4">
-                <StarDecoration size="sm" variant="accent" />
+              <div className="mb-4">
                 <h3
                   className="font-heading text-2xl font-black text-text-primary"
                 >

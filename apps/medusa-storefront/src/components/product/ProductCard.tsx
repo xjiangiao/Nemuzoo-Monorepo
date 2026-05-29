@@ -57,7 +57,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             {product.title}
           </h3>
           {price && (
-            <p className="shrink-0 font-mono text-sm text-text-secondary">
+            <p className="shrink-0 text-sm font-medium text-text-secondary">
               {formatPrice(price.amount, price.currency_code)}
             </p>
           )}

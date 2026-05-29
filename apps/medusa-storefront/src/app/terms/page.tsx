@@ -1,193 +1,114 @@
 import type { Metadata } from "next";
 import Container from "@/components/layout/Container";
-import StarDecoration from "@/components/ui/StarDecoration";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
-    "Nemuzoo terms of service — conditions for using our website and purchasing our products.",
+    "Nemuzoo terms of service: conditions for using our website and purchasing our products.",
 };
 
-/**
- * Render the Terms of Service page for Nemuzoo.
- *
- * Renders a styled, responsive page containing the Terms of Service content,
- * including sections for Acceptance of Terms, Products, Pricing & Payment,
- * Orders, Shipping & Delivery, Returns & Refunds, Intellectual Property,
- * Limitation of Liability, Governing Law, Changes to Terms, and Contact.
- *
- * @returns The Terms of Service page as a React element.
- */
+const sections = [
+  {
+    title: "Acceptance of terms",
+    body: [
+      'By accessing or purchasing from Nemuzoo ("we," "our," or "us"), you agree to be bound by these Terms of Service. If you do not agree, please do not use our website or services.',
+    ],
+  },
+  {
+    title: "Products",
+    body: [
+      "All Nemuzoo dolls are hand-knitted, which means each piece is unique. Slight variations in size, texture, and color are natural characteristics of handmade goods and are not considered defects.",
+      "Product images are for illustration purposes. Actual colors may vary slightly due to yarn dye lots, lighting, and screen settings.",
+    ],
+  },
+  {
+    title: "Pricing and payment",
+    body: [
+      "All prices are listed in US Dollars (USD) and are subject to change without notice. The price at the time of purchase is the price you pay.",
+      "We accept major credit cards and payment methods shown at checkout. Payment is processed securely through Stripe. We do not store your full payment details.",
+    ],
+  },
+  {
+    title: "Orders",
+    body: [
+      "By placing an order, you agree to provide accurate and complete information. We reserve the right to cancel or refuse any order at our discretion.",
+      "If your order is cancelled after payment, you will receive a full refund.",
+    ],
+  },
+  {
+    title: "Shipping and returns",
+    body: [
+      "Shipping times are estimates and not guaranteed. We are not responsible for delays caused by customs, postal services, or events outside our control.",
+      "Returns are accepted within 30 days of delivery as outlined in Care & FAQ. Refunds are processed to the original payment method within 5 to 10 business days after we receive the returned item.",
+    ],
+  },
+  {
+    title: "Intellectual property",
+    body: [
+      "All content on this website, including product designs, images, text, logos, and brand name, is the property of Nemuzoo and is protected by applicable intellectual property laws.",
+      "You may not reproduce, distribute, or use our content without written permission.",
+    ],
+  },
+  {
+    title: "Liability and governing law",
+    body: [
+      "Nemuzoo shall not be liable for any indirect, incidental, or consequential damages arising from the use of our products or website. Our total liability is limited to the purchase price of the product in question.",
+      "These terms are governed by the laws of the jurisdiction in which Nemuzoo operates. Any disputes shall be resolved through good-faith negotiation before seeking legal recourse.",
+    ],
+  },
+  {
+    title: "Changes and contact",
+    body: [
+      "We reserve the right to update these terms at any time. Changes take effect immediately upon posting. Continued use of our website after changes constitutes acceptance of the new terms.",
+      "For questions about these terms, reach out at support@nemuzoo.com.",
+    ],
+  },
+];
+
 export default function TermsPage() {
   return (
-    <Container className="py-16 lg:py-20">
-      <div className="max-w-2xl mx-auto">
-        <div className="flex items-center gap-3 mb-4">
-          <StarDecoration variant="warm" size="sm" />
-          <span className="text-sm text-warm tracking-widest uppercase font-heading">
-            Terms of Service
-          </span>
-        </div>
-        <h1 className="text-4xl lg:text-5xl font-bold text-text-primary mb-4 font-heading">
-          Terms of Service
-        </h1>
-        <p className="text-sm text-text-muted mb-10">
-          Last updated: May 26, 2026
+    <Container
+      as="main"
+      className="grid gap-10 py-14 lg:grid-cols-[0.55fr_1fr] lg:py-16"
+    >
+      <aside>
+        <p className="font-heading text-xs font-bold uppercase tracking-[0.24em] text-text-muted">
+          policies
         </p>
-
-        <div className="space-y-8 text-text-secondary leading-relaxed">
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Acceptance of Terms
-            </h2>
-            <p style={{ fontWeight: 300 }}>
-              By accessing or purchasing from Nemuzoo ("we," "our," or "us"), you
-              agree to be bound by these Terms of Service. If you do not agree,
-              please do not use our website or services.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Products
-            </h2>
-            <div className="space-y-2" style={{ fontWeight: 300 }}>
-              <p>
-                All Nemuzoo dolls are hand-knitted, which means each piece is
-                unique. Slight variations in size, texture, and color are natural
-                characteristics of handmade goods and are not considered defects.
-              </p>
-              <p>
-                Product images are for illustration purposes. Actual colors may
-                vary slightly due to yarn dye lots, lighting, and screen
-                settings.
-              </p>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-                Pricing & Payment
-            </h2>
-            <div className="space-y-2" style={{ fontWeight: 300 }}>
-              <p>
-                All prices are listed in US Dollars (USD) and are subject to
-                change without notice. The price at the time of purchase is the
-                price you pay.
-              </p>
-              <p>
-                We accept major credit cards and payment methods as displayed at
-                checkout. Payment is processed securely through Stripe. We do not
-                store your full payment details.
-              </p>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Orders
-            </h2>
-            <div className="space-y-2" style={{ fontWeight: 300 }}>
-              <p>
-                By placing an order, you agree to provide accurate and complete
-                information. We reserve the right to cancel or refuse any order
-                at our discretion.
-              </p>
-              <p>
-                If your order is cancelled after payment, you will receive a full
-                refund.
-              </p>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Shipping & Delivery
-            </h2>
-            <p style={{ fontWeight: 300 }}>
-              Shipping times are estimates and not guaranteed. We are not
-              responsible for delays caused by customs, postal services, or
-              events outside our control. Risk of loss passes to you upon
-              delivery to the carrier.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Returns & Refunds
-            </h2>
-            <p style={{ fontWeight: 300 }}>
-              Returns are accepted within 30 days of delivery as outlined in our
-              Shipping & Returns policy. Refunds are processed to the original
-              payment method within 5–10 business days after we receive the
-              returned item.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Intellectual Property
-            </h2>
-            <p style={{ fontWeight: 300 }}>
-              All content on this website — including product designs, images,
-              text, logos, and brand name — is the property of Nemuzoo and is
-              protected by applicable intellectual property laws. You may not
-              reproduce, distribute, or use our content without written
-              permission.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Limitation of Liability
-            </h2>
-            <p style={{ fontWeight: 300 }}>
-              Nemuzoo shall not be liable for any indirect, incidental, or
-              consequential damages arising from the use of our products or
-              website. Our total liability is limited to the purchase price of
-              the product in question.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Governing Law
-            </h2>
-            <p style={{ fontWeight: 300 }}>
-              These terms are governed by the laws of the jurisdiction in which
-              Nemuzoo operates. Any disputes shall be resolved through
-              good-faith negotiation before seeking legal recourse.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Changes to Terms
-            </h2>
-            <p style={{ fontWeight: 300 }}>
-              We reserve the right to update these terms at any time. Changes
-              take effect immediately upon posting. Continued use of our website
-              after changes constitutes acceptance of the new terms.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-medium text-text-primary font-heading mb-2">
-              Contact
-            </h2>
-            <p style={{ fontWeight: 300 }}>
-              For questions about these terms, reach out at{" "}
-              <a
-                href="mailto:support@nemuzoo.com"
-                className="text-accent hover:text-accent-hover transition-colors"
-              >
-                support@nemuzoo.com
-              </a>
-              .
-            </p>
-          </section>
+        <h1 className="mt-4 font-heading text-5xl font-black leading-tight text-text-primary sm:text-6xl">
+          Terms for a clear, soft checkout.
+        </h1>
+        <div className="mt-8 rounded-[2rem] bg-white/55 p-6">
+          <p className="font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
+            last updated
+          </p>
+          <p className="mt-3 text-sm leading-7 text-text-secondary">
+            May 26, 2026. These terms cover using the site, buying plush
+            companions, payments, shipping, returns, and brand content.
+          </p>
         </div>
-      </div>
+      </aside>
+
+      <section className="space-y-4" aria-label="Terms of service sections">
+        {sections.map((section, index) => (
+          <article
+            key={section.title}
+            className="rounded-[2rem] bg-surface-elevated p-6"
+          >
+            <p className="font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
+              {String(index + 1).padStart(2, "0")}
+            </p>
+            <h2 className="mt-3 font-heading text-2xl font-black text-text-primary">
+              {section.title}
+            </h2>
+            <div className="mt-4 space-y-3 text-sm leading-7 text-text-secondary">
+              {section.body.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </article>
+        ))}
+      </section>
     </Container>
   );
 }

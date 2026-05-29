@@ -31,7 +31,7 @@ export default function ValueProps() {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             {values.map((v, index) => (
               <div key={v.title}>
-                <p className="mb-4 font-mono text-xs uppercase tracking-[0.24em] text-text-muted">
+                <p className="mb-4 font-heading text-xs font-bold uppercase tracking-[0.24em] text-text-muted">
                   {String(index + 1).padStart(2, "0")}
                 </p>
                 <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-full bg-accent-subtle text-text-primary">

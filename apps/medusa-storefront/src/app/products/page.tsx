@@ -30,7 +30,7 @@ export default function ProductsPage() {
     <Container className="py-16 lg:py-20">
       <div className="mb-10 grid gap-8 border-b border-border-primary pb-10 lg:grid-cols-[0.7fr_1fr]">
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.24em] text-text-muted">
+          <p className="font-heading text-xs font-bold uppercase tracking-[0.24em] text-text-muted">
             shop
           </p>
           <h1 className="mt-4 font-heading text-5xl font-black leading-tight text-text-primary sm:text-6xl">

@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from "react";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import QuantitySelector from "@/components/ui/QuantitySelector";
-import StarDecoration from "@/components/ui/StarDecoration";
 import { formatPrice } from "@/lib/utils";
 import { useCartStore } from "@/lib/cart/store";
 
@@ -101,8 +100,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       )}
 
       {product.description && (
-        <p className="text-base text-text-secondary leading-relaxed"
-           style={{ fontWeight: 300 }}>
+        <p className="text-base text-text-secondary leading-relaxed">
           {product.description}
         </p>
       )}
@@ -110,11 +108,9 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       {story && (
         <details className="group">
           <summary className="flex items-center gap-2 cursor-pointer text-sm font-medium text-accent hover:text-accent-hover transition-colors">
-            <StarDecoration size="sm" />
             The Story
           </summary>
-          <p className="mt-3 pl-6 text-sm text-text-secondary leading-relaxed"
-             style={{ fontWeight: 300 }}>
+          <p className="mt-3 pl-6 text-sm text-text-secondary leading-relaxed">
             {story}
           </p>
         </details>

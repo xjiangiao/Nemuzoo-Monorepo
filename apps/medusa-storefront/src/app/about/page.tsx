@@ -33,7 +33,7 @@ export default function AboutPage() {
     <main>
       <Container className="grid gap-10 py-16 lg:grid-cols-[1fr_0.8fr] lg:py-20">
         <section>
-          <p className="font-mono text-xs uppercase tracking-[0.24em] text-text-muted">
+          <p className="font-heading text-xs font-bold uppercase tracking-[0.24em] text-text-muted">
             brand story
           </p>
           <h1 className="mt-4 max-w-4xl font-heading text-5xl font-black leading-[0.96] text-text-primary sm:text-6xl lg:text-7xl">
@@ -50,7 +50,7 @@ export default function AboutPage() {
         <aside className="relative min-h-[420px] overflow-hidden rounded-[2.5rem] bg-surface-secondary p-8">
           <div className="plush-oval soft-shadow absolute bottom-8 left-8 h-64 w-48 rounded-[48%_48%_38%_38%]" />
           <div className="absolute right-8 top-8 max-w-[240px] rounded-[2rem] bg-white/60 p-6 backdrop-blur">
-            <p className="font-mono text-xs uppercase tracking-[0.22em] text-text-muted">
+            <p className="font-heading text-xs font-bold uppercase tracking-[0.22em] text-text-muted">
               design language
             </p>
             <p className="mt-3 font-heading text-2xl font-black leading-tight text-[#2E2E33]">
@@ -71,7 +71,7 @@ export default function AboutPage() {
               key={value.number}
               className="rounded-[2rem] bg-surface-primary p-7"
             >
-              <p className="font-mono text-xs uppercase tracking-[0.18em] text-text-muted">
+              <p className="font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
                 {value.number}
               </p>
               <h2 className="mt-4 font-heading text-2xl font-black text-text-primary">

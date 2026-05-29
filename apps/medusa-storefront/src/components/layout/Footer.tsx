@@ -46,7 +46,7 @@ export default function Footer() {
 
           {/* Shop Links */}
           <div>
-            <h4 className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-text-muted">
+            <h4 className="mb-3 font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
               Shop
             </h4>
             <ul className="space-y-2">
@@ -65,7 +65,7 @@ export default function Footer() {
 
           {/* Company Links */}
           <div>
-            <h4 className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-text-muted">
+            <h4 className="mb-3 font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
               Company
             </h4>
             <ul className="space-y-2">
@@ -84,7 +84,7 @@ export default function Footer() {
 
           {/* Policy Links */}
           <div>
-            <h4 className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-text-muted">
+            <h4 className="mb-3 font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
               Policies
             </h4>
             <ul className="space-y-2">

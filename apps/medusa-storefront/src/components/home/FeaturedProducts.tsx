@@ -37,14 +37,14 @@ export default function FeaturedProducts() {
         />
 
         {isLoading && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:gap-8">
             {Array.from({ length: 4 }).map((_, i) => (
               <SkeletonCard key={i} />
             ))}
           </div>
         )}
 
-        {!isLoading && featured.length > 0 && (
+        {featured.length > 0 && (
           <ProductGrid products={featured} columns={4} />
         )}
 
