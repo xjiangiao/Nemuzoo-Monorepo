@@ -26,9 +26,9 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
   return (
     <Link
       href={`/products/${product.handle}`}
-      className="group block"
+      className="soft-shadow group block rounded-[2rem] bg-surface-elevated p-4 transition hover:-translate-y-1"
     >
-      <div className="aspect-square bg-surface-secondary rounded-xl overflow-hidden mb-4 relative">
+      <div className="relative mb-4 aspect-square overflow-hidden rounded-[1.5rem] bg-surface-secondary">
         {thumbnail ? (
           <ProductImage
             src={thumbnail}
@@ -43,27 +43,29 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-text-muted">
+          <div className="plush-cream flex h-full w-full items-center justify-center text-text-muted">
             No Image
           </div>
         )}
       </div>
 
-      <div className="space-y-1">
-        <div className="flex items-center gap-2">
+      <div className="px-2 pb-1 pt-1">
+        <div className="flex items-start justify-between gap-4">
           <h3
-            className="text-base lg:text-lg font-medium text-text-primary font-heading"
+            className="font-heading text-xl font-black text-text-primary"
           >
             {product.title}
           </h3>
-          {personality && (
-            <Badge variant="warm">{personality}</Badge>
+          {price && (
+            <p className="shrink-0 font-mono text-sm text-text-secondary">
+              {formatPrice(price.amount, price.currency_code)}
+            </p>
           )}
         </div>
-        {price && (
-          <p className="text-sm text-text-secondary">
-            {formatPrice(price.amount, price.currency_code)}
-          </p>
+        {personality && (
+          <div className="mt-3">
+            <Badge variant="warm">{personality}</Badge>
+          </div>
         )}
       </div>
     </Link>

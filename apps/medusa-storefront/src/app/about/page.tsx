@@ -13,15 +13,15 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <Container className="py-16 lg:py-20">
-      <div className="max-w-2xl mx-auto">
+      <div className="mx-auto max-w-3xl">
         {/* Hero */}
         <FadeInView>
-          <div className="text-center mb-16">
+          <div className="mb-16 text-center">
             <div className="flex items-center justify-center gap-2 mb-4">
-              <StarDecoration variant="warm" size="md" />
+              <StarDecoration variant="accent" size="md" />
             </div>
             <h1
-              className="text-4xl lg:text-5xl font-bold text-text-primary mb-4 font-heading"
+              className="mb-4 font-heading text-5xl font-black text-text-primary lg:text-6xl"
             >
               About Nemuzoo
             </h1>
@@ -38,10 +38,7 @@ export default function AboutPage() {
         <FadeInView delay={100}>
           <section className="mb-16">
             <SectionHeading title="What is Nemuzoo?" alignment="left" />
-            <div
-              className="space-y-4 text-base text-text-secondary leading-relaxed"
-              style={{ fontWeight: 300 }}
-            >
+            <div className="space-y-4 text-base leading-8 text-text-secondary">
               <p>
                 <em>Nemu</em> (眠る) means &ldquo;sleep&rdquo; in Japanese.{" "}
                 <em>Zoo</em> is a collection of companions. Together, Nemuzoo is
@@ -62,47 +59,38 @@ export default function AboutPage() {
         <FadeInView delay={200}>
           <section className="mb-16">
             <SectionHeading title="Caring for Your Doll" alignment="left" />
-            <div className="space-y-6">
-              <div>
+            <div className="space-y-5">
+              <div className="rounded-[2rem] border border-border-primary bg-surface-elevated p-6">
                 <h3
-                  className="text-lg font-medium text-text-primary mb-1 font-heading"
+                  className="mb-2 font-heading text-xl font-black text-text-primary"
                 >
                   Gentle Hand Wash
                 </h3>
-                <p
-                  className="text-sm text-text-secondary"
-                  style={{ fontWeight: 300 }}
-                >
+                <p className="text-sm leading-7 text-text-secondary">
                   Use lukewarm water and mild detergent. Gently squeeze — do not
                   wring. Lay flat to dry in a shaded spot. Your doll will be
                   fresh and ready for another night.
                 </p>
               </div>
-              <div>
+              <div className="rounded-[2rem] border border-border-primary bg-surface-elevated p-6">
                 <h3
-                  className="text-lg font-medium text-text-primary mb-1 font-heading"
+                  className="mb-2 font-heading text-xl font-black text-text-primary"
                 >
                   Natural Yarns
                 </h3>
-                <p
-                  className="text-sm text-text-secondary"
-                  style={{ fontWeight: 300 }}
-                >
+                <p className="text-sm leading-7 text-text-secondary">
                   Each doll is knitted with carefully selected natural yarns.
                   Colors may deepen slightly over time — that is the yarn
                   settling in with you, not a flaw.
                 </p>
               </div>
-              <div>
+              <div className="rounded-[2rem] border border-border-primary bg-surface-elevated p-6">
                 <h3
-                  className="text-lg font-medium text-text-primary mb-1 font-heading"
+                  className="mb-2 font-heading text-xl font-black text-text-primary"
                 >
                   A Little Love
                 </h3>
-                <p
-                  className="text-sm text-text-secondary"
-                  style={{ fontWeight: 300 }}
-                >
+                <p className="text-sm leading-7 text-text-secondary">
                   Your doll is made to be held. Over time, the knit will soften
                   and mold to your touch — like any good friendship.
                 </p>
@@ -113,14 +101,14 @@ export default function AboutPage() {
 
         {/* Contact placeholder */}
         <FadeInView delay={300}>
-          <section className="text-center py-10 bg-surface-secondary rounded-2xl">
+          <section className="soft-shadow rounded-[2rem] border border-border-primary bg-surface-elevated py-10 text-center">
             <StarDecoration
               variant="accent"
               size="md"
               className="mx-auto mb-3"
             />
             <h3
-              className="text-xl font-medium text-text-primary font-heading"
+              className="font-heading text-2xl font-black text-text-primary"
             >
               Have a Question?
             </h3>

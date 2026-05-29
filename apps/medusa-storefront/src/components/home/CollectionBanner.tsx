@@ -26,24 +26,24 @@ const collections: CollectionData[] = [
 
 export default function CollectionBanners() {
   return (
-    <section className="py-20 lg:py-28 bg-surface-secondary">
+    <section className="bg-surface-secondary py-20 lg:py-28">
       <Container>
         <SectionHeading
           title="Find Your Companion"
           subtitle="Every Nemuzoo doll belongs to a family. Which one calls to you?"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {collections.map((col) => (
             <Link
               key={col.title}
               href={col.href}
-              className="group bg-surface-elevated rounded-2xl p-8 lg:p-10 border border-border-primary hover:shadow-md transition-shadow"
+              className="soft-shadow group rounded-[2rem] border border-border-primary bg-surface-elevated p-8 transition hover:-translate-y-1 lg:p-10"
             >
               <div className="flex items-center gap-2 mb-4">
-                <StarDecoration size="sm" variant="warm" />
+                <StarDecoration size="sm" variant="accent" />
                 <h3
-                  className="text-xl font-medium text-text-primary font-heading"
+                  className="font-heading text-2xl font-black text-text-primary"
                 >
                   {col.title}
                 </h3>
@@ -51,7 +51,7 @@ export default function CollectionBanners() {
               <p className="text-sm text-text-secondary leading-relaxed">
                 {col.description}
               </p>
-              <span className="inline-block mt-4 text-sm font-medium text-accent group-hover:text-accent-hover transition-colors">
+              <span className="mt-5 inline-block text-sm font-bold text-text-primary underline decoration-text-primary/20 underline-offset-8 transition-colors group-hover:decoration-text-primary/50">
                 Explore &rarr;
               </span>
             </Link>

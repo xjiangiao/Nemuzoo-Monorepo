@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import medusaClient from "@/lib/medusa-client";
 import type { Product } from "@/types";
 import Container from "@/components/layout/Container";
-import SectionHeading from "@/components/ui/SectionHeading";
 import ProductGrid from "@/components/product/ProductGrid";
 import SkeletonCard from "@/components/ui/SkeletonCard";
 import EmptyState from "@/components/ui/EmptyState";
@@ -29,10 +28,19 @@ export default function ProductsPage() {
 
   return (
     <Container className="py-16 lg:py-20">
-      <SectionHeading
-        title="All Dolls"
-        subtitle="Every Nemuzoo companion is waiting for a home. Find yours."
-      />
+      <div className="mb-10 grid gap-8 border-b border-border-primary pb-10 lg:grid-cols-[0.7fr_1fr]">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-[0.24em] text-text-muted">
+            shop
+          </p>
+          <h1 className="mt-4 font-heading text-5xl font-black leading-tight text-text-primary sm:text-6xl">
+            Find the plush that fits your day.
+          </h1>
+        </div>
+        <p className="max-w-2xl text-lg leading-8 text-text-secondary lg:pt-10">
+          Browse soft companions for bedtime comfort, desk company, gifting, and carry-along calm. Free US shipping on orders over $75.
+        </p>
+      </div>
 
       {isLoading && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">

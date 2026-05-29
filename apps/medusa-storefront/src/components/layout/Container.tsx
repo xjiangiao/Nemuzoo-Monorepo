@@ -12,7 +12,7 @@ export default function Container({
   as: Tag = "div",
 }: ContainerProps) {
   return (
-    <Tag className={`max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>
+    <Tag className={`mx-auto max-w-7xl px-5 lg:px-8 ${className}`}>
       {children}
     </Tag>
   );

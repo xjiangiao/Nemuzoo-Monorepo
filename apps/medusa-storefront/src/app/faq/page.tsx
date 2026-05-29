@@ -53,24 +53,24 @@ const faqs = [
 export default function FAQPage() {
   return (
     <Container className="py-16 lg:py-20">
-      <div className="max-w-2xl mx-auto">
+      <div className="mx-auto max-w-3xl">
         <div className="flex items-center gap-3 mb-4">
-          <StarDecoration variant="warm" size="sm" />
-          <span className="text-sm text-warm tracking-widest uppercase font-heading">
+          <StarDecoration variant="accent" size="sm" />
+          <span className="font-mono text-xs uppercase tracking-[0.24em] text-text-muted">
             FAQ
           </span>
         </div>
-        <h1 className="text-4xl lg:text-5xl font-bold text-text-primary mb-10 font-heading">
+        <h1 className="mb-10 font-heading text-5xl font-black text-text-primary lg:text-6xl">
           Frequently Asked Questions
         </h1>
 
-        <div className="space-y-6">
+        <div className="space-y-4">
           {faqs.map((faq) => (
             <details
               key={faq.q}
-              className="group bg-surface-elevated rounded-xl border border-border-primary p-5"
+              className="group rounded-[2rem] border border-border-primary bg-surface-elevated p-6"
             >
-              <summary className="cursor-pointer text-sm font-medium text-text-primary hover:text-accent transition-colors list-none flex items-center justify-between gap-4">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-bold text-text-primary transition-colors hover:text-accent">
                 <span>{faq.q}</span>
                 <span className="text-text-muted group-open:rotate-180 transition-transform shrink-0">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -78,7 +78,7 @@ export default function FAQPage() {
                   </svg>
                 </span>
               </summary>
-              <p className="mt-4 text-sm text-text-secondary leading-relaxed" style={{ fontWeight: 300 }}>
+              <p className="mt-4 text-sm leading-7 text-text-secondary">
                 {faq.a}
               </p>
             </details>

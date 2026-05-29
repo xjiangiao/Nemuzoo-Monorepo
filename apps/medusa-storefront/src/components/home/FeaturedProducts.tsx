@@ -32,8 +32,8 @@ export default function FeaturedProducts() {
     <section className="py-20 lg:py-28">
       <Container>
         <SectionHeading
-          title="Meet Your Nighttime Companions"
-          subtitle="Each doll has a name, a personality, and a quiet story waiting for you."
+          title="The first plush drop"
+          subtitle="Each companion is soft, collectible, and calm enough to live beautifully in grown-up spaces."
         />
 
         {isLoading && (
@@ -50,7 +50,7 @@ export default function FeaturedProducts() {
 
         <div className="mt-12 text-center">
           <Button variant="outline" href="/products">
-            View All Dolls &rarr;
+            View all plush &rarr;
           </Button>
         </div>
       </Container>

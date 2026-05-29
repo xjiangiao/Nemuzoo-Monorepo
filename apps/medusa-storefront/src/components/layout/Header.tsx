@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import CartIcon from "@/components/cart/CartIcon";
 import AccountIcon from "@/components/auth/AccountIcon";
 import { Menu, X } from "lucide-react";
@@ -17,13 +18,21 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-md bg-surface-primary/80 border-b border-border-primary">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+    <header className="sticky top-0 z-50 border-b border-border-primary bg-surface-primary/85 backdrop-blur-xl">
+      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 lg:px-8">
         <Link
           href="/"
-          className="text-xl font-bold text-text-primary font-heading"
+          className="flex items-center"
+          aria-label="Nemuzoo home"
         >
-          Nemuzoo
+          <Image
+            src="/nemuzoo-wordmark.svg"
+            alt="nemuzoo"
+            width={188}
+            height={28}
+            priority
+            className="h-7 w-auto"
+          />
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
@@ -37,7 +46,13 @@ export default function Header() {
             href="/about"
             className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
           >
-            About
+            Story
+          </Link>
+          <Link
+            href="/faq"
+            className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
+          >
+            Care
           </Link>
         </nav>
 
@@ -45,7 +60,7 @@ export default function Header() {
           <AccountIcon />
           <button
             type="button"
-            className="md:hidden p-2 text-text-secondary hover:text-text-primary transition-colors"
+            className="rounded-full border border-border-primary bg-surface-elevated p-2 text-text-secondary transition-colors hover:text-text-primary md:hidden"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
@@ -59,21 +74,28 @@ export default function Header() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden border-t border-border-primary bg-surface-primary/95 backdrop-blur-md">
-          <nav id="mobile-site-nav" className="px-4 sm:px-6 py-4 space-y-1">
+        <div className="md:hidden border-t border-border-primary bg-surface-primary/95 backdrop-blur-xl">
+          <nav id="mobile-site-nav" className="space-y-1 px-5 py-4">
             <Link
               href="/products"
               onClick={() => setMenuOpen(false)}
-              className="block px-4 py-3 rounded-lg text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-surface-secondary transition-colors"
+              className="block rounded-2xl px-4 py-3 text-sm font-semibold text-text-secondary transition-colors hover:bg-surface-secondary hover:text-text-primary"
             >
               Shop
             </Link>
             <Link
               href="/about"
               onClick={() => setMenuOpen(false)}
-              className="block px-4 py-3 rounded-lg text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-surface-secondary transition-colors"
+              className="block rounded-2xl px-4 py-3 text-sm font-semibold text-text-secondary transition-colors hover:bg-surface-secondary hover:text-text-primary"
             >
-              About
+              Story
+            </Link>
+            <Link
+              href="/faq"
+              onClick={() => setMenuOpen(false)}
+              className="block rounded-2xl px-4 py-3 text-sm font-semibold text-text-secondary transition-colors hover:bg-surface-secondary hover:text-text-primary"
+            >
+              Care
             </Link>
           </nav>
         </div>

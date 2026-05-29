@@ -4,23 +4,22 @@ import StarDecoration from "@/components/ui/StarDecoration";
 
 export default function BrandPhilosophy() {
   return (
-    <section className="py-20 lg:py-28 bg-surface-secondary">
+    <section className="bg-surface-secondary py-20 lg:py-28">
       <Container>
         <FadeInView>
-          <div className="max-w-xl mx-auto text-center">
+          <div className="soft-shadow mx-auto max-w-3xl rounded-[2rem] border border-border-primary bg-surface-elevated p-8 text-center backdrop-blur md:p-12">
             <div className="flex items-center justify-center gap-3 mb-6">
-              <StarDecoration variant="warm" size="sm" />
+              <StarDecoration variant="accent" size="sm" />
               <span
-                className="text-sm text-warm tracking-widest uppercase font-heading"
+                className="font-mono text-xs uppercase tracking-[0.24em] text-text-muted"
               >
                 Nemuzoo
               </span>
-              <StarDecoration variant="warm" size="sm" />
+              <StarDecoration variant="accent" size="sm" />
             </div>
 
             <p
-              className="text-lg lg:text-xl text-text-secondary leading-relaxed"
-              style={{ fontWeight: 300 }}
+              className="text-lg leading-8 text-text-secondary lg:text-xl"
             >
               <em>Nemu</em> (眠る) means &ldquo;sleep&rdquo; in Japanese.{" "}
               <em>Zoo</em> means a collection of companions. Together, Nemuzoo
