@@ -3,7 +3,6 @@ import "./globals.css";
 import { Providers } from "@/lib/providers";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import ThemeColor from "@/components/layout/ThemeColor";
 import { cn } from "@/lib/utils";
 
 const siteUrl = "https://www.nemuzoo.com";
@@ -91,7 +90,6 @@ export default function RootLayout({
           }}
         />
         <Providers>
-          <ThemeColor />
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
