@@ -16,14 +16,16 @@ export default function FAQAccordion({ items }: { items: FAQItem[] }) {
       {items.map((faq, index) => {
         const isOpen = openIndex === index;
         const panelId = `faq-panel-${index}`;
+        const buttonId = `faq-button-${index}`;
 
         return (
           <article
-            key={faq.q}
+            key={`${faq.q}-${index}`}
             className="rounded-[2rem] bg-surface-elevated p-6"
           >
             <button
               type="button"
+              id={buttonId}
               className="flex w-full items-center justify-between gap-6 text-left font-heading text-2xl font-black leading-tight text-text-primary"
               aria-expanded={isOpen}
               aria-controls={panelId}
@@ -55,6 +57,10 @@ export default function FAQAccordion({ items }: { items: FAQItem[] }) {
 
             <div
               id={panelId}
+              role="region"
+              aria-labelledby={buttonId}
+              aria-hidden={!isOpen}
+              hidden={!isOpen}
               className={cn(
                 "grid transition-[grid-template-rows] duration-300 ease-out",
                 isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
