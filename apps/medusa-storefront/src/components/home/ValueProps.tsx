@@ -25,27 +25,30 @@ const values = [
 
 export default function ValueProps() {
   return (
-    <section className="border-y border-border-primary bg-white/45 py-14">
+    <section className="border-y border-border-primary bg-surface-secondary py-14 lg:py-20">
       <Container>
         <FadeInView>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-5">
             {values.map((v, index) => (
-              <div key={v.title}>
-                <p className="mb-4 font-heading text-xs font-bold uppercase tracking-[0.24em] text-text-muted">
+              <article
+                key={v.title}
+                className="rounded-[1.75rem] border border-border-primary bg-surface-primary/72 p-6 backdrop-blur md:p-7"
+              >
+                <p className="mb-5 font-heading text-xs font-bold uppercase tracking-[0.24em] text-text-muted">
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-full bg-accent-subtle text-text-primary">
+                <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent-subtle text-text-primary">
                   {v.icon}
                 </div>
                 <h3
-                  className="mb-3 font-heading text-2xl font-black text-text-primary"
+                  className="mb-3 font-heading text-2xl font-black leading-tight text-text-primary"
                 >
                   {v.title}
                 </h3>
                 <p className="text-sm leading-7 text-text-secondary">
                   {v.description}
                 </p>
-              </div>
+              </article>
             ))}
           </div>
         </FadeInView>

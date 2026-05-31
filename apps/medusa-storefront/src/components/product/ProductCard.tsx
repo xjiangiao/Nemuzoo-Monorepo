@@ -1,6 +1,6 @@
-import Link from "next/link";
 import Badge from "@/components/ui/Badge";
 import ProductImage from "@/components/media/ProductImage";
+import SurfaceCard from "@/components/ui/SurfaceCard";
 import { formatPrice, getProductThumbnail, getProductPrice } from "@/lib/utils";
 import type { Product } from "@/types";
 
@@ -24,9 +24,9 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
       : null;
 
   return (
-    <Link
+    <SurfaceCard
       href={`/products/${product.handle}`}
-      className="soft-shadow group block rounded-[2rem] bg-surface-elevated p-4 transition-colors hover:bg-white/80"
+      className="group block p-4"
     >
       <div className="relative mb-4 aspect-square overflow-hidden rounded-[1.5rem] bg-surface-secondary">
         {thumbnail ? (
@@ -49,7 +49,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
         )}
       </div>
 
-      <div className="px-2 pb-1 pt-1">
+      <div className="relative px-2 pb-1 pt-1">
         <div className="flex items-start justify-between gap-4">
           <h3
             className="font-heading text-xl font-black text-text-primary"
@@ -68,6 +68,6 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           </div>
         )}
       </div>
-    </Link>
+    </SurfaceCard>
   );
 }

@@ -36,24 +36,27 @@ export default function ContactPage() {
           </p>
         </section>
 
-        <section className="relative overflow-hidden rounded-[2.5rem] bg-surface-secondary p-6 md:p-8">
-          <div className="grain absolute inset-0 opacity-70" aria-hidden="true" />
+        <section className="relative min-w-0 overflow-hidden rounded-[2rem] bg-surface-secondary p-4 sm:rounded-[2.5rem] sm:p-6 md:p-8">
+          <div
+            className="grain absolute inset-0 opacity-70"
+            aria-hidden="true"
+          />
           <div className="relative grid gap-5">
             {contacts.map((item) => (
               <article
                 key={item.email}
-                className="rounded-[2rem] bg-white/65 p-6 backdrop-blur"
+                className="min-w-0 rounded-2xl bg-surface-primary/72 p-5 backdrop-blur sm:rounded-[2rem] sm:p-6"
               >
                 <p className="font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
                   {item.label}
                 </p>
                 <a
                   href={`mailto:${item.email}`}
-                  className="mt-3 block break-words font-heading text-2xl font-black text-[#2E2E33] transition-colors hover:text-[#5C5963]"
+                  className="mt-3 block min-w-0 wrap-anywhere font-heading text-[clamp(1.5rem,7vw,2rem)] font-black leading-tight text-text-primary transition-colors hover:text-text-secondary"
                 >
                   {item.email}
                 </a>
-                <p className="mt-3 text-sm leading-7 text-[#2E2E33]/65">
+                <p className="mt-3 text-sm leading-7 text-text-secondary">
                   {item.description}
                 </p>
               </article>
