@@ -1,6 +1,6 @@
-import Link from "next/link";
 import Container from "@/components/layout/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
+import SurfaceCard from "@/components/ui/SurfaceCard";
 
 interface CollectionData {
   title: string;
@@ -34,25 +34,25 @@ export default function CollectionBanners() {
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {collections.map((col) => (
-            <Link
+            <SurfaceCard
               key={col.title}
               href={col.href}
-              className="soft-shadow group rounded-[2rem] border border-border-primary bg-surface-elevated p-8 transition-colors hover:bg-white/70 lg:p-10"
+              className="group block p-8 lg:p-10"
             >
-              <div className="mb-4">
+              <div className="relative mb-4">
                 <h3
                   className="font-heading text-2xl font-black text-text-primary"
                 >
                   {col.title}
                 </h3>
               </div>
-              <p className="text-sm text-text-secondary leading-relaxed">
+              <p className="relative text-sm text-text-secondary leading-relaxed">
                 {col.description}
               </p>
-              <span className="mt-5 inline-block text-sm font-bold text-text-primary underline decoration-text-primary/20 underline-offset-8 transition-colors group-hover:decoration-text-primary/50">
+              <span className="relative mt-5 inline-block text-sm font-bold text-text-primary underline decoration-text-primary/20 underline-offset-8 transition-colors group-hover:decoration-text-primary/50">
                 Explore &rarr;
               </span>
-            </Link>
+            </SurfaceCard>
           ))}
         </div>
       </Container>

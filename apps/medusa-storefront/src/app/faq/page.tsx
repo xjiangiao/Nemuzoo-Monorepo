@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Container from "@/components/layout/Container";
+import FAQAccordion from "@/components/faq/FAQAccordion";
 
 export const metadata: Metadata = {
   title: "Care & FAQ",
@@ -63,29 +64,7 @@ export default function FAQPage() {
         </div>
       </aside>
 
-      <section className="space-y-4" aria-label="Frequently asked questions">
-        {faqs.map((faq, index) => (
-          <details
-            key={faq.q}
-            open={index === 0}
-            className="group rounded-[2rem] bg-surface-elevated p-6"
-          >
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-left font-heading text-2xl font-black leading-tight text-text-primary">
-              <span>{faq.q}</span>
-              <span
-                className="grid size-9 shrink-0 place-items-center rounded-full bg-accent-subtle text-xl leading-none text-text-primary"
-                aria-hidden="true"
-              >
-                <span className="group-open:hidden">+</span>
-                <span className="hidden group-open:block">-</span>
-              </span>
-            </summary>
-            <p className="mt-4 max-w-3xl leading-7 text-text-secondary">
-              {faq.a}
-            </p>
-          </details>
-        ))}
-      </section>
+      <FAQAccordion items={faqs} />
     </Container>
   );
 }
