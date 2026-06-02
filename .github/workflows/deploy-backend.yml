@@ -129,6 +129,11 @@ jobs:
             R2_BUCKET=${{ vars.R2_BUCKET }}
             R2_ACCESS_KEY_ID=${{ secrets.R2_ACCESS_KEY_ID }}
             R2_SECRET_ACCESS_KEY=${{ secrets.R2_SECRET_ACCESS_KEY }}
+            ORDER_EMAILS_ENABLED=${{ vars.ORDER_EMAILS_ENABLED }}
+            RESEND_FROM_EMAIL=${{ vars.RESEND_FROM_EMAIL || secrets.RESEND_FROM_EMAIL }}
+            ACCOUNT_EMAILS_ENABLED=${{ vars.ACCOUNT_EMAILS_ENABLED }}
+            ACCOUNT_EMAIL_FROM=${{ vars.ACCOUNT_EMAIL_FROM || secrets.ACCOUNT_EMAIL_FROM }}
+            RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
             PAYMENT_PROVIDER=${{ vars.PAYMENT_PROVIDER }}
             PAYMENT_ENV=${{ vars.PAYMENT_ENV }}
             PAYMENT_API_KEY=${{ secrets.PAYMENT_API_KEY }}
@@ -144,6 +149,22 @@ jobs:
 
             if grep -q "^PAYMENT_PROVIDER=." "${ENV_FILE}"; then
               for name in PAYMENT_ENV PAYMENT_API_KEY PAYMENT_WEBHOOK_SECRET; do
+                if ! grep -q "^${name}=." "${ENV_FILE}"; then
+                  missing_env="${missing_env} ${name}"
+                fi
+              done
+            fi
+
+            if ! grep -q "^ORDER_EMAILS_ENABLED=false" "${ENV_FILE}"; then
+              for name in RESEND_FROM_EMAIL RESEND_API_KEY; do
+                if ! grep -q "^${name}=." "${ENV_FILE}"; then
+                  missing_env="${missing_env} ${name}"
+                fi
+              done
+            fi
+
+            if ! grep -q "^ACCOUNT_EMAILS_ENABLED=false" "${ENV_FILE}"; then
+              for name in ACCOUNT_EMAIL_FROM RESEND_API_KEY; do
                 if ! grep -q "^${name}=." "${ENV_FILE}"; then
                   missing_env="${missing_env} ${name}"
                 fi
