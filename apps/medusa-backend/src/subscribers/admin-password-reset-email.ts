@@ -12,6 +12,17 @@ type PasswordResetEvent = {
   token?: string
 }
 
+const maskEmail = (email?: string) => {
+  if (!email || !email.includes("@")) {
+    return "unknown"
+  }
+
+  const [local, domain] = email.split("@")
+  const visible = local.slice(0, 2)
+
+  return `${visible}${"*".repeat(Math.max(local.length - 2, 1))}@${domain}`
+}
+
 export default async function adminPasswordResetEmailHandler({
   event: { data },
   container,
@@ -22,6 +33,8 @@ export default async function adminPasswordResetEmailHandler({
     return
   }
 
+  const maskedEmail = maskEmail(data.entity_id)
+
   const result = await sendAdminPasswordResetEmail({
     email: data.entity_id || "",
     token: data.token || "",
@@ -29,12 +42,12 @@ export default async function adminPasswordResetEmailHandler({
 
   if (result.skipped) {
     logger.warn(
-      `Skipped admin password reset email for ${data.entity_id || "unknown"}: ${result.reason}`
+      `Skipped admin password reset email for ${maskedEmail}: ${result.reason}`
     )
     return
   }
 
-  logger.info(`Sent admin password reset email for ${data.entity_id}`)
+  logger.info(`Sent admin password reset email for ${maskedEmail}`)
 }
 
 export const config: SubscriberConfig = {

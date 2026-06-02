@@ -5,7 +5,6 @@ type OrderEmailLineItem = {
   title?: string | null
   variant_title?: string | null
   quantity?: number | string | null
-  unit_price?: number | null
   total?: number | null
 }
 
@@ -35,6 +34,15 @@ type OrderEmailData = {
 
 const isEmailEnabled = () => process.env.ORDER_EMAILS_ENABLED !== "false"
 
+type EmailSendResult =
+  | { skipped: false }
+  | { skipped: true; reason: string }
+
+const getOrderItems = (order: OrderEmailData) =>
+  (order.items || []).filter(
+    (item): item is OrderEmailLineItem => !!item
+  )
+
 const formatMoney = (amount?: number | null, currencyCode = "usd") => {
   if (typeof amount !== "number") {
     return "-"
@@ -43,7 +51,7 @@ const formatMoney = (amount?: number | null, currencyCode = "usd") => {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: currencyCode.toUpperCase(),
-  }).format(amount / 100)
+  }).format(amount)
 }
 
 const escapeHtml = (value: unknown) =>
@@ -76,7 +84,7 @@ const renderAddress = (address?: OrderEmailAddress | null) => {
 const renderItemsHtml = (order: OrderEmailData) => {
   const currencyCode = order.currency_code || "usd"
 
-  const items = order.items?.filter((item) => !!item) || []
+  const items = getOrderItems(order)
 
   if (!items.length) {
     return "<p>No line items were found for this order.</p>"
@@ -101,7 +109,7 @@ const renderItemsHtml = (order: OrderEmailData) => {
               <tr>
                 <td style="border-bottom:1px solid #eee;padding:10px 0;">${escapeHtml(title)}${escapeHtml(variant)}</td>
                 <td align="center" style="border-bottom:1px solid #eee;padding:10px 0;">${escapeHtml(item.quantity ?? 1)}</td>
-                <td align="right" style="border-bottom:1px solid #eee;padding:10px 0;">${formatMoney(item.total ?? item.unit_price, currencyCode)}</td>
+                <td align="right" style="border-bottom:1px solid #eee;padding:10px 0;">${formatMoney(item.total, currencyCode)}</td>
               </tr>
             `
           })
@@ -122,11 +130,11 @@ export const renderOrderConfirmationEmail = (order: OrderEmailData) => {
       `Thank you for your order ${orderNumber}.`,
       "",
       "Order summary:",
-      ...((order.items?.filter((item) => !!item) || []).map((item) => {
+      ...getOrderItems(order).map((item) => {
         const title = item.product_title || item.title || "Item"
         const variant = item.variant_title ? ` (${item.variant_title})` : ""
-        return `- ${title}${variant} x ${item.quantity ?? 1}: ${formatMoney(item.total ?? item.unit_price, currencyCode)}`
-      })),
+        return `- ${title}${variant} x ${item.quantity ?? 1}: ${formatMoney(item.total, currencyCode)}`
+      }),
       "",
       `Subtotal: ${formatMoney(order.subtotal, currencyCode)}`,
       `Shipping: ${formatMoney(order.shipping_total, currencyCode)}`,
@@ -160,7 +168,9 @@ export const renderOrderConfirmationEmail = (order: OrderEmailData) => {
   }
 }
 
-export const sendOrderConfirmationEmail = async (order: OrderEmailData) => {
+export const sendOrderConfirmationEmail = async (
+  order: OrderEmailData
+): Promise<EmailSendResult> => {
   if (!isEmailEnabled()) {
     return { skipped: true, reason: "disabled" }
   }
@@ -176,13 +186,27 @@ export const sendOrderConfirmationEmail = async (order: OrderEmailData) => {
   const resend = new Resend(process.env.RESEND_API_KEY)
   const email = renderOrderConfirmationEmail(order)
 
-  await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL,
-    to: order.email,
-    subject: email.subject,
-    html: email.html,
-    text: email.text,
-  })
+  try {
+    const { error } = await resend.emails.send({
+      from: process.env.RESEND_FROM_EMAIL,
+      to: order.email,
+      subject: email.subject,
+      html: email.html,
+      text: email.text,
+    })
+
+    if (error) {
+      return {
+        skipped: true,
+        reason: `resend-error:${error.name ?? "unknown"}:${error.message ?? "unknown"}`,
+      }
+    }
+  } catch (error) {
+    return {
+      skipped: true,
+      reason: `resend-exception:${error instanceof Error ? error.message : String(error)}`,
+    }
+  }
 
   return { skipped: false }
 }

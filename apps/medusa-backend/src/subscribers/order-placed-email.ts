@@ -32,7 +32,6 @@ export default async function orderPlacedEmailHandler({
       "items.title",
       "items.variant_title",
       "items.quantity",
-      "items.unit_price",
       "items.total",
       "shipping_address.first_name",
       "shipping_address.last_name",

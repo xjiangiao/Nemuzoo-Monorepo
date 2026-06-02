@@ -155,7 +155,7 @@ jobs:
               done
             fi
 
-            if grep -q "^ORDER_EMAILS_ENABLED=true" "${ENV_FILE}"; then
+            if ! grep -q "^ORDER_EMAILS_ENABLED=false" "${ENV_FILE}"; then
               for name in RESEND_FROM_EMAIL RESEND_API_KEY; do
                 if ! grep -q "^${name}=." "${ENV_FILE}"; then
                   missing_env="${missing_env} ${name}"

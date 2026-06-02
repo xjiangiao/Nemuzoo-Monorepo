@@ -112,13 +112,27 @@ export const sendAdminPasswordResetEmail = async ({
 
   const resend = new Resend(process.env.RESEND_API_KEY)
 
-  await resend.emails.send({
-    from: process.env.ACCOUNT_EMAIL_FROM,
-    to: email,
-    subject: emailContent.subject,
-    html: emailContent.html,
-    text: emailContent.text,
-  })
+  try {
+    const { error } = await resend.emails.send({
+      from: process.env.ACCOUNT_EMAIL_FROM,
+      to: email,
+      subject: emailContent.subject,
+      html: emailContent.html,
+      text: emailContent.text,
+    })
+
+    if (error) {
+      return {
+        skipped: true,
+        reason: `resend-error:${error.name ?? "unknown"}:${error.message ?? "unknown"}`,
+      }
+    }
+  } catch (error) {
+    return {
+      skipped: true,
+      reason: `resend-exception:${error instanceof Error ? error.message : String(error)}`,
+    }
+  }
 
   return { skipped: false }
 }
