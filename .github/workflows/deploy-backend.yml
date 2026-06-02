@@ -115,8 +115,8 @@ jobs:
             ADMIN_CORS=${{ vars.ADMIN_CORS }}
             AUTH_CORS=${{ vars.AUTH_CORS }}
             MEDUSA_ADMIN_ONBOARDING_TYPE=default
-            R2_FILE_URL=${{ secrets.R2_FILE_URL }}
-            R2_ENDPOINT=${{ secrets.R2_ENDPOINT }}
+            R2_FILE_URL=${{ vars.R2_FILE_URL || secrets.R2_FILE_URL }}
+            R2_ENDPOINT=${{ vars.R2_ENDPOINT || secrets.R2_ENDPOINT }}
             R2_BUCKET=${{ vars.R2_BUCKET }}
             R2_ACCESS_KEY_ID=${{ secrets.R2_ACCESS_KEY_ID }}
             R2_SECRET_ACCESS_KEY=${{ secrets.R2_SECRET_ACCESS_KEY }}
