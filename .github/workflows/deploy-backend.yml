@@ -15,6 +15,12 @@ on:
       - "pnpm-workspace.yaml"
       - "package.json"
   workflow_dispatch:
+    inputs:
+      run_migrations:
+        description: "Run Medusa database migrations before deploying"
+        required: false
+        default: false
+        type: boolean
 
 env:
   REGISTRY: ghcr.io
@@ -80,6 +86,7 @@ jobs:
             ENV_FILE=".env.${DEPLOY_ENV}"
             API_DOMAIN="${{ github.ref_name == 'main' && 'api.nemuzoo.com' || 'api-staging.nemuzoo.com' }}"
             ADMIN_DOMAIN="${{ github.ref_name == 'main' && 'admin.nemuzoo.com' || 'admin-staging.nemuzoo.com' }}"
+            RUN_MIGRATIONS="${{ github.event.inputs.run_migrations || 'false' }}"
 
             # Write docker-compose.yml
             cat > docker-compose.yml << COMPOSEEOF
@@ -151,8 +158,12 @@ jobs:
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             docker pull ghcr.io/${{ env.IMAGE_NAME }}:${IMAGE_TAG}
 
-            docker compose run --rm ${SERVICE_NAME} npx medusa db:migrate
-            docker compose run --rm ${SERVICE_NAME} npx medusa db:sync-links
+            if [ "${RUN_MIGRATIONS}" = "true" ]; then
+              docker compose run --rm ${SERVICE_NAME} npx medusa db:migrate
+              docker compose run --rm ${SERVICE_NAME} npx medusa db:sync-links
+            else
+              echo "Skipping database migrations. Set run_migrations=true on workflow_dispatch to run them."
+            fi
 
             docker compose up -d ${SERVICE_NAME}
 
