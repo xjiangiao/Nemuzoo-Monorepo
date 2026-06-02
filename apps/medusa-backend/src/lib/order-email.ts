@@ -179,7 +179,7 @@ export const sendOrderConfirmationEmail = async (
     return { skipped: true, reason: "missing-order-email" }
   }
 
-  if (!process.env.RESEND_API_KEY || !process.env.RESEND_FROM_EMAIL) {
+  if (!process.env.RESEND_API_KEY || !process.env.ORDER_EMAIL_FROM) {
     return { skipped: true, reason: "missing-resend-config" }
   }
 
@@ -188,7 +188,7 @@ export const sendOrderConfirmationEmail = async (
 
   try {
     const { error } = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL,
+      from: process.env.ORDER_EMAIL_FROM,
       to: order.email,
       subject: email.subject,
       html: email.html,
