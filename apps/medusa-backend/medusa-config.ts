@@ -2,6 +2,19 @@ import { loadEnv, defineConfig } from '@medusajs/framework/utils'
 
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
+const deploymentEnv = process.env.APP_ENV || process.env.NODE_ENV || "development"
+const requiresStrictEnv = process.env.NODE_ENV === "production"
+
+const requiredCoreEnvNames = [
+  "DATABASE_URL",
+  "REDIS_URL",
+  "STORE_CORS",
+  "ADMIN_CORS",
+  "AUTH_CORS",
+  "JWT_SECRET",
+  "COOKIE_SECRET",
+]
+
 const requiredR2EnvNames = [
   "R2_FILE_URL",
   "R2_ACCESS_KEY_ID",
@@ -10,11 +23,19 @@ const requiredR2EnvNames = [
   "R2_BUCKET",
 ]
 
-const missingR2EnvNames = requiredR2EnvNames.filter((name) => !process.env[name])
+const requiredPaymentEnvNames = process.env.PAYMENT_PROVIDER
+  ? ["PAYMENT_PROVIDER", "PAYMENT_API_KEY", "PAYMENT_WEBHOOK_SECRET", "PAYMENT_ENV"]
+  : []
 
-if (process.env.NODE_ENV === "production" && missingR2EnvNames.length) {
-  console.warn(
-    `Missing R2 environment variables: ${missingR2EnvNames.join(", ")}. File uploads will fail until they are configured.`
+const missingEnvNames = [
+  ...requiredCoreEnvNames,
+  ...requiredR2EnvNames,
+  ...requiredPaymentEnvNames,
+].filter((name) => !process.env[name])
+
+if (requiresStrictEnv && missingEnvNames.length) {
+  throw new Error(
+    `Missing ${deploymentEnv} environment variables: ${missingEnvNames.join(", ")}`
   )
 }
 

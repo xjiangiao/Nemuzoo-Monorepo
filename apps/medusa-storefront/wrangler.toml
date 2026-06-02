@@ -5,6 +5,18 @@ compatibility_flags = ["nodejs_compat"]
 workers_dev = false
 preview_urls = false
 
+[vars]
+NEXT_PUBLIC_MEDUSA_BACKEND_URL = "https://api.nemuzoo.com"
+NEXT_PUBLIC_MEDUSA_PUBLISHABLE_API_KEY = "pk_6ffe07eeac0113181549762b2b2925dd0edfe54479f2d1eb8d410fb91428acb7"
+NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT = "https://ik.imagekit.io/afgvip2rl/"
+RESEND_TOPIC_ID = "8fb5890c-e49c-4c08-8778-565469977ffd"
+RESEND_NEWSLETTER_SEGMENT_ID = "dc2d73c1-0793-43c1-bb0b-a83b2f1e5138"
+RESEND_REGISTERED_USER_SEGMENT_ID = "feee62a0-0fc0-47a6-82d1-65f101b52ade"
+
+[[routes]]
+pattern = "www.nemuzoo.com"
+custom_domain = true
+
 [assets]
 directory = ".open-next/assets"
 binding = "ASSETS"
@@ -23,3 +35,17 @@ invocation_logs = true
 enabled = true
 persist = true
 head_sampling_rate = 1
+
+[env.staging]
+name = "nemuzoo-staging"
+workers_dev = false
+preview_urls = false
+
+[env.staging.vars]
+NEXT_PUBLIC_MEDUSA_BACKEND_URL = "https://api-staging.nemuzoo.com"
+NEXT_PUBLIC_MEDUSA_PUBLISHABLE_API_KEY = "pk_staging_replace_me"
+NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT = "https://ik.imagekit.io/afgvip2rl/staging/"
+
+[[env.staging.routes]]
+pattern = "staging.nemuzoo.com"
+custom_domain = true

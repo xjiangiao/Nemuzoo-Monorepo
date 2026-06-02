@@ -14,7 +14,7 @@ export function resolveImageKitEndpoint(value?: string) {
   }
 }
 
-const imageKitProxyHosts = ["static.nemuzoo.com"];
+const imageKitProxyHosts = ["static.nemuzoo.com", "static-staging.nemuzoo.com"];
 
 export function shouldProxyWithImageKit(src: string) {
   try {

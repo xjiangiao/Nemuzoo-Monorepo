@@ -54,7 +54,14 @@ Required environment variables:
 - `R2_ACCESS_KEY_ID`: R2 API token access key ID.
 - `R2_SECRET_ACCESS_KEY`: R2 API token secret access key.
 
-Production deploys write these values from GitHub Secrets and Repository Variables in `.github/workflows/deploy-backend.yml`. `R2_BUCKET` is read from Repository Variables, while the access keys and endpoint are read from Secrets. If any R2 value is missing at production startup, the backend logs the missing names and keeps running, but file uploads will fail until the deploy configuration is corrected.
+Production and staging deploys write these values from GitHub Environment Secrets and Variables in `.github/workflows/deploy-backend.yml`. `main` deploys with the `production` environment and the `latest` image tag. `staging` deploys with the `staging` environment and the `staging` image tag.
+
+Use a separate R2 bucket and public file URL per environment:
+
+- Production: `R2_BUCKET=nemuzoo-prod`, `R2_FILE_URL=https://static.nemuzoo.com`
+- Staging: `R2_BUCKET=nemuzoo-staging`, `R2_FILE_URL=https://static-staging.nemuzoo.com`
+
+When `NODE_ENV=production`, the backend fails startup if required database, Redis, CORS, secret, or R2 variables are missing. If `PAYMENT_PROVIDER` is set, `PAYMENT_ENV`, `PAYMENT_API_KEY`, and `PAYMENT_WEBHOOK_SECRET` are required as well.
 
 ## What is Medusa
 

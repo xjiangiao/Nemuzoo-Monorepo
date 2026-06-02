@@ -6,9 +6,29 @@ services:
     ports:
       - "9000:9000"
     env_file:
-      - .env
+      - .env.production
     environment:
+      - APP_ENV=production
       - NODE_ENV=production
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  medusa-backend-staging:
+    image: ghcr.io/xjiangiao/medusa-backend:staging
+    container_name: medusa-backend-staging
+    restart: unless-stopped
+    ports:
+      - "9001:9000"
+    env_file:
+      - .env.staging
+    environment:
+      - APP_ENV=staging
+      - NODE_ENV=production
+      - PORT=9000
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9000/health"]
       interval: 30s

@@ -4,9 +4,12 @@ on:
   push:
     branches:
       - main
+      - staging
     paths:
       - "apps/medusa-backend/**"
       - "docker-compose.yml"
+      - ".env.production.example"
+      - ".env.staging.example"
       - ".github/workflows/deploy-backend.yml"
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
@@ -20,6 +23,7 @@ env:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
     permissions:
       contents: read
       packages: write
@@ -45,7 +49,8 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=sha,prefix=,format=short
-            type=raw,value=latest
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+            type=raw,value=staging,enable=${{ github.ref == 'refs/heads/staging' }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
@@ -68,19 +73,27 @@ jobs:
             mkdir -p /opt/medusa
             cd /opt/medusa
 
+            DEPLOY_ENV="${{ github.ref_name == 'main' && 'production' || 'staging' }}"
+            SERVICE_NAME="${{ github.ref_name == 'main' && 'medusa-backend' || 'medusa-backend-staging' }}"
+            IMAGE_TAG="${{ github.ref_name == 'main' && 'latest' || 'staging' }}"
+            HOST_PORT="${{ github.ref_name == 'main' && '9000' || '9001' }}"
+            ENV_FILE=".env.${DEPLOY_ENV}"
+
             # Write docker-compose.yml
-            cat > docker-compose.yml << 'COMPOSEEOF'
+            cat > docker-compose.yml << COMPOSEEOF
             services:
-              medusa-backend:
-                image: ghcr.io/${{ env.IMAGE_NAME }}:latest
-                container_name: medusa-backend
+              ${SERVICE_NAME}:
+                image: ghcr.io/${{ env.IMAGE_NAME }}:${IMAGE_TAG}
+                container_name: ${SERVICE_NAME}
                 restart: unless-stopped
                 ports:
-                  - "9000:9000"
+                  - "${HOST_PORT}:9000"
                 env_file:
-                  - .env
+                  - ${ENV_FILE}
                 environment:
+                  - APP_ENV=${DEPLOY_ENV}
                   - NODE_ENV=production
+                  - PORT=9000
                 healthcheck:
                   test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9000/health"]
                   interval: 30s
@@ -90,7 +103,8 @@ jobs:
             COMPOSEEOF
 
             # Write .env from GitHub Secrets and Variables on every deploy
-            cat > .env << 'ENVEOF'
+            cat > "${ENV_FILE}" << ENVEOF
+            APP_ENV=${DEPLOY_ENV}
             NODE_ENV=production
             PORT=9000
             DATABASE_URL=${{ secrets.DATABASE_URL }}
@@ -106,23 +120,34 @@ jobs:
             R2_BUCKET=${{ vars.R2_BUCKET }}
             R2_ACCESS_KEY_ID=${{ secrets.R2_ACCESS_KEY_ID }}
             R2_SECRET_ACCESS_KEY=${{ secrets.R2_SECRET_ACCESS_KEY }}
+            PAYMENT_PROVIDER=${{ vars.PAYMENT_PROVIDER }}
+            PAYMENT_ENV=${{ vars.PAYMENT_ENV }}
+            PAYMENT_API_KEY=${{ secrets.PAYMENT_API_KEY }}
+            PAYMENT_WEBHOOK_SECRET=${{ secrets.PAYMENT_WEBHOOK_SECRET }}
             ENVEOF
 
             missing_env=""
             for name in DATABASE_URL REDIS_URL JWT_SECRET COOKIE_SECRET STORE_CORS ADMIN_CORS AUTH_CORS R2_FILE_URL R2_ENDPOINT R2_BUCKET R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY; do
-              if ! grep -q "^${name}=." .env; then
+              if ! grep -q "^${name}=." "${ENV_FILE}"; then
                 missing_env="${missing_env} ${name}"
               fi
             done
 
+            if grep -q "^PAYMENT_PROVIDER=." "${ENV_FILE}"; then
+              for name in PAYMENT_ENV PAYMENT_API_KEY PAYMENT_WEBHOOK_SECRET; do
+                if ! grep -q "^${name}=." "${ENV_FILE}"; then
+                  missing_env="${missing_env} ${name}"
+                fi
+              done
+            fi
+
             if [ -n "$missing_env" ]; then
-              echo "Missing deploy environment values:${missing_env}"
+              echo "Missing ${DEPLOY_ENV} deploy environment values:${missing_env}"
               exit 1
             fi
 
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            docker pull ghcr.io/${{ env.IMAGE_NAME }}:latest
-            docker compose down medusa-backend
-            docker compose up -d medusa-backend
+            docker pull ghcr.io/${{ env.IMAGE_NAME }}:${IMAGE_TAG}
+            docker compose up -d ${SERVICE_NAME}
             docker image prune -f
             docker logout ghcr.io

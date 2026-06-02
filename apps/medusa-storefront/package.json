@@ -8,7 +8,8 @@
     "build:cloudflare": "npx @opennextjs/cloudflare build",
     "start": "next start",
     "lint": "next lint",
-    "cf:deploy": "wrangler deploy",
+    "cf:deploy": "wrangler deploy --env production",
+    "cf:deploy:staging": "wrangler deploy --env staging",
     "cf:typegen": "wrangler types"
   },
   "dependencies": {
