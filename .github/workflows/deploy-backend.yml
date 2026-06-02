@@ -202,6 +202,17 @@ jobs:
             sudo nginx -t
             sudo systemctl reload nginx
 
+            if command -v certbot >/dev/null 2>&1; then
+              sudo certbot --nginx \
+                -d "${API_DOMAIN}" \
+                -d "${ADMIN_DOMAIN}" \
+                --non-interactive \
+                --agree-tos \
+                --register-unsafely-without-email
+            else
+              echo "certbot is not installed on the VPS. Skipping HTTPS certificate setup."
+            fi
+
             docker compose ps ${SERVICE_NAME}
 
             healthy=""
