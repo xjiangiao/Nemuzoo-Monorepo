@@ -21,6 +21,11 @@ on:
         required: false
         default: false
         type: boolean
+      run_initial_seed:
+        description: "Run Medusa initial data seed after migrations"
+        required: false
+        default: false
+        type: boolean
 
 env:
   REGISTRY: ghcr.io
@@ -87,6 +92,7 @@ jobs:
             API_DOMAIN="${{ github.ref_name == 'main' && 'api.nemuzoo.com' || 'api-staging.nemuzoo.com' }}"
             ADMIN_DOMAIN="${{ github.ref_name == 'main' && 'admin.nemuzoo.com' || 'admin-staging.nemuzoo.com' }}"
             RUN_MIGRATIONS="${{ github.event.inputs.run_migrations || 'false' }}"
+            RUN_INITIAL_SEED="${{ github.event.inputs.run_initial_seed || 'false' }}"
 
             # Write docker-compose.yml
             cat > docker-compose.yml << COMPOSEEOF
@@ -163,6 +169,12 @@ jobs:
               docker compose run --rm ${SERVICE_NAME} npx medusa db:sync-links
             else
               echo "Skipping database migrations. Set run_migrations=true on workflow_dispatch to run them."
+            fi
+
+            if [ "${RUN_INITIAL_SEED}" = "true" ]; then
+              docker compose run --rm ${SERVICE_NAME} npx medusa exec .medusa/server/src/migration-scripts/initial-data-seed.js
+            else
+              echo "Skipping initial seed. Set run_initial_seed=true on workflow_dispatch to run it."
             fi
 
             docker compose up -d ${SERVICE_NAME}
