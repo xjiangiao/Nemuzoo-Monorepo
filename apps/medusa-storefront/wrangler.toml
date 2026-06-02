@@ -43,7 +43,7 @@ preview_urls = false
 
 [env.staging.vars]
 NEXT_PUBLIC_MEDUSA_BACKEND_URL = "https://api-staging.nemuzoo.com"
-NEXT_PUBLIC_MEDUSA_PUBLISHABLE_API_KEY = "pk_staging_replace_me"
+NEXT_PUBLIC_MEDUSA_PUBLISHABLE_API_KEY = "pk_4ba0913ae36f23fbc818d33483254aba17cb3d2f70561ce0acd5f3496060c10d"
 NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT = "https://ik.imagekit.io/afgvip2rl/staging/"
 
 [[env.staging.routes]]
