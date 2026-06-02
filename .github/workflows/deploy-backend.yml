@@ -150,6 +150,10 @@ jobs:
 
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             docker pull ghcr.io/${{ env.IMAGE_NAME }}:${IMAGE_TAG}
+
+            docker compose run --rm ${SERVICE_NAME} npx medusa db:migrate
+            docker compose run --rm ${SERVICE_NAME} npx medusa db:sync-links
+
             docker compose up -d ${SERVICE_NAME}
 
             cat > "/tmp/${API_DOMAIN}.conf" << NGINXEOF
