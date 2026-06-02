@@ -78,6 +78,8 @@ jobs:
             IMAGE_TAG="${{ github.ref_name == 'main' && 'latest' || 'staging' }}"
             HOST_PORT="${{ github.ref_name == 'main' && '9000' || '9001' }}"
             ENV_FILE=".env.${DEPLOY_ENV}"
+            API_DOMAIN="${{ github.ref_name == 'main' && 'api.nemuzoo.com' || 'api-staging.nemuzoo.com' }}"
+            ADMIN_DOMAIN="${{ github.ref_name == 'main' && 'admin.nemuzoo.com' || 'admin-staging.nemuzoo.com' }}"
 
             # Write docker-compose.yml
             cat > docker-compose.yml << COMPOSEEOF
@@ -149,5 +151,52 @@ jobs:
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             docker pull ghcr.io/${{ env.IMAGE_NAME }}:${IMAGE_TAG}
             docker compose up -d ${SERVICE_NAME}
+
+            cat > "/tmp/${API_DOMAIN}.conf" << NGINXEOF
+            server {
+                listen 80;
+                server_name ${API_DOMAIN};
+
+                location / {
+                    proxy_pass http://127.0.0.1:${HOST_PORT};
+                    proxy_http_version 1.1;
+                    proxy_set_header Host \$host;
+                    proxy_set_header X-Real-IP \$remote_addr;
+                    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+                    proxy_set_header X-Forwarded-Proto \$scheme;
+                }
+
+                client_max_body_size 50M;
+            }
+            NGINXEOF
+
+            cat > "/tmp/${ADMIN_DOMAIN}.conf" << NGINXEOF
+            server {
+                listen 80;
+                server_name ${ADMIN_DOMAIN};
+
+                location / {
+                    proxy_pass http://127.0.0.1:${HOST_PORT};
+                    proxy_http_version 1.1;
+                    proxy_set_header Upgrade \$http_upgrade;
+                    proxy_set_header Connection "upgrade";
+                    proxy_set_header Host \$host;
+                    proxy_set_header X-Real-IP \$remote_addr;
+                    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+                    proxy_set_header X-Forwarded-Proto \$scheme;
+                    proxy_read_timeout 86400s;
+                }
+
+                client_max_body_size 50M;
+            }
+            NGINXEOF
+
+            sudo mv "/tmp/${API_DOMAIN}.conf" "/etc/nginx/sites-available/${API_DOMAIN}.conf"
+            sudo mv "/tmp/${ADMIN_DOMAIN}.conf" "/etc/nginx/sites-available/${ADMIN_DOMAIN}.conf"
+            sudo ln -sf "/etc/nginx/sites-available/${API_DOMAIN}.conf" "/etc/nginx/sites-enabled/${API_DOMAIN}.conf"
+            sudo ln -sf "/etc/nginx/sites-available/${ADMIN_DOMAIN}.conf" "/etc/nginx/sites-enabled/${ADMIN_DOMAIN}.conf"
+            sudo nginx -t
+            sudo systemctl reload nginx
+
             docker image prune -f
             docker logout ghcr.io
