@@ -98,10 +98,11 @@ const sendNewsletterConfirmationEmail = async ({
   const { error } = await resend.emails.send({
     from,
     to: email,
+    subject: "Welcome to our newsletter!",
     template: {
       id: newsletterWelcomeTemplateId,
       variables: {
-        EMAIL: email,
+        user_email: email,
       },
     },
   })
