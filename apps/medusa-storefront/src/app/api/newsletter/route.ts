@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const RESEND_TOPIC_ID = process.env.RESEND_TOPIC_ID;
-const RESEND_NEWSLETTER_SEGMENT_ID = process.env.RESEND_NEWSLETTER_SEGMENT_ID;
+import { syncMarketingContact } from "@/lib/resend-marketing";
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,19 +20,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!RESEND_TOPIC_ID || !RESEND_NEWSLETTER_SEGMENT_ID || !process.env.RESEND_API_KEY) {
-      // Resend not configured — silently accept for dev
-      return NextResponse.json({ ok: true });
-    }
-
-    const { Resend } = await import("resend");
-    const resend = new Resend(process.env.RESEND_API_KEY);
-
-    await resend.contacts.create({
+    const result = await syncMarketingContact({
       email,
-      segments: [{ id: RESEND_NEWSLETTER_SEGMENT_ID }],
-      topics: [{ id: RESEND_TOPIC_ID, subscription: "opt_in" }],
+      newsletterOptIn: true,
+      sendNewsletterConfirmation: true,
     });
+
+    if (!result.ok) {
+      console.error(`Newsletter subscription failed: ${result.reason}`);
+      return NextResponse.json(
+        { error: "Something went wrong. Please try again." },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({ ok: true });
   } catch {
