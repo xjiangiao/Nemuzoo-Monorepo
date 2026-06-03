@@ -37,13 +37,16 @@ For Cloudflare deploys, use `pnpm cf:deploy` for production and `pnpm cf:deploy:
 - `RESEND_TOPIC_ID`
 - `RESEND_NEWSLETTER_SEGMENT_ID`
 - `RESEND_REGISTERED_USER_SEGMENT_ID`
+- `MARKETING_EMAIL_FROM`
+- `MARKETING_EMAIL_ALLOWLIST`
 
-The Resend variables are configured for production only. Staging intentionally omits them so newsletter and registration API routes fall back to `{ ok: true }` without creating Resend contacts.
+Production leaves `MARKETING_EMAIL_ALLOWLIST` empty so newsletter subscriptions and confirmation emails are sent normally. Staging uses a comma-separated allowlist so only test email addresses create/update Resend contacts and receive confirmation emails; non-allowlisted emails return `{ ok: true }` without Resend side effects.
 
 `RESEND_API_KEY` is a production secret and must be configured in Cloudflare instead of committed to `wrangler.toml`:
 
 ```bash
 pnpm --filter=@nemuzoo/medusa-storefront exec wrangler secret put RESEND_API_KEY --env=""
+pnpm --filter=@nemuzoo/medusa-storefront exec wrangler secret put RESEND_API_KEY --env="staging"
 ```
 
 The storefront can render without these runtime variables because the public values are also read at build time and the Resend API routes skip their remote call when Resend is not configured.

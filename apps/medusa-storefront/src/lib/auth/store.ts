@@ -40,7 +40,8 @@ interface AuthState {
     email: string,
     password: string,
     firstName: string,
-    lastName: string
+    lastName: string,
+    newsletterOptIn?: boolean
   ) => Promise<boolean>;
   logout: () => Promise<void>;
   clearError: () => void;
@@ -97,7 +98,8 @@ export const useAuthStore = create<AuthState>((set) => ({
     email: string,
     password: string,
     firstName: string,
-    lastName: string
+    lastName: string,
+    newsletterOptIn = false
   ): Promise<boolean> => {
     set({ isLoading: true, error: null });
     try {
@@ -130,7 +132,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       fetch("/api/resend/register-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, newsletterOptIn }),
       }).catch(() => {});
 
       return true;

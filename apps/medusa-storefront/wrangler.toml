@@ -12,6 +12,8 @@ NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT = "https://ik.imagekit.io/afgvip2rl/"
 RESEND_TOPIC_ID = "8fb5890c-e49c-4c08-8778-565469977ffd"
 RESEND_NEWSLETTER_SEGMENT_ID = "dc2d73c1-0793-43c1-bb0b-a83b2f1e5138"
 RESEND_REGISTERED_USER_SEGMENT_ID = "feee62a0-0fc0-47a6-82d1-65f101b52ade"
+MARKETING_EMAIL_FROM = "marketing@nemuzoo.com"
+MARKETING_EMAIL_ALLOWLIST = ""
 
 [[routes]]
 pattern = "www.nemuzoo.com"
@@ -45,10 +47,11 @@ preview_urls = false
 NEXT_PUBLIC_MEDUSA_BACKEND_URL = "https://api-staging.nemuzoo.com"
 NEXT_PUBLIC_MEDUSA_PUBLISHABLE_API_KEY = "pk_4ba0913ae36f23fbc818d33483254aba17cb3d2f70561ce0acd5f3496060c10d"
 NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT = "https://ik.imagekit.io/afgvip2rl/staging/"
+RESEND_TOPIC_ID = "8fb5890c-e49c-4c08-8778-565469977ffd"
 RESEND_REGISTERED_USER_SEGMENT_ID = "feee62a0-0fc0-47a6-82d1-65f101b52ade"
 RESEND_NEWSLETTER_SEGMENT_ID = "dc2d73c1-0793-43c1-bb0b-a83b2f1e5138"
-MARKETING_EMAIL_FROM="marketing@nemuzoo.com"
-MARKETING_EMAIL_ALLOWLIST="xjtc19910103@gmail.com,xjtc19910103@hotmail.com,xjiangiao@foxmail.com,394516380@qq.com,xjiangiao91@gmail.com"
+MARKETING_EMAIL_FROM = "marketing@nemuzoo.com"
+MARKETING_EMAIL_ALLOWLIST = "xjtc19910103@gmail.com,xjtc19910103@hotmail.com,xjiangiao@foxmail.com,394516380@qq.com,xjiangiao91@gmail.com"
 
 [[env.staging.routes]]
 pattern = "staging.nemuzoo.com"

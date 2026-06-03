@@ -32,6 +32,7 @@ const registerSchema = z
     email: z.string().email("Please enter a valid email address."),
     password: z.string().min(6, "Password must be at least 6 characters."),
     confirmPassword: z.string(),
+    newsletterOptIn: z.boolean().optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match.",
@@ -76,6 +77,7 @@ export default function AuthModal() {
       email: "",
       password: "",
       confirmPassword: "",
+      newsletterOptIn: false,
     },
   });
 
@@ -93,6 +95,7 @@ export default function AuthModal() {
       data.password,
       data.firstName,
       data.lastName,
+      Boolean(data.newsletterOptIn),
     );
     if (ok) {
       setOpen(false);
@@ -325,6 +328,22 @@ export default function AuthModal() {
                     </span>
                   )}
                 </div>
+
+                <label
+                  htmlFor="reg-newsletter"
+                  className="flex items-start gap-3 rounded-2xl border border-border-primary bg-surface-secondary px-4 py-3 text-left"
+                >
+                  <input
+                    id="reg-newsletter"
+                    type="checkbox"
+                    className="mt-1 h-4 w-4 shrink-0 rounded border-border-primary text-accent focus:ring-accent"
+                    {...registerForm.register("newsletterOptIn")}
+                  />
+                  <span className="text-xs leading-relaxed text-text-secondary">
+                    Send me Nemuzoo newsletter and product updates. You can
+                    unsubscribe at any time.
+                  </span>
+                </label>
 
                 {error && <p className="text-sm text-destructive">{error}</p>}
 
