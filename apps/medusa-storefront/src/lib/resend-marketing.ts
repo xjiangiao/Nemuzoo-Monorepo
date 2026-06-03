@@ -12,16 +12,20 @@ type ContactSyncInput = {
 
 const normalizeEmail = (email: string) => email.trim().toLowerCase()
 
-const parseAllowlist = () =>
-  (process.env.MARKETING_EMAIL_ALLOWLIST || "")
-    .split(",")
-    .map((email) => normalizeEmail(email))
-    .filter(Boolean)
+const MARKETING_EMAIL_ALLOWLIST = (process.env.MARKETING_EMAIL_ALLOWLIST || "")
+  .split(",")
+  .map((email) => normalizeEmail(email))
+  .filter(Boolean)
+
+const requiresAllowlist =
+  process.env.MARKETING_EMAIL_REQUIRE_ALLOWLIST === "true"
 
 const isAllowedEmail = (email: string) => {
-  const allowlist = parseAllowlist()
+  if (MARKETING_EMAIL_ALLOWLIST.length === 0) {
+    return !requiresAllowlist
+  }
 
-  return allowlist.length === 0 || allowlist.includes(normalizeEmail(email))
+  return MARKETING_EMAIL_ALLOWLIST.includes(normalizeEmail(email))
 }
 
 const escapeHtml = (value: unknown) =>
@@ -164,9 +168,13 @@ export const syncMarketingContact = async ({
       ? [{ id: process.env.RESEND_TOPIC_ID!, subscription: "opt_in" as const }]
       : undefined
 
-    const existing = await resend.contacts.get(normalizedEmail)
+    const existing = await resend.contacts.get({ email: normalizedEmail })
 
     if (existing.error) {
+      if (existing.error.name !== "not_found") {
+        return { ok: false, reason: formatError("contact-get", existing.error) }
+      }
+
       const created = await resend.contacts.create({
         email: normalizedEmail,
         segments: segments.map((id) => ({ id })),

@@ -14,6 +14,7 @@ RESEND_NEWSLETTER_SEGMENT_ID = "dc2d73c1-0793-43c1-bb0b-a83b2f1e5138"
 RESEND_REGISTERED_USER_SEGMENT_ID = "feee62a0-0fc0-47a6-82d1-65f101b52ade"
 MARKETING_EMAIL_FROM = "marketing@nemuzoo.com"
 MARKETING_EMAIL_ALLOWLIST = ""
+MARKETING_EMAIL_REQUIRE_ALLOWLIST = "false"
 
 [[routes]]
 pattern = "www.nemuzoo.com"
@@ -51,7 +52,8 @@ RESEND_TOPIC_ID = "8fb5890c-e49c-4c08-8778-565469977ffd"
 RESEND_REGISTERED_USER_SEGMENT_ID = "feee62a0-0fc0-47a6-82d1-65f101b52ade"
 RESEND_NEWSLETTER_SEGMENT_ID = "dc2d73c1-0793-43c1-bb0b-a83b2f1e5138"
 MARKETING_EMAIL_FROM = "marketing@nemuzoo.com"
-MARKETING_EMAIL_ALLOWLIST = "xjtc19910103@gmail.com,xjtc19910103@hotmail.com,xjiangiao@foxmail.com,394516380@qq.com,xjiangiao91@gmail.com"
+MARKETING_EMAIL_ALLOWLIST = ""
+MARKETING_EMAIL_REQUIRE_ALLOWLIST = "true"
 
 [[env.staging.routes]]
 pattern = "staging.nemuzoo.com"

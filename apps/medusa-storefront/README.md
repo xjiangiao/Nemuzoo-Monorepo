@@ -39,8 +39,9 @@ For Cloudflare deploys, use `pnpm cf:deploy` for production and `pnpm cf:deploy:
 - `RESEND_REGISTERED_USER_SEGMENT_ID`
 - `MARKETING_EMAIL_FROM`
 - `MARKETING_EMAIL_ALLOWLIST`
+- `MARKETING_EMAIL_REQUIRE_ALLOWLIST`
 
-Production leaves `MARKETING_EMAIL_ALLOWLIST` empty so newsletter subscriptions and confirmation emails are sent normally. Staging uses a comma-separated allowlist so only test email addresses create/update Resend contacts and receive confirmation emails; non-allowlisted emails return `{ ok: true }` without Resend side effects.
+Production leaves `MARKETING_EMAIL_ALLOWLIST` empty and sets `MARKETING_EMAIL_REQUIRE_ALLOWLIST=false` so newsletter subscriptions and confirmation emails are sent normally. Staging sets `MARKETING_EMAIL_REQUIRE_ALLOWLIST=true`; configure the comma-separated allowlist outside git so only test email addresses create/update Resend contacts and receive confirmation emails. Non-allowlisted emails return `{ ok: true }` without Resend side effects.
 
 `RESEND_API_KEY` is a production secret and must be configured in Cloudflare instead of committed to `wrangler.toml`:
 
