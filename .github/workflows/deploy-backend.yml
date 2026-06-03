@@ -4,14 +4,23 @@ on:
   push:
     branches:
       - main
+      - staging
     paths:
       - "apps/medusa-backend/**"
       - "docker-compose.yml"
+      - ".env.production.example"
+      - ".env.staging.example"
       - ".github/workflows/deploy-backend.yml"
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
       - "package.json"
   workflow_dispatch:
+    inputs:
+      run_migrations:
+        description: "Run Medusa database migrations before deploying"
+        required: false
+        default: false
+        type: boolean
 
 env:
   REGISTRY: ghcr.io
@@ -20,6 +29,7 @@ env:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
     permissions:
       contents: read
       packages: write
@@ -45,7 +55,8 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=sha,prefix=,format=short
-            type=raw,value=latest
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+            type=raw,value=staging,enable=${{ github.ref == 'refs/heads/staging' }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
@@ -68,19 +79,30 @@ jobs:
             mkdir -p /opt/medusa
             cd /opt/medusa
 
+            DEPLOY_ENV="${{ github.ref_name == 'main' && 'production' || 'staging' }}"
+            SERVICE_NAME="${{ github.ref_name == 'main' && 'medusa-backend' || 'medusa-backend-staging' }}"
+            IMAGE_TAG="${{ github.ref_name == 'main' && 'latest' || 'staging' }}"
+            HOST_PORT="${{ github.ref_name == 'main' && '9000' || '9001' }}"
+            ENV_FILE=".env.${DEPLOY_ENV}"
+            API_DOMAIN="${{ github.ref_name == 'main' && 'api.nemuzoo.com' || 'api-staging.nemuzoo.com' }}"
+            ADMIN_DOMAIN="${{ github.ref_name == 'main' && 'admin.nemuzoo.com' || 'admin-staging.nemuzoo.com' }}"
+            RUN_MIGRATIONS="${{ github.event.inputs.run_migrations || 'false' }}"
+
             # Write docker-compose.yml
-            cat > docker-compose.yml << 'COMPOSEEOF'
+            cat > docker-compose.yml << COMPOSEEOF
             services:
-              medusa-backend:
-                image: ghcr.io/${{ env.IMAGE_NAME }}:latest
-                container_name: medusa-backend
+              ${SERVICE_NAME}:
+                image: ghcr.io/${{ env.IMAGE_NAME }}:${IMAGE_TAG}
+                container_name: ${SERVICE_NAME}
                 restart: unless-stopped
                 ports:
-                  - "9000:9000"
+                  - "${HOST_PORT}:9000"
                 env_file:
-                  - .env
+                  - ${ENV_FILE}
                 environment:
+                  - APP_ENV=${DEPLOY_ENV}
                   - NODE_ENV=production
+                  - PORT=9000
                 healthcheck:
                   test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9000/health"]
                   interval: 30s
@@ -90,7 +112,8 @@ jobs:
             COMPOSEEOF
 
             # Write .env from GitHub Secrets and Variables on every deploy
-            cat > .env << 'ENVEOF'
+            cat > "${ENV_FILE}" << ENVEOF
+            APP_ENV=${DEPLOY_ENV}
             NODE_ENV=production
             PORT=9000
             DATABASE_URL=${{ secrets.DATABASE_URL }}
@@ -101,28 +124,151 @@ jobs:
             ADMIN_CORS=${{ vars.ADMIN_CORS }}
             AUTH_CORS=${{ vars.AUTH_CORS }}
             MEDUSA_ADMIN_ONBOARDING_TYPE=default
-            R2_FILE_URL=${{ secrets.R2_FILE_URL }}
-            R2_ENDPOINT=${{ secrets.R2_ENDPOINT }}
+            R2_FILE_URL=${{ vars.R2_FILE_URL || secrets.R2_FILE_URL }}
+            R2_ENDPOINT=${{ vars.R2_ENDPOINT || secrets.R2_ENDPOINT }}
             R2_BUCKET=${{ vars.R2_BUCKET }}
             R2_ACCESS_KEY_ID=${{ secrets.R2_ACCESS_KEY_ID }}
             R2_SECRET_ACCESS_KEY=${{ secrets.R2_SECRET_ACCESS_KEY }}
+            ORDER_EMAILS_ENABLED=${{ vars.ORDER_EMAILS_ENABLED }}
+            ORDER_EMAIL_FROM=${{ vars.ORDER_EMAIL_FROM || secrets.ORDER_EMAIL_FROM }}
+            ACCOUNT_EMAILS_ENABLED=${{ vars.ACCOUNT_EMAILS_ENABLED }}
+            ACCOUNT_EMAIL_FROM=${{ vars.ACCOUNT_EMAIL_FROM || secrets.ACCOUNT_EMAIL_FROM }}
+            RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
+            PAYMENT_PROVIDER=${{ vars.PAYMENT_PROVIDER }}
+            PAYMENT_ENV=${{ vars.PAYMENT_ENV }}
+            PAYMENT_API_KEY=${{ secrets.PAYMENT_API_KEY }}
+            PAYMENT_WEBHOOK_SECRET=${{ secrets.PAYMENT_WEBHOOK_SECRET }}
             ENVEOF
 
             missing_env=""
             for name in DATABASE_URL REDIS_URL JWT_SECRET COOKIE_SECRET STORE_CORS ADMIN_CORS AUTH_CORS R2_FILE_URL R2_ENDPOINT R2_BUCKET R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY; do
-              if ! grep -q "^${name}=." .env; then
+              if ! grep -q "^${name}=." "${ENV_FILE}"; then
                 missing_env="${missing_env} ${name}"
               fi
             done
 
+            if grep -q "^PAYMENT_PROVIDER=." "${ENV_FILE}"; then
+              for name in PAYMENT_ENV PAYMENT_API_KEY PAYMENT_WEBHOOK_SECRET; do
+                if ! grep -q "^${name}=." "${ENV_FILE}"; then
+                  missing_env="${missing_env} ${name}"
+                fi
+              done
+            fi
+
+            if ! grep -q "^ORDER_EMAILS_ENABLED=false" "${ENV_FILE}"; then
+              for name in ORDER_EMAIL_FROM RESEND_API_KEY; do
+                if ! grep -q "^${name}=." "${ENV_FILE}"; then
+                  missing_env="${missing_env} ${name}"
+                fi
+              done
+            fi
+
+            if ! grep -q "^ACCOUNT_EMAILS_ENABLED=false" "${ENV_FILE}"; then
+              for name in ACCOUNT_EMAIL_FROM RESEND_API_KEY; do
+                if ! grep -q "^${name}=." "${ENV_FILE}"; then
+                  missing_env="${missing_env} ${name}"
+                fi
+              done
+            fi
+
             if [ -n "$missing_env" ]; then
-              echo "Missing deploy environment values:${missing_env}"
+              echo "Missing ${DEPLOY_ENV} deploy environment values:${missing_env}"
               exit 1
             fi
 
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            docker pull ghcr.io/${{ env.IMAGE_NAME }}:latest
-            docker compose down medusa-backend
-            docker compose up -d medusa-backend
+            docker pull ghcr.io/${{ env.IMAGE_NAME }}:${IMAGE_TAG}
+
+            if [ "${RUN_MIGRATIONS}" = "true" ]; then
+              docker compose run --rm ${SERVICE_NAME} npx medusa db:migrate
+              docker compose run --rm ${SERVICE_NAME} npx medusa db:sync-links
+            else
+              echo "Skipping database migrations. Set run_migrations=true on workflow_dispatch to run them."
+            fi
+
+            docker compose up -d ${SERVICE_NAME}
+
+            cat > "/tmp/${API_DOMAIN}.conf" << NGINXEOF
+            server {
+                listen 80;
+                server_name ${API_DOMAIN};
+
+                location / {
+                    proxy_pass http://127.0.0.1:${HOST_PORT};
+                    proxy_http_version 1.1;
+                    proxy_set_header Host \$host;
+                    proxy_set_header X-Real-IP \$remote_addr;
+                    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+                    proxy_set_header X-Forwarded-Proto \$scheme;
+                }
+
+                client_max_body_size 50M;
+            }
+            NGINXEOF
+
+            cat > "/tmp/${ADMIN_DOMAIN}.conf" << NGINXEOF
+            server {
+                listen 80;
+                server_name ${ADMIN_DOMAIN};
+
+                location = / {
+                    return 302 /app;
+                }
+
+                location / {
+                    proxy_pass http://127.0.0.1:${HOST_PORT};
+                    proxy_http_version 1.1;
+                    proxy_set_header Upgrade \$http_upgrade;
+                    proxy_set_header Connection "upgrade";
+                    proxy_set_header Host \$host;
+                    proxy_set_header X-Real-IP \$remote_addr;
+                    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+                    proxy_set_header X-Forwarded-Proto \$scheme;
+                    proxy_read_timeout 86400s;
+                }
+
+                client_max_body_size 50M;
+            }
+            NGINXEOF
+
+            sudo mv "/tmp/${API_DOMAIN}.conf" "/etc/nginx/sites-available/${API_DOMAIN}.conf"
+            sudo mv "/tmp/${ADMIN_DOMAIN}.conf" "/etc/nginx/sites-available/${ADMIN_DOMAIN}.conf"
+            sudo ln -sf "/etc/nginx/sites-available/${API_DOMAIN}.conf" "/etc/nginx/sites-enabled/${API_DOMAIN}.conf"
+            sudo ln -sf "/etc/nginx/sites-available/${ADMIN_DOMAIN}.conf" "/etc/nginx/sites-enabled/${ADMIN_DOMAIN}.conf"
+            sudo nginx -t
+            sudo systemctl reload nginx
+
+            if command -v certbot >/dev/null 2>&1; then
+              sudo certbot --nginx \
+                -d "${API_DOMAIN}" \
+                -d "${ADMIN_DOMAIN}" \
+                --non-interactive \
+                --agree-tos \
+                --register-unsafely-without-email
+            else
+              echo "certbot is not installed on the VPS. Skipping HTTPS certificate setup."
+            fi
+
+            docker compose ps ${SERVICE_NAME}
+
+            healthy=""
+            for attempt in 1 2 3 4 5 6; do
+              if wget --no-verbose --tries=1 --spider "http://127.0.0.1:${HOST_PORT}/health"; then
+                healthy="yes"
+                break
+              fi
+
+              echo "Waiting for ${SERVICE_NAME} health check (${attempt}/6)..."
+              docker logs ${SERVICE_NAME} --tail 80 || true
+              sleep 5
+            done
+
+            if [ "${healthy}" != "yes" ]; then
+              echo "${SERVICE_NAME} did not become healthy."
+              docker compose ps ${SERVICE_NAME}
+              docker logs ${SERVICE_NAME} --tail 200 || true
+              exit 1
+            fi
+
             docker image prune -f
             docker logout ghcr.io
