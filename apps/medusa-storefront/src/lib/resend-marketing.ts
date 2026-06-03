@@ -19,6 +19,8 @@ const MARKETING_EMAIL_ALLOWLIST = (process.env.MARKETING_EMAIL_ALLOWLIST || "")
 
 const requiresAllowlist =
   process.env.MARKETING_EMAIL_REQUIRE_ALLOWLIST === "true"
+const newsletterWelcomeTemplateId =
+  process.env.RESEND_NEWSLETTER_WELCOME_TEMPLATE_ID || "welcome-mail"
 
 const isAllowedEmail = (email: string) => {
   if (MARKETING_EMAIL_ALLOWLIST.length === 0) {
@@ -27,14 +29,6 @@ const isAllowedEmail = (email: string) => {
 
   return MARKETING_EMAIL_ALLOWLIST.includes(normalizeEmail(email))
 }
-
-const escapeHtml = (value: unknown) =>
-  String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;")
 
 const getRequiredConfig = ({
   registered,
@@ -101,27 +95,16 @@ const sendNewsletterConfirmationEmail = async ({
     return { ok: true, skipped: true, reason: "missing-marketing-email-from" }
   }
 
-  const subject = "Welcome to Nemuzoo updates"
-  const html = `
-    <div style="font-family:Arial,sans-serif;color:#1f2933;line-height:1.5;max-width:640px;margin:0 auto;">
-      <h1 style="font-size:24px;margin:0 0 16px;">You're subscribed</h1>
-      <p>Thanks for joining Nemuzoo updates.</p>
-      <p>We will send gentle notes about new companions, stories, and moments of comfort.</p>
-      <p style="margin-top:24px;color:#52606d;">This confirmation was sent to ${escapeHtml(email)}.</p>
-    </div>
-  `
-  const text = [
-    "You're subscribed to Nemuzoo updates.",
-    "",
-    "We will send gentle notes about new companions, stories, and moments of comfort.",
-  ].join("\n")
-
   const { error } = await resend.emails.send({
     from,
     to: email,
-    subject,
-    html,
-    text,
+    subject: "Welcome to our newsletter!",
+    template: {
+      id: newsletterWelcomeTemplateId,
+      variables: {
+        user_email: email,
+      },
+    },
   })
 
   if (error) {
