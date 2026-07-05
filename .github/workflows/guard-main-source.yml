@@ -1,0 +1,34 @@
+name: Validate main merge source
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - edited
+      - ready_for_review
+
+permissions:
+  contents: read
+
+jobs:
+  allowed-source:
+    name: allowed-source
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate source branch
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          case "$HEAD_REF" in
+            staging|hotfix/*)
+              echo "Allowed source branch: $HEAD_REF"
+              ;;
+            *)
+              echo "::error::Pull requests into main must come from staging or hotfix/*; got: $HEAD_REF"
+              exit 1
+              ;;
+          esac
