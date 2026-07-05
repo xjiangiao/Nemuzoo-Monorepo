@@ -3,14 +3,14 @@ import Container from "@/components/layout/Container";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with Nemuzoo for plush, order, and care support.",
+  description: "Get in touch with Nemuzoo for product, order, and gift support.",
 };
 
 const contacts = [
   {
     label: "General support",
     email: "support@nemuzoo.com",
-    description: "Care questions, product details, gifting, and anything soft.",
+    description: "Product details, materials, gifting, and everyday use questions.",
   },
   {
     label: "Order help",
@@ -28,7 +28,7 @@ export default function ContactPage() {
             contact
           </p>
           <h1 className="mt-4 max-w-3xl font-heading text-5xl font-black leading-[0.96] text-text-primary sm:text-6xl lg:text-7xl">
-            Questions, order help, or a soft hello.
+            Questions, order help, or a small note.
           </h1>
           <p className="mt-7 max-w-xl text-lg leading-8 text-text-secondary">
             Tell us what you need and we will point you to the clearest next
@@ -38,7 +38,7 @@ export default function ContactPage() {
 
         <section className="relative min-w-0 overflow-hidden rounded-[2rem] bg-surface-secondary p-4 sm:rounded-[2.5rem] sm:p-6 md:p-8">
           <div
-            className="grain absolute inset-0 opacity-70"
+            className="paper-grain absolute inset-0 opacity-70"
             aria-hidden="true"
           />
           <div className="relative grid gap-5">
@@ -86,7 +86,7 @@ export default function ContactPage() {
               Send a photo when useful
             </h2>
             <p className="mt-3 text-sm leading-7 text-text-secondary">
-              For care questions or damaged packages, one clear image is enough.
+              For damaged packages or material questions, one clear image is enough.
             </p>
           </article>
           <article className="rounded-[2rem] bg-surface-primary p-7">
@@ -94,10 +94,10 @@ export default function ContactPage() {
               03
             </p>
             <h2 className="mt-4 font-heading text-2xl font-black text-text-primary">
-              Check Care & FAQ first
+              Check Use & FAQ first
             </h2>
             <p className="mt-3 text-sm leading-7 text-text-secondary">
-              Shipping, cleaning, gifting, and returns now live together there.
+              Shipping, product details, gifting, and returns now live together there.
             </p>
           </article>
         </Container>

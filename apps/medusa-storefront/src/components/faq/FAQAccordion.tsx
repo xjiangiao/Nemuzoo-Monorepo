@@ -33,12 +33,12 @@ export default function FAQAccordion({ items }: { items: FAQItem[] }) {
             >
               <span>{faq.q}</span>
               <span
-                className="grid size-9 shrink-0 place-items-center rounded-full bg-accent-subtle text-xl leading-none text-text-primary"
+                className="relative grid size-9 shrink-0 place-items-center rounded-full bg-accent-subtle text-xl leading-none text-text-primary"
                 aria-hidden="true"
               >
                 <span
                   className={cn(
-                    "absolute transition-all duration-200",
+                    "absolute inset-0 grid place-items-center transition-all duration-200",
                     isOpen ? "rotate-90 opacity-0" : "rotate-0 opacity-100",
                   )}
                 >
@@ -46,7 +46,7 @@ export default function FAQAccordion({ items }: { items: FAQItem[] }) {
                 </span>
                 <span
                   className={cn(
-                    "transition-all duration-200",
+                    "absolute inset-0 grid place-items-center transition-all duration-200",
                     isOpen ? "rotate-0 opacity-100" : "-rotate-90 opacity-0",
                   )}
                 >

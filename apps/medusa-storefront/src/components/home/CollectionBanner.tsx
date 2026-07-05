@@ -10,16 +10,16 @@ interface CollectionData {
 
 const collections: CollectionData[] = [
   {
-    title: "Sleepy Pals",
+    title: "Reading",
     description:
-      "For those who need a little extra comfort at bedtime. Soft, huggable, and always ready to listen.",
-    href: "/products?collection=sleepy-pals",
+      "Simple tools for marking pages, keeping notes, and returning to useful ideas.",
+    href: "/products?collection=annotation-kit",
   },
   {
-    title: "Dream Wanderers",
+    title: "Everyday Desk",
     description:
-      "Curious souls with big personalities. They guard your dreams and inspire your mornings.",
-    href: "/products?collection=dream-wanderers",
+      "Small objects for writing, sorting, storing, and making a work surface feel settled.",
+    href: "/products?collection=desk-editions",
   },
 ];
 
@@ -28,8 +28,8 @@ export default function CollectionBanners() {
     <section className="bg-surface-secondary py-20 lg:py-28">
       <Container>
         <SectionHeading
-          title="Find Your Companion"
-          subtitle="Every Nemuzoo doll belongs to a family. Which one calls to you?"
+          title="For ordinary routines"
+          subtitle="The first drop starts with books and notes, then leaves room for everyday goods beyond the page."
         />
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">

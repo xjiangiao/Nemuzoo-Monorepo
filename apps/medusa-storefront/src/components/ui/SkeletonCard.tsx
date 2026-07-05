@@ -5,7 +5,7 @@ export default function SkeletonCard({
 }) {
   return (
     <div
-      className={`soft-shadow overflow-hidden rounded-[2rem] bg-surface-elevated p-4 ${className}`}
+      className={`quiet-shadow overflow-hidden rounded-[2rem] bg-surface-elevated p-4 ${className}`}
     >
       <div className="aspect-square animate-pulse rounded-2xl bg-surface-secondary" />
       <div className="mt-3 space-y-2 px-1">

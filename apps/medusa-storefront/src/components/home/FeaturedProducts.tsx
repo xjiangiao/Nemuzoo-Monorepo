@@ -13,7 +13,7 @@ import Button from "@/components/ui/Button";
  * Renders a featured-products section that fetches products and displays up to four highlighted items.
  *
  * The section includes a heading, a responsive grid of loading skeletons while products are being fetched,
- * the featured product grid when items are available, and a centered "View All Dolls" button linking to `/products`.
+ * the featured product grid when items are available, and a centered "View all products" button linking to `/products`.
  *
  * @returns A React element containing the featured products section with loading and empty-state behavior.
  */
@@ -32,8 +32,8 @@ export default function FeaturedProducts() {
     <section className="py-20 lg:py-28">
       <Container>
         <SectionHeading
-          title="The first plush drop"
-          subtitle="Each companion is soft, collectible, and calm enough to live beautifully in grown-up spaces."
+          title="The first Nemuzoo edition"
+          subtitle="A small set of useful objects for reading, noting, and keeping your desk in order."
         />
 
         {isLoading && (
@@ -50,7 +50,7 @@ export default function FeaturedProducts() {
 
         <div className="mt-12 text-center">
           <Button variant="outline" href="/products">
-            View all plush &rarr;
+            View all products &rarr;
           </Button>
         </div>
       </Container>

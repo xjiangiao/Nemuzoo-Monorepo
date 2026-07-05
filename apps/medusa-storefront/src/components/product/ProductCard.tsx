@@ -10,16 +10,18 @@ interface ProductCardProps {
 }
 
 /**
- * Renders a clickable product tile that links to the product's page and displays a square thumbnail, title, optional personality badge, and optional formatted price.
+ * Renders a clickable product tile that links to the product's page and displays a square thumbnail, title, optional product note badge, and optional formatted price.
  *
- * @param product - Product data containing at least `id`, `title`, and `handle`. May include `thumbnail`, `images`, `variants`, `metadata`, and optional pricing fields; if `metadata.personality` is a string it will be shown as a badge.
+ * @param product - Product data containing at least `id`, `title`, and `handle`. May include `thumbnail`, `images`, `variants`, `metadata`, and optional pricing fields; if `metadata.product_note` or legacy `metadata.personality` is a string it will be shown as a badge.
  * @returns A JSX element representing the product card linked to `/products/[handle]`.
  */
 export default function ProductCard({ product, priority = false }: ProductCardProps) {
   const thumbnail = getProductThumbnail(product);
   const price = getProductPrice(product);
-  const personality =
-    typeof product.metadata?.personality === "string"
+  const productNote =
+    typeof product.metadata?.product_note === "string"
+      ? product.metadata.product_note
+      : typeof product.metadata?.personality === "string"
       ? product.metadata.personality
       : null;
 
@@ -43,7 +45,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
           />
         ) : (
-          <div className="plush-cream flex h-full w-full items-center justify-center text-text-muted">
+          <div className="paper-grain flex h-full w-full items-center justify-center bg-surface-muted text-text-muted">
             No Image
           </div>
         )}
@@ -62,9 +64,9 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             </p>
           )}
         </div>
-        {personality && (
+        {productNote && (
           <div className="mt-3">
-            <Badge variant="warm">{personality}</Badge>
+            <Badge variant="warm">{productNote}</Badge>
           </div>
         )}
       </div>

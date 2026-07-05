@@ -31,11 +31,11 @@ export default function CartPage() {
     return (
       <Container className="py-16 lg:py-20">
         <EmptyState
-          title="Your cart is ready for a companion"
-          description="Browse our collection and find the doll that speaks to you."
+          title="Your cart is ready"
+          description="Browse the collection and choose useful objects for your day."
           action={
             <Button variant="warm" href="/products">
-              Browse Dolls
+              Browse Products
             </Button>
           }
         />
