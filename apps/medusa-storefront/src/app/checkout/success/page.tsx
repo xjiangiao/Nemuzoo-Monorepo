@@ -17,8 +17,8 @@ export default async function CheckoutSuccessPage({
           Thank you for your order
         </h1>
         <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-          Your companion is getting ready. We will send a confirmation email
-          when the order has been processed.
+          Your Nemuzoo order is being prepared. We will send a confirmation
+          email when it has been processed.
         </p>
         {order_id && (
           <p className="mt-4 text-xs text-text-muted">

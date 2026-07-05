@@ -17,8 +17,8 @@ const sections = [
   {
     title: "Products",
     body: [
-      "All Nemuzoo dolls are hand-knitted, which means each piece is unique. Slight variations in size, texture, and color are natural characteristics of handmade goods and are not considered defects.",
-      "Product images are for illustration purposes. Actual colors may vary slightly due to yarn dye lots, lighting, and screen settings.",
+      "Nemuzoo products are everyday cultural goods made in small editions. Slight variations in paper tone, fabric texture, metal finish, and packaging are natural characteristics of these materials and are not considered defects.",
+      "Product images are for illustration purposes. Actual colors may vary slightly due to paper stock, lighting, and screen settings.",
     ],
   },
   {
@@ -76,15 +76,15 @@ export default function TermsPage() {
           policies
         </p>
         <h1 className="mt-4 font-heading text-5xl font-black leading-tight text-text-primary sm:text-6xl">
-          Terms for a clear, soft checkout.
+          Terms for a clear checkout.
         </h1>
         <div className="mt-8 rounded-[2rem] bg-white/55 p-6">
           <p className="font-heading text-xs font-bold uppercase tracking-[0.18em] text-text-muted">
             last updated
           </p>
           <p className="mt-3 text-sm leading-7 text-text-secondary">
-            May 26, 2026. These terms cover using the site, buying plush
-            companions, payments, shipping, returns, and brand content.
+            May 26, 2026. These terms cover using the site, buying Nemuzoo
+            goods, payments, shipping, returns, and brand content.
           </p>
         </div>
       </aside>

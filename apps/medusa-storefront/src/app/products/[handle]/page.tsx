@@ -54,10 +54,10 @@ export default function ProductPage() {
           Not Found
         </h1>
         <p className="text-sm text-text-secondary mb-6">
-          This doll wandered off. Let us help you find another one.
+          This product is not in the catalog right now. Let us help you find another one.
         </p>
         <Button variant="warm" href="/products">
-          Browse All Dolls
+          Browse All Products
         </Button>
       </Container>
     );
@@ -69,7 +69,7 @@ export default function ProductPage() {
         href="/products"
         className="inline-block text-sm text-text-secondary hover:text-text-primary transition-colors mb-8"
       >
-        &larr; All Dolls
+        &larr; All Products
       </Link>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16">
