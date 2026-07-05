@@ -1,30 +1,31 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Container from "@/components/layout/Container";
 
 export const metadata: Metadata = {
   title: "Brand Story",
   description:
-    "Nemuzoo is a soft place to land: plush companions shaped by rounded arches, gentle curves, and quiet everyday comfort.",
+    "Nemuzoo makes quiet cultural goods for reading, writing, storage, and simple daily routines.",
 };
 
 const storyValues = [
   {
     number: "01",
-    title: "Emotional comfort",
+    title: "Plain usefulness",
     description:
-      "The plush expressions stay quiet so the owner can bring their own feeling to the object.",
+      "Every object should be easy to understand, easy to use, and quiet enough to keep nearby.",
   },
   {
     number: "02",
-    title: "Collectible softness",
+    title: "Material calm",
     description:
-      "Muted colors and clean packaging make each companion feel giftable, photographable, and worth keeping.",
+      "Neutral colors, paper textures, fabric, and metal details keep the brand practical and warm.",
   },
   {
     number: "03",
     title: "Online-first clarity",
     description:
-      "Size, touch, care, and use cases are written plainly so shoppers can choose with confidence.",
+      "Dimensions, materials, contents, and use cases are written plainly so shoppers can choose with confidence.",
   },
 ];
 
@@ -37,28 +38,34 @@ export default function AboutPage() {
             brand story
           </p>
           <h1 className="mt-4 max-w-4xl font-heading text-5xl font-black leading-[0.96] text-text-primary sm:text-6xl lg:text-7xl">
-            nemuzoo is a soft place to land.
+            nemuzoo is for the small routines that make a day feel ordered.
           </h1>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-text-secondary">
-            The brand begins with a rounded wordmark: soft arches, gentle curves,
-            and a quiet rhythm. The store carries that language into plush
-            silhouettes, packaging, and care details that feel polished but easy
-            to approach.
+            The first product happens to live with books. The wider brand is
+            about useful, modest objects for reading, writing, organizing, and
+            carrying what you need.
           </p>
         </section>
 
         <aside className="relative min-h-[420px] overflow-hidden rounded-[2.5rem] bg-surface-secondary p-8">
-          <div className="plush-oval soft-shadow absolute bottom-8 left-8 h-64 w-48 rounded-[48%_48%_38%_38%]" />
-          <div className="absolute right-8 top-8 max-w-[240px] rounded-[2rem] bg-white/60 p-6 backdrop-blur">
+          <Image
+            src="/book-annotation-kit-hero.png"
+            alt="Book annotation kit arranged on warm paper"
+            fill
+            sizes="(max-width: 1024px) 100vw, 480px"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#2F2B25]/34 via-transparent to-transparent" />
+          <div className="absolute right-8 top-8 max-w-[240px] rounded-[1.5rem] bg-white/70 p-6 backdrop-blur">
             <p className="font-heading text-xs font-bold uppercase tracking-[0.22em] text-text-muted">
               design language
             </p>
-            <p className="mt-3 font-heading text-2xl font-black leading-tight text-[#2E2E33]">
-              soft arches
+            <p className="mt-3 font-heading text-2xl font-black leading-tight text-[#2F2B25]">
+              plain paper
               <br />
-              gentle curves
+              natural fabric
               <br />
-              rounded rhythm
+              useful forms
             </p>
           </div>
         </aside>

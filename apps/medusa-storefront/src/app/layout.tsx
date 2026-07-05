@@ -15,19 +15,19 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "Nemuzoo — Nighttime Companions",
+    default: "Nemuzoo — Everyday Cultural Goods",
     template: "%s | Nemuzoo",
   },
   description:
-    "Knitted dolls for quiet nights and gentle hearts. Each Nemuzoo doll is a handmade emotional companion, ready to be the friend you hold tight before falling asleep.",
+    "Quiet cultural goods for reading, writing, storage, and simple daily routines. The first Nemuzoo edition begins with a book annotation kit.",
   metadataBase: new URL(siteUrl),
   openGraph: {
     type: "website",
     locale: "en_US",
     siteName: "Nemuzoo",
-    title: "Nemuzoo — Nighttime Companions",
+    title: "Nemuzoo — Everyday Cultural Goods",
     description:
-      "Knitted dolls for quiet nights and gentle hearts. Each Nemuzoo doll is a handmade emotional companion, ready to be the friend you hold tight before falling asleep.",
+      "Quiet cultural goods for reading, writing, storage, and simple daily routines. The first Nemuzoo edition begins with a book annotation kit.",
   },
   robots: {
     index: true,
@@ -85,7 +85,7 @@ export default function RootLayout({
               name: "Nemuzoo",
               url: siteUrl,
               description:
-                "Knitted companions for quiet nights and gentle hearts.",
+                "Quiet cultural goods for reading, writing, storage, and simple daily routines.",
             }),
           }}
         />

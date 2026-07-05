@@ -1,25 +1,25 @@
 import Container from "@/components/layout/Container";
 import FadeInView from "@/components/ui/FadeInView";
-import { Star, Heart, Moon } from "lucide-react";
+import { BookOpen, Bookmark, PackageCheck } from "lucide-react";
 
 const values = [
   {
-    icon: <Star size={28} />,
-    title: "Handmade with Care",
+    icon: <BookOpen size={28} />,
+    title: "Useful before expressive",
     description:
-      "Every Nemuzoo doll is hand-knitted with soft, natural yarns chosen for their gentle touch and lasting comfort.",
+      "Each object starts with a clear job, then keeps its shape, color, and language quiet.",
   },
   {
-    icon: <Heart size={28} />,
-    title: "Emotional Companion",
+    icon: <Bookmark size={28} />,
+    title: "Made for daily surfaces",
     description:
-      "Designed not just as toys but as quiet friends who listen without judgment and comfort without condition.",
+      "The first kit belongs near books and notebooks, but the brand is built for desks, shelves, bags, and small routines.",
   },
   {
-    icon: <Moon size={28} />,
-    title: "Nighttime Comfort",
+    icon: <PackageCheck size={28} />,
+    title: "Ready to give",
     description:
-      "Inspired by the stillness of night — when we most need someone by our side. Hold tight and drift away.",
+      "Plain packaging and practical contents make each edition easy to use, easy to keep, and easy to gift.",
   },
 ];
 

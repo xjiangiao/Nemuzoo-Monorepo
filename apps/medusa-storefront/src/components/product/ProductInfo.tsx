@@ -28,11 +28,11 @@ interface ProductInfoProps {
 /**
  * Renders product details and purchase controls for a given product, including variant selection,
  * price resolution (uses variant.calculated_price when available, otherwise falls back to the first variant price),
- * optional personality badge and story section, quantity selection, and an Add to Cart flow with success/error states.
+ * optional product note badge and material notes, quantity selection, and an Add to Cart flow with success/error states.
  *
  * @param product - Product data used to populate the UI. Expected fields used: `title`, optional `description`,
  *   optional `variants` (each with `id`, optional `title`, optional `calculated_price`, optional `prices`), and
- *   optional `metadata` entries `personality` and `story`.
+ *   optional `metadata` entries `product_note`, `material_note`, and legacy `personality`/`story`.
  * @returns The rendered React element containing the product information and purchase controls.
  */
 export default function ProductInfo({ product }: ProductInfoProps) {
@@ -58,12 +58,18 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           currency_code: calculatedPrice.currency_code,
         }
       : selectedVariant?.prices?.[0];
-  const personality =
-    typeof product.metadata?.personality === "string"
+  const productNote =
+    typeof product.metadata?.product_note === "string"
+      ? product.metadata.product_note
+      : typeof product.metadata?.personality === "string"
       ? product.metadata.personality
       : null;
-  const story =
-    typeof product.metadata?.story === "string" ? product.metadata.story : null;
+  const materialNote =
+    typeof product.metadata?.material_note === "string"
+      ? product.metadata.material_note
+      : typeof product.metadata?.story === "string"
+      ? product.metadata.story
+      : null;
 
   const handleAddToCart = async () => {
     if (!selectedVariant) return;
@@ -81,9 +87,9 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 
   return (
     <div className="space-y-6">
-      {personality && (
+      {productNote && (
         <Badge variant="warm" size="md">
-          {personality}
+          {productNote}
         </Badge>
       )}
 
@@ -105,13 +111,13 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         </p>
       )}
 
-      {story && (
+      {materialNote && (
         <details className="group">
           <summary className="flex items-center gap-2 cursor-pointer text-sm font-medium text-accent hover:text-accent-hover transition-colors">
-            The Story
+            Material Notes
           </summary>
           <p className="mt-3 pl-6 text-sm text-text-secondary leading-relaxed">
-            {story}
+            {materialNote}
           </p>
         </details>
       )}

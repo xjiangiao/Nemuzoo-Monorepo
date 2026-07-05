@@ -18,14 +18,19 @@
     "storefront:build:cloudflare": "pnpm --filter=@nemuzoo/medusa-storefront run build:cloudflare"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "sharp", "unrs-resolver", "workerd"],
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "unrs-resolver",
+      "workerd"
+    ],
     "overrides": {
-      "@types/react": "19.0.5",
-      "@types/react-dom": "19.0.5"
+      "@types/react": "19.2.17",
+      "@types/react-dom": "19.2.3"
     }
   },
   "devDependencies": {
-    "turbo": "^2.0.14",
-    "prettier": "^3.2.5"
+    "prettier": "^3.9.4",
+    "turbo": "^2.10.3"
   }
 }

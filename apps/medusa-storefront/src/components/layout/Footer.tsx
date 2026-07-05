@@ -4,13 +4,13 @@ import Container from "@/components/layout/Container";
 
 const footerLinks = {
   shop: [
-    { label: "All Dolls", href: "/products" },
-    { label: "Sleepy Pals", href: "/products?collection=sleepy-pals" },
-    { label: "Dream Wanderers", href: "/products?collection=dream-wanderers" },
+    { label: "All Products", href: "/products" },
+    { label: "Reading", href: "/products?collection=annotation-kit" },
+    { label: "Everyday Desk", href: "/products?collection=desk-editions" },
   ],
   company: [
     { label: "About Nemuzoo", href: "/about" },
-    { label: "Care & FAQ", href: "/faq" },
+    { label: "Use & FAQ", href: "/faq" },
     { label: "Contact", href: "/contact" },
   ],
   policies: [
@@ -36,8 +36,8 @@ export default function Footer() {
               />
             </Link>
             <p className="mt-3 text-sm text-text-secondary leading-relaxed">
-              Soft companions for bedrooms, desks, gifting, and gentle everyday
-              rituals.
+              Quiet cultural goods for reading, writing, storage, and everyday
+              desks.
             </p>
           </div>
 

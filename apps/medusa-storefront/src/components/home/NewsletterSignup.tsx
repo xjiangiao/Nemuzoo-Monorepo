@@ -36,20 +36,20 @@ export default function NewsletterSignup() {
     <section className="bg-surface-secondary py-20 lg:py-28">
       <Container>
         <FadeInView>
-          <div className="soft-shadow mx-auto max-w-2xl rounded-[2rem] border border-border-primary bg-surface-elevated p-8 text-center md:p-12">
+          <div className="quiet-shadow mx-auto max-w-2xl rounded-[2rem] border border-border-primary bg-surface-elevated p-8 text-center md:p-12">
             <h2
               className="font-heading text-4xl font-black text-text-primary"
             >
-              Join the Dreamers
+              Join the list
             </h2>
             <p className="mx-auto mt-3 max-w-md text-base leading-7 text-text-secondary">
-              Gentle updates about new companions, stories, and moments of
-              comfort.
+              Quiet updates about new editions, useful objects, and the small
+              routines behind Nemuzoo.
             </p>
 
             {status === "success" ? (
               <p className="mt-8 text-sm font-medium text-success">
-                Welcome to the dream. We will keep in touch.
+                You are on the list. We will keep in touch.
               </p>
             ) : status === "error" ? (
               <div className="mt-8">

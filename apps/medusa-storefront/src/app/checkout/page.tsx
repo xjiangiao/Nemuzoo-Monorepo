@@ -159,10 +159,10 @@ export default function CheckoutPage() {
       <Container className="py-16 lg:py-20">
         <EmptyState
           title="Your cart is empty"
-          description="Add a companion to your cart before checking out."
+          description="Add a Nemuzoo object to your cart before checking out."
           action={
             <Button variant="warm" href="/products">
-              Browse Dolls
+              Browse Products
             </Button>
           }
         />

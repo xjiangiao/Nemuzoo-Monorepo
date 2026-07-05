@@ -3,23 +3,23 @@ import Container from "@/components/layout/Container";
 import FAQAccordion from "@/components/faq/FAQAccordion";
 
 export const metadata: Metadata = {
-  title: "Care & FAQ",
+  title: "Use & FAQ",
   description:
-    "Care, shipping, gifting, and returns for Nemuzoo plush companions.",
+    "Use, shipping, gifting, and returns for Nemuzoo everyday cultural goods.",
 };
 
 const faqs = [
   {
-    q: "Who are nemuzoo plush made for?",
-    a: "For anyone who likes soft objects with a collectible feel: young design shoppers, gift buyers, kids who want a calm bedtime companion, and adults who want a quiet desk or sofa friend.",
+    q: "Who are Nemuzoo products made for?",
+    a: "For people who like simple, useful objects: readers, students, desk workers, gift buyers, and anyone who prefers quiet materials over loud decoration.",
   },
   {
-    q: "How should I clean a plush?",
-    a: "Spot clean with a mild soap and cool water, then air dry fully. Avoid bleach, high heat, and machine drying to protect the shape and surface texture.",
+    q: "What is the first edition?",
+    a: "The first edition begins with a book annotation kit: page markers, note cards, clips, and compact writing tools. Final contents are listed on each product page before checkout.",
   },
   {
     q: "Do you offer gift packaging?",
-    a: "Gift-ready styles are marked in the shop. Boxed sets include soft wrap and a note card area, so the order feels intentional without extra clutter.",
+    a: "Gift-ready products are marked in the shop. Boxed sets include considered wrap and a note card area, so the order feels intentional without extra clutter.",
   },
   {
     q: "What is the return policy?",
@@ -27,7 +27,7 @@ const faqs = [
   },
   {
     q: "When will my order ship?",
-    a: "In-stock plush typically ship within 2-4 business days. Preorder and first-drop items show their estimated ship window on the product page.",
+    a: "In-stock stationery typically ships within 2-4 business days. Preorder and first-edition items show their estimated ship window on the product page.",
   },
   {
     q: "Do you ship internationally?",
@@ -51,15 +51,15 @@ export default function FAQPage() {
     >
       <aside>
         <p className="font-heading text-xs font-bold uppercase tracking-[0.24em] text-text-muted">
-          care & support
+          use & support
         </p>
         <h1 className="mt-4 font-heading text-5xl font-black leading-tight text-text-primary sm:text-6xl">
-          Shipping, cleaning, gifting, and returns.
+          Shipping, product details, gifting, and returns.
         </h1>
         <div className="mt-8 rounded-[2rem] bg-white/55 p-6">
           <p className="text-sm leading-7 text-text-secondary">
-            Made for US shoppers: clear delivery expectations, simple care
-            language, and gift-friendly policies before checkout.
+            Made for US shoppers: clear delivery expectations, plain material
+            notes, and gift-friendly policies before checkout.
           </p>
         </div>
       </aside>

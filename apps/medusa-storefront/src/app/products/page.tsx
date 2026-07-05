@@ -10,7 +10,7 @@ import EmptyState from "@/components/ui/EmptyState";
 import Button from "@/components/ui/Button";
 
 /**
- * Renders the "All Dolls" products page with loading, error, empty, and populated states.
+ * Renders the products page with loading, error, empty, and populated states.
  *
  * Shows a skeleton grid while loading, an error state with a retry action when loading fails,
  * a no-results empty state when the product list is empty, and a product grid when products are available.
@@ -34,11 +34,12 @@ export default function ProductsPage() {
             shop
           </p>
           <h1 className="mt-4 font-heading text-5xl font-black leading-tight text-text-primary sm:text-6xl">
-            Find the plush that fits your day.
+            Useful goods for books, notes, and desks.
           </h1>
         </div>
         <p className="max-w-2xl text-lg leading-8 text-text-secondary lg:pt-10">
-          Browse soft companions for bedtime comfort, desk company, gifting, and carry-along calm. Free US shipping on orders over $75.
+          The first Nemuzoo products begin with reading and paper, then stay
+          simple enough for everyday use. Free US shipping on orders over $75.
         </p>
       </div>
 
@@ -52,7 +53,7 @@ export default function ProductsPage() {
 
       {error && (
         <EmptyState
-          title="Failed to load dolls"
+          title="Failed to load products"
           description="Please try again later."
           action={
             <Button variant="outline" onClick={() => refetch()}>
@@ -64,8 +65,8 @@ export default function ProductsPage() {
 
       {!isLoading && !error && products && products.length === 0 && (
         <EmptyState
-          title="No dolls available yet"
-          description="Our companions are being crafted. Check back soon."
+          title="No products available yet"
+          description="The next small edition is being prepared. Check back soon."
         />
       )}
 

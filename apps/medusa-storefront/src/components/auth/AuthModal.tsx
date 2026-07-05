@@ -142,7 +142,7 @@ export default function AuthModal() {
             <DialogDescription className="text-sm leading-6 text-text-secondary">
               {tab === "login"
                 ? "Sign in to your account to continue."
-                : "Join Nemuzoo and start your collection."}
+                : "Join Nemuzoo and keep your order details close."}
             </DialogDescription>
           </DialogHeader>
 
